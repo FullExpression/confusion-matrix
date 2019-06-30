@@ -2,6 +2,6 @@
  * Public API Surface of fullexpressionconfusionmatrix
  */
 
-export * from './lib/fullexpressionconfusionmatrix.service';
-export * from './lib/fullexpressionconfusionmatrix.component';
-export * from './lib/fullexpressionconfusionmatrix.module';
+export * from './lib/services/confusion.matrix.service';
+export * from './lib/modules/public.modules';
+export * from './lib/interface/confusion-matrix.interface';
