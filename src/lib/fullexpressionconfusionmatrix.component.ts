@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'lib-FullExpressionConfusionMatrix',
-  template: `
+    selector: 'lib-FullExpressionConfusionMatrix',
+    template: `
     <p>
-      fullexpressionconfusionmatrix works!
+      fullexpressioncon
     </p>
   `,
-  styles: []
+    styles: []
 })
 export class FullExpressionConfusionMatrixComponent implements OnInit {
 
-  constructor() { }
+    constructor() { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
 }
