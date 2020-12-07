@@ -9,7 +9,7 @@
 
         <div class="line" *ngFor="let label of _confusionMatrix.labels; let i = index">
             <div class="columns-wrapper">
-                <div [class]="'columns ' + getIntencityClass(column)" *ngFor="let column of _confusionMatrix.matrix[i]">
+                <div [class]="'columns ' + getIntensityClass(column)" *ngFor="let column of _confusionMatrix.matrix[i]">
                     <div class="column">{{column}}</div>
                 </div>
                 <div class="column-label">{{label}}</div>

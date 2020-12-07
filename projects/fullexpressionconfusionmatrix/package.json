@@ -1,0 +1,20 @@
+{
+    "name": "@ricardogomesrocha/fullexpressionconfusionmatrix",
+    "version": "0.0.2",
+    "repository": {
+        "url": "git@github.com:RicardoGomesRocha/fullexpressionconfusionmatrix.git"
+    },
+    "scripts": {
+        "build": "ng build --prod"
+    },
+    "peerDependencies": {
+        "@angular/common": "^11.0.3",
+        "@angular/core": "^11.0.3"
+    },
+    "dependencies": {
+        "tslib": "^2.0.0"
+    },
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com"
+    }
+}

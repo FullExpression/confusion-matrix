@@ -1,0 +1,48 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "fullexpressionconfusionmatrix": {
+      "projectType": "library",
+      "root": "projects/fullexpressionconfusionmatrix",
+      "sourceRoot": "projects/fullexpressionconfusionmatrix/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/fullexpressionconfusionmatrix/tsconfig.lib.json",
+            "project": "projects/fullexpressionconfusionmatrix/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/fullexpressionconfusionmatrix/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/fullexpressionconfusionmatrix/src/test.ts",
+            "tsConfig": "projects/fullexpressionconfusionmatrix/tsconfig.spec.json",
+            "karmaConfig": "projects/fullexpressionconfusionmatrix/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/fullexpressionconfusionmatrix/tsconfig.lib.json",
+              "projects/fullexpressionconfusionmatrix/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "fullexpressionconfusionmatrix"
+}

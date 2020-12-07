@@ -12,6 +12,13 @@ export class ConfusionMatrixComponent {
     _confusionMatrix: ConfusionMatrix;
     private level1: number = 0;
 
+    constructor() {
+        this._confusionMatrix = {
+            labels: [],
+            matrix: [[]],
+        }
+    }
+
     @Input()
     set confusionMatrix(value: ConfusionMatrix) {
         this.updateIntensityValues(value);
@@ -20,7 +27,7 @@ export class ConfusionMatrixComponent {
 
     }
 
-    getIntencityClass(value: number): string {
+    getIntensityClass(value: number): string {
         if (value < 1) {
             return "level-0"
         } else if (value < (this.level1)) {
