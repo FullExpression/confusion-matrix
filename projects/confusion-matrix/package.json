@@ -1,8 +1,8 @@
 {
-    "name": "@ricardogomesrocha/fullexpressionconfusionmatrix",
-    "version": "0.0.2",
+    "name": "@fullexpression/confusion-matrix",
+    "version": "0.0.5",
     "repository": {
-        "url": "git@github.com:RicardoGomesRocha/fullexpressionconfusionmatrix.git"
+        "url": "https://github.com/FullExpression/confusion-matrix.git"
     },
     "scripts": {
         "build": "ng build --prod"

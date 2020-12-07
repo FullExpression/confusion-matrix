@@ -21,8 +21,8 @@
     ],
     "paths": {
       "fullexpressionconfusionmatrix": [
-        "dist/fullexpressionconfusionmatrix/fullexpressionconfusionmatrix",
-        "dist/fullexpressionconfusionmatrix"
+        "dist/confusion-matrix/confusion-matrix",
+        "dist/confusion-matrix"
       ]
     }
   },
