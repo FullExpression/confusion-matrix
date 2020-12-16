@@ -5,7 +5,7 @@ on:
     branches:
       - development
       - master
-
+      
 jobs:
   release:
     name: publish
