@@ -4,10 +4,11 @@
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
-        "build": "ng build --prod",
+        "build": "ng build confusion-matrix --prod && ng build web-app",
         "test": "ng test",
         "lint": "ng lint",
-        "publish": "npm run build && npm publish ./dist/confusion-matrix"
+        "publish": "npm run build && npm publish ./dist/confusion-matrix",
+        "e2e": "ng e2e"
     },
     "private": true,
     "dependencies": {

@@ -9,14 +9,11 @@ import { ConfusionMatrix } from '../interface/confusion-matrix.interface';
 })
 export class ConfusionMatrixComponent {
 
-    _confusionMatrix: ConfusionMatrix;
-    private level1: number = 0;
 
-    constructor() {
-        this._confusionMatrix = {
-            labels: [],
-            matrix: [[]],
-        }
+
+    @Input()
+    set levelsColor(levelsColor: Array<string>) {
+        this._levelsColor = levelsColor;
     }
 
     @Input()
@@ -27,23 +24,24 @@ export class ConfusionMatrixComponent {
 
     }
 
-    getIntensityClass(value: number): string {
-        if (value < 1) {
-            return "level-0"
-        } else if (value < (this.level1)) {
-            return "level-1";
-        } else if (value < (this.level1 * 2)) {
-            return "level-2";
-        } else if (value < (this.level1 * 3)) {
-            return "level-3";
-        } else if (value < (this.level1 * 4)) {
-            return "level-4";
-        } else {
-            return "level-5";
+    _levelsColor = ['transparent', '#FADBD8', '#F5B7B1', '#F1948A', '#EC7063', '#E74C3C'];
+
+    _confusionMatrix: ConfusionMatrix = {
+        labels: [],
+        matrix: [[]],
+    };
+
+    private levelsStep = 0;
+
+    getColor(value: number): string {
+        const levelsNumber = this._levelsColor.length;
+        for (let i = 1; i <= levelsNumber; i++) {
+            if (this.levelsStep * i >= value) {
+                return this._levelsColor[i - 1];
+            }
         }
+        return this._levelsColor[0];
     }
-
-
 
     private updateIntensityValues(confusionMatrix: ConfusionMatrix): void {
         let matrix = confusionMatrix.matrix;
@@ -55,7 +53,7 @@ export class ConfusionMatrixComponent {
                 }
             }
         }
-        this.level1 = max / 5;
+        this.levelsStep = max / this._levelsColor.length;
     }
 
     private reverseMatrix(): void {
