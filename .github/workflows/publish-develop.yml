@@ -38,7 +38,10 @@ jobs:
         run: npm publish ./dist/confusion-matrix
       - name: Commit new package version
         working-directory: ./projects/confusion-matrix
-        run: git push 
+        run: |
+          git add package.json
+          git commit -m "Update version"
+          git push 
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
