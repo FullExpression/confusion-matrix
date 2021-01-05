@@ -1,19 +1,29 @@
-<div class="confusion-matrix">
-    <div class="lines-label">
-        <div class="line-label" *ngFor="let label of _confusionMatrix.labels; let i = index">
-            {{label}}
+<div class="confusion-matrix-wrapper">
+    <div class="title"> {{ title }} </div>
+    <div class="confusion-matrix">
+        <div class="lines-label">
+            <div class="line-label" *ngFor="let label of _confusionMatrix.labels; let i = index">
+                {{label}}
+            </div>
         </div>
-
-    </div>
-    <div class="lines">
-
-        <div class="line" *ngFor="let label of _confusionMatrix.labels; let i = index">
-            <div class="columns-wrapper">
-                <div class="column" [style.background-color]="getColor(column)"
-                    *ngFor="let column of _confusionMatrix.matrix[i]">
-                    <div class="column">{{column}}</div>
+        <div class="lines">
+            <div class="line" *ngFor="let label of _confusionMatrix.labels; let i = index">
+                <div class="columns-wrapper">
+                    <div class="column" [style.background-color]="getColor(column)"
+                        *ngFor="let column of _confusionMatrix.matrix[i]">
+                        <div class="column">{{column}}</div>
+                    </div>
+                    <div class="column-label">{{label}}</div>
                 </div>
-                <div class="column-label">{{label}}</div>
+            </div>
+        </div>
+        <div class="intensity-bar">
+            <div class="bar" [ngStyle]="getGradientBackground()"></div>
+            <div class="measure-wrapper">
+                <div class="measure" *ngFor="let item of _levelsColor; let i = index">
+                    <div class="dash"></div>
+                    <div class="value">{{ getIntensityNumber(i) }}</div>
+                </div>
             </div>
         </div>
     </div>

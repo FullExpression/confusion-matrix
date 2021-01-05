@@ -9,7 +9,8 @@ import { ConfusionMatrix } from '../interface/confusion-matrix.interface';
 })
 export class ConfusionMatrixComponent {
 
-
+    @Input()
+    title = 'This is an title example';
 
     @Input()
     set levelsColor(levelsColor: Array<string>) {
@@ -31,16 +32,28 @@ export class ConfusionMatrixComponent {
         matrix: [[]],
     };
 
-    private levelsStep = 0;
+    levelsStep = 0;
 
     getColor(value: number): string {
         const levelsNumber = this._levelsColor.length;
         for (let i = 1; i <= levelsNumber; i++) {
-            if (this.levelsStep * i >= value) {
+            if (this.levelsStep * i >= (value - (this.levelsStep / 2))) {
                 return this._levelsColor[i - 1];
             }
         }
         return this._levelsColor[0];
+    }
+
+    getGradientBackground(): { [key: string]: string } {
+        const colors = [...this._levelsColor].reverse();
+        const style = {
+            'background': `linear-gradient(${this._levelsColor})`
+        };
+        return style;
+    }
+
+    getIntensityNumber(index: number): number {
+        return Math.round((index + 1) * this.levelsStep);
     }
 
     private updateIntensityValues(confusionMatrix: ConfusionMatrix): void {
