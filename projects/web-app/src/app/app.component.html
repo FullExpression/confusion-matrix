@@ -1,1 +1,19 @@
-<confusion-matrix [confusionMatrix]="confusionMatrix"></confusion-matrix>
+<div class="base">
+    <div class="matrix">
+        <confusion-matrix [confusionMatrix]="confusionMatrix" [title]="matrixTitle" [size]="size"></confusion-matrix>
+    </div>
+    <div class="settings">
+        <mat-form-field>
+            <mat-label>Title</mat-label>
+            <input matInput (keydown)="changeTitle($event)" placeholder="Ex: An awesome title!" value="{{matrixTitle}}">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Favorite food</mat-label>
+            <mat-select (selectionChange)="selectionChange($event)">
+                <mat-option *ngFor="let size of sizes" [value]="size">
+                    {{size}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>

@@ -1,6 +1,7 @@
 
 import { Component, Input } from '@angular/core';
 import { ConfusionMatrix } from '../interface/confusion-matrix.interface';
+import { ConfusionMatrixSizes } from './confusion-matrix.models';
 
 @Component({
     selector: 'confusion-matrix',
@@ -11,6 +12,9 @@ export class ConfusionMatrixComponent {
 
     @Input()
     title = 'This is an title example';
+
+    @Input()
+    size = ConfusionMatrixSizes.Medium;
 
     @Input()
     set levelsColor(levelsColor: Array<string>) {

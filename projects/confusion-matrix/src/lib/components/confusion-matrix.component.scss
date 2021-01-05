@@ -4,6 +4,112 @@
     justify-content: center;
     flex-direction: column;
 
+    &.small {
+        font-size: 10px;
+
+        .lines-label {
+            .line-label {
+                height: 20px !important;
+            }
+        }
+
+        .lines {
+            .line {
+                .columns-wrapper {
+                    .column {
+                        width: 20px !important;
+                        height: 20px !important;
+                    }
+                }
+            }
+        }
+    }
+
+    &.medium {
+        font-size: 12px;
+
+        .lines-label {
+            .line-label {
+                height: 30px !important;
+            }
+        }
+
+        .lines {
+            .line {
+                .columns-wrapper {
+                    .column {
+                        width: 30px !important;
+                        height: 30px !important;
+                    }
+                }
+            }
+        }
+    }
+
+    &.large {
+        font-size: 14px;
+
+        .lines-label {
+            .line-label {
+                height: 40px !important;
+            }
+        }
+
+        .lines {
+            .line {
+                .columns-wrapper {
+                    .column {
+                        width: 40px !important;
+                        height: 40px !important;
+                    }
+                }
+            }
+        }
+    }
+
+    &.large {
+        font-size: 14px;
+
+        .lines-label {
+            .line-label {
+                height: 40px !important;
+            }
+        }
+
+        .lines {
+            .line {
+                .columns-wrapper {
+                    .column {
+                        width: 40px !important;
+                        height: 40px !important;
+                    }
+                }
+            }
+        }
+    }
+
+    &.extra-large {
+        font-size: 16px;
+
+        .lines-label {
+            .line-label {
+                height: 50px !important;
+            }
+        }
+
+        .lines {
+            .line {
+                .columns-wrapper {
+                    .column {
+                        width: 50px !important;
+                        height: 50px !important;
+                    }
+                }
+            }
+        }
+    }
+
+
     .confusion-matrix {
         display: flex;
         justify-content: center;
@@ -67,7 +173,6 @@
                     }
 
                     .column-label {
-                        padding: 5px;
                         writing-mode: vertical-rl;
                         margin-top: 10px;
                     }
