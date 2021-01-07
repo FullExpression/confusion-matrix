@@ -23,7 +23,9 @@ export class AppComponent {
 
     matrixTitle = 'Matrix Title';
 
-    size = ConfusionMatrixSizes.Medium;
+    size = ConfusionMatrixSizes.Large;
+
+    colors = ['transparent', '#FADBD8', '#F5B7B1', '#F1948A', '#EC7063', '#E74C3C'];
 
     get sizes(): Array<string> {
         return Object.keys(ConfusionMatrixSizes);
@@ -34,6 +36,21 @@ export class AppComponent {
         // Waits for input to change is value 
         setTimeout(() => {
             this.matrixTitle = event.target.value;
+        });
+    }
+
+    changeValues(event: any) {
+
+        // Waits for input to change is value 
+        setTimeout(() => {
+            this.confusionMatrix.matrix = JSON.parse(event.target.value);
+        });
+    }
+    changeLabels(event: any) {
+
+        // Waits for input to change is value 
+        setTimeout(() => {
+            this.confusionMatrix.labels = JSON.parse(event.target.value);
         });
     }
 

@@ -14,7 +14,7 @@ export class ConfusionMatrixComponent {
     title = 'This is an title example';
 
     @Input()
-    size = ConfusionMatrixSizes.Medium;
+    size = ConfusionMatrixSizes.Large;
 
     @Input()
     set levelsColor(levelsColor: Array<string>) {

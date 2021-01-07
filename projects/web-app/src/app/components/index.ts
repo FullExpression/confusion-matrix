@@ -1,0 +1,1 @@
+export * from './color-intensity-picker/color-intensity-picker.component';

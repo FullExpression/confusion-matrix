@@ -1,0 +1,26 @@
+.colors {
+    display: flex;
+    flex-wrap: wrap;
+
+    .color {
+        margin: 5px;
+
+        input,
+        .add-button {
+            padding: 5px;
+            width: 20px;
+            height: 20px;
+            border: none;
+            cursor: pointer;
+            border: 1px solid lavender;
+        }
+
+        .add-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid lavender;
+        }
+    }
+
+}
