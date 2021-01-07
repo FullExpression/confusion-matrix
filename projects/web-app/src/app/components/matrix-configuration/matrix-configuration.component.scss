@@ -1,0 +1,13 @@
+.base {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px;
+
+    .settings {
+        margin-left: 50px;
+        display: flex;
+        flex-direction: column;
+    }
+}

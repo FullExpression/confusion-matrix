@@ -1,0 +1,31 @@
+<div class="base">
+    <div class="matrix">
+        <confusion-matrix [confusionMatrix]="confusionMatrix" [levelsColor]="colors" [title]="matrixTitle"
+            [size]="size"></confusion-matrix>
+    </div>
+    <div class="settings">
+        <mat-form-field>
+            <mat-label>Title</mat-label>
+            <input matInput (keydown)="changeTitle($event)" placeholder="Ex: An awesome title!" value="{{matrixTitle}}">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Labels</mat-label>
+            <input matInput (keydown)="changeLabels($event)" placeholder="Ex: An awesome title!"
+                value="{{confusionMatrix.labels | json}}">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Values</mat-label>
+            <input matInput (keydown)="changeValues($event)" placeholder="Ex: An awesome title!"
+                value="{{confusionMatrix.matrix | json}}">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Matrix Size</mat-label>
+            <mat-select (selectionChange)="selectionChange($event)" ([value])="size">
+                <mat-option *ngFor="let s of sizes" [value]="s">
+                    {{s}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <color-intensity-picker [(colors)]="colors"></color-intensity-picker>
+    </div>
+</div>

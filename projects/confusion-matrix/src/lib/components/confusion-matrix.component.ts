@@ -1,7 +1,6 @@
 
 import { Component, Input } from '@angular/core';
-import { ConfusionMatrix } from '../interface/confusion-matrix.interface';
-import { ConfusionMatrixSizes } from './confusion-matrix.models';
+import { ConfusionMatrix, ConfusionMatrixSizes } from './confusion-matrix.models';
 
 @Component({
     selector: 'confusion-matrix',
