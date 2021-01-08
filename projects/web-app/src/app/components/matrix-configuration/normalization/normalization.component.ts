@@ -18,8 +18,8 @@ export class NormalizationComponent {
 
     normalizeCheckboxValue = false
 
-    private min = 0;
-    private max = 1;
+    min = 0;
+    max = 1;
 
     changeMinValue(event: any) {
         this.min = Number(event.target.value ?? this.min);
