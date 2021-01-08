@@ -1,5 +1,5 @@
 
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { ConfusionMatrix, ConfusionMatrixSizes } from './confusion-matrix.models';
 
 @Component({
@@ -9,33 +9,70 @@ import { ConfusionMatrix, ConfusionMatrixSizes } from './confusion-matrix.models
 })
 export class ConfusionMatrixComponent {
 
+    /**
+     * Sets the confusion matrix title.
+     * If undefined, the title reserved space will be hidden.
+     */
     @Input()
-    title = 'This is an title example';
+    title: string | undefined;
 
+    /**
+     * Represents the confusion matrix size.
+     */
     @Input()
     size = ConfusionMatrixSizes.Large;
 
+    /**
+     * Sets the confusion matrix color level (a.k.a color intensity).
+     * Should be order asc from less intense (close to 0) to max intense (close to max value).
+     */
     @Input()
     set levelsColor(levelsColor: Array<string>) {
-        this._levelsColor = levelsColor;
+        this._levelsColor = this.deepCopy(levelsColor);
+        this.updateIntensityValues(this._confusionMatrix);
     }
 
+    /**
+     * Sets the confusion matrix labels and values.
+     */
     @Input()
     set confusionMatrix(value: ConfusionMatrix) {
+        this._confusionMatrix = this.deepCopy(value);
         this.updateIntensityValues(value);
-        this._confusionMatrix = value;
         this.reverseMatrix();
 
     }
 
-    _levelsColor = ['transparent', '#FADBD8', '#F5B7B1', '#F1948A', '#EC7063', '#E74C3C'];
+    /**
+     * https://angular.io/api/common/DecimalPipe
+     */
+    @Input()
+    roundRules = '1.0-2';
 
-    _confusionMatrix: ConfusionMatrix = {
-        labels: [],
-        matrix: [[]],
-    };
+    @ViewChild('lines') lines: ElementRef | undefined;
+
+    getSquareSize(): number {
+        const _lines = this.lines?.nativeElement;
+        if (_lines) {
+            const line = _lines.getElementsByClassName('line')[0];
+            if (line) {
+                return line.clientWidth;
+            }
+        }
+
+        return 0;
+    }
+
+    get intensityHeight(): number {
+        return this.getSquareSize() * this._confusionMatrix.matrix.length;
+    }
+
+    _levelsColor = new Array<string>();
+
+    _confusionMatrix = new ConfusionMatrix();
 
     levelsStep = 0;
+
 
     getColor(value: number): string {
         const levelsNumber = this._levelsColor.length;
@@ -48,7 +85,6 @@ export class ConfusionMatrixComponent {
     }
 
     getGradientBackground(): { [key: string]: string } {
-        const colors = [...this._levelsColor].reverse();
         const style = {
             'background': `linear-gradient(${this._levelsColor})`
         };
@@ -56,7 +92,12 @@ export class ConfusionMatrixComponent {
     }
 
     getIntensityNumber(index: number): number {
-        return Math.round((index + 1) * this.levelsStep);
+        if (index === 0) {
+            return 0;
+        } else {
+            return Math.round((index + 1) * this.levelsStep);
+        }
+
     }
 
     private updateIntensityValues(confusionMatrix: ConfusionMatrix): void {
@@ -70,11 +111,18 @@ export class ConfusionMatrixComponent {
             }
         }
         this.levelsStep = max / this._levelsColor.length;
+        if (this.levelsStep === Infinity) {
+            this.levelsStep = 0;
+        }
     }
 
     private reverseMatrix(): void {
         let matrix = this._confusionMatrix.matrix;
         this._confusionMatrix.matrix = matrix[0].map((col, i) => matrix.map(row => row[i]));
+    }
+
+    private deepCopy(object: any): any {
+        return JSON.parse(JSON.stringify(object));
     }
 
 }

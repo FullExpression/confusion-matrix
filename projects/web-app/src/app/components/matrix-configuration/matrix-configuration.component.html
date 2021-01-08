@@ -18,6 +18,8 @@
             <input matInput (keydown)="changeValues($event)" placeholder="Ex: An awesome title!"
                 value="{{confusionMatrix.matrix | json}}">
         </mat-form-field>
+        <normalization [confusionMatrix]="confusionMatrix" (confusionMatrixChange)="changeConfusionMatrix($event)">
+        </normalization>
         <mat-form-field appearance="fill">
             <mat-label>Matrix Size</mat-label>
             <mat-select (selectionChange)="selectionChange($event)" ([value])="size">

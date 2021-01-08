@@ -7,13 +7,14 @@ import { ConfusionMatrixModule } from 'projects/confusion-matrix/src/public-api'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { ColorPickerModule } from 'ngx-color-picker';
-import { ColorIntensityPicker, MatrixConfiguration } from './components';
+import { ColorIntensityPicker, MatrixConfiguration, NormalizationComponent } from './components';
 
 @NgModule({
     declarations: [
         AppComponent,
         ColorIntensityPicker,
-        MatrixConfiguration
+        MatrixConfiguration,
+        NormalizationComponent
     ],
     imports: [
         BrowserModule,

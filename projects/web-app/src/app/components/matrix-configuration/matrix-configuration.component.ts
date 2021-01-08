@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ApplicationRef, Component } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { ConfusionMatrix, ConfusionMatrixSizes } from 'projects/confusion-matrix/src/lib/components/confusion-matrix.models';
 
@@ -9,15 +9,18 @@ import { ConfusionMatrix, ConfusionMatrixSizes } from 'projects/confusion-matrix
 })
 
 export class MatrixConfiguration {
-    confusionMatrix: ConfusionMatrix = {
-        labels: ["AAA", "BBB", "CCC", "DDD", "EEEE"],
+
+    confusionMatrix = new ConfusionMatrix({
+        labels: ["Happiness", "Sadness", "Fear", "Disgust", "Anger", "Contempt", "Surprise"],
         matrix:
-            [[50, 2, 3, 4, 5],
-            [6, 50, 8, 9, 10],
-            [11, 12, 50, 14, 15],
-            [16, 17, 18, 50, 20],
-            [21, 22, 23, 24, 50]]
-    };
+            [[50, 2, 3, 4, 5, 6, 7],
+            [8, 50, 10, 11, 12, 13, 14],
+            [15, 16, 50, 18, 19, 20, 21],
+            [22, 23, 24, 50, 26, 27, 28],
+            [29, 30, 31, 32, 50, 34, 35],
+            [36, 37, 38, 39, 40, 50, 42],
+            [43, 44, 45, 46, 47, 48, 50]]
+    });
 
     matrixTitle = 'Matrix Title';
 
@@ -28,6 +31,8 @@ export class MatrixConfiguration {
     get sizes(): Array<string> {
         return Object.keys(ConfusionMatrixSizes);
     }
+
+    constructor(private _applicationRef: ApplicationRef) { }
 
     changeTitle(event: any) {
 
@@ -50,6 +55,10 @@ export class MatrixConfiguration {
         setTimeout(() => {
             this.confusionMatrix.labels = JSON.parse(event.target.value);
         });
+    }
+
+    changeConfusionMatrix(confusionMatrix: ConfusionMatrix) {
+        this.confusionMatrix = confusionMatrix.clone();
     }
 
     selectionChange(event: MatSelectChange) {
