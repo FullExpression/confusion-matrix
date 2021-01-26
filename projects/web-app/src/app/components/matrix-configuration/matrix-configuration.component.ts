@@ -2,6 +2,7 @@ import { ApplicationRef, Component } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { ConfusionMatrix, ConfusionMatrixSizes } from 'projects/confusion-matrix/src/lib/components/confusion-matrix.models';
 
+
 @Component({
     selector: 'matrix-configuration',
     templateUrl: 'matrix-configuration.component.html',
@@ -46,7 +47,12 @@ export class MatrixConfiguration {
 
         // Waits for input to change is value 
         setTimeout(() => {
-            this.confusionMatrix.matrix = JSON.parse(event.target.value);
+            try {
+                this.confusionMatrix.matrix = JSON.parse(event.target.value);
+            } catch (ex) {
+                console.warn(ex);
+            }
+
         });
     }
     changeLabels(event: any) {

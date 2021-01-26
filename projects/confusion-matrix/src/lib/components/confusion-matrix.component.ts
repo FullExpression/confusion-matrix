@@ -1,6 +1,7 @@
 
 import { Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { ConfusionMatrix, ConfusionMatrixSizes } from './confusion-matrix.models';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
     selector: 'confusion-matrix',
@@ -74,6 +75,8 @@ export class ConfusionMatrixComponent {
     levelsStep = 0;
 
 
+    constructor(private decimalPipe: DecimalPipe) { }
+
     getColor(value: number): string {
         const levelsNumber = this._levelsColor.length;
         for (let i = 1; i <= levelsNumber; i++) {
@@ -91,11 +94,16 @@ export class ConfusionMatrixComponent {
         return style;
     }
 
-    getIntensityNumber(index: number): number {
+    getIntensityNumber(index: number): string {
         if (index === 0) {
-            return 0;
+            return '0';
         } else {
-            return Math.round((index + 1) * this.levelsStep);
+            if (this._levelsColor.length > this.levelsStep * this._levelsColor.length) {
+                return this.decimalPipe.transform((index + 1) * this.levelsStep, this.roundRules) ?? '0';
+            } else {
+                return String(Math.round((index + 1) * this.levelsStep));
+            }
+
         }
 
     }

@@ -183,7 +183,7 @@
 
         .intensity-bar {
             margin-left: 20px;
-            position: relative;
+            display: flex;
 
             .bar {
                 width: 10px;
@@ -191,15 +191,11 @@
             }
 
             .measure-wrapper {
-                position: absolute;
                 display: flex;
-                align-items: left;
                 justify-content: space-between;
                 flex-direction: column;
-                height: 100%;
-                position: absolute;
-                top: -9px;
-                left: 0px;
+                height: calc(100% + 19px);
+                margin-top: -9px;
 
 
                 .measure {

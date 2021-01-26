@@ -1,12 +1,6 @@
-import { JsonPipe } from "@angular/common";
-
-export enum ConfusionMatrixSizes {
-    Small = 'small',
-    Medium = 'medium',
-    Large = 'large',
-    ExtraLarge = 'extra-large'
-}
-
+/**
+ * Confusion matrix model.
+ */
 export class ConfusionMatrix {
     labels = new Array<string>();
     matrix = new Array<Array<number>>();
@@ -75,4 +69,11 @@ export class ConfusionMatrix {
     private deepCopy(object: any): any {
         return JSON.parse(JSON.stringify(object));
     }
+}
+
+export enum ConfusionMatrixSizes {
+    Small = 'small',
+    Medium = 'medium',
+    Large = 'large',
+    ExtraLarge = 'extra-large'
 }
