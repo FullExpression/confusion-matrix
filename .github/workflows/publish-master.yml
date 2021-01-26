@@ -42,7 +42,7 @@ jobs:
           git add package.json
           git commit -m "Update version"
           git push 
-        - name: Deploy to Firebase
+      - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting --PROJECT_ID fe-confusion-matrix
