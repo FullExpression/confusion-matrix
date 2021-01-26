@@ -1,9 +1,8 @@
-name: "publish"
+name: "publish-development"
 
 on:
   push:
     branches:
-      - development
       - master
       
 jobs:
@@ -19,7 +18,7 @@ jobs:
       - name: setup checkout
         uses: actions/checkout@v2
         with:
-          ref: development
+          ref: develop
       - name: Setup npmrc
         run: | 
           echo -e "@fullexpression:registry=https://npm.pkg.github.com/fullexpression\n//npm.pkg.github.com/:_authToken=${{secrets.NPM_AUTH_TOKEN}}\nregistry=https://registry.npmjs.org" > .npmrc
@@ -37,9 +36,16 @@ jobs:
         run: npm run build
       - name: Publish package
         run: npm publish ./dist/confusion-matrix
-      - name: Commit new version
+      - name: Commit new package version
         working-directory: ./projects/confusion-matrix
         run: |
           git add package.json
           git commit -m "Update version"
           git push 
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          PROJECT_ID: fe-confusion-matrix
