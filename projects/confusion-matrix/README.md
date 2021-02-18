@@ -1,13 +1,15 @@
 # Confusion Matrix Library
 
 ⚠️ *This library only works in angular application!* ⚠️
- ase, submit it [here](https://github.com/FullExpression/confusion-matrix/issues)*
+
+*If you find out any bug, issue or you just want to give suggestions, please, submit it [here](https://github.com/FullExpression/confusion-matrix/issues)*
 
 ## Example
 
 You can see visually how the library looks like as well as some of different configurations [here](https://fe-confusion-matrix.web.app/).
 
 In [here](../web-app/src) you can find the source code of the example shown before.
+
 
 ## How to use it
 
