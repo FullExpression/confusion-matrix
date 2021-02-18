@@ -1,6 +1,7 @@
 # Full Expression Confusion matrix
 
-*Only Compatible with angular application*.
+The repository contains:
 
-You can interact with confusion-matrix component [here](https://fe-confusion-matrix.web.app/) and see the source code [here](https://github.com/FullExpression/confusion-matrix/tree/master/projects/web-app).
+1. A angular [library](./projects/confusion-matrix) which which allows to manipulate confusion matrix.
+2. A angular [web app](./projects/web-app) containing a live example how to use library.
 
