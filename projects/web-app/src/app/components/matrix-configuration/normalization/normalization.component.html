@@ -1,0 +1,16 @@
+<div class="normalization">
+    <mat-checkbox class="example-margin" [checked]="normalizeCheckboxValue" (change)="changeCheckboxValue($event)">
+        Normalize Matrix
+    </mat-checkbox>
+
+    <div class="min-max" *ngIf="this.normalizeCheckboxValue">
+        <mat-form-field>
+            <mat-label>Minimum Value</mat-label>
+            <input matInput (keydown)="changeMinValue($event)" value="{{min}}">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Maximum Value</mat-label>
+            <input matInput (keydown)="changeMaxValue($event)" value="{{max}}">
+        </mat-form-field>
+    </div>
+</div>

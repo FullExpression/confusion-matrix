@@ -1,51 +1,173 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1,
-  "newProjectRoot": "projects",
-  "projects": {
-    "confusion-matrix": {
-      "projectType": "library",
-      "root": "projects/confusion-matrix",
-      "sourceRoot": "projects/confusion-matrix/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "tsConfig": "projects/confusion-matrix/tsconfig.lib.json",
-            "project": "projects/confusion-matrix/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/confusion-matrix/tsconfig.lib.prod.json"
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "confusion-matrix": {
+            "projectType": "library",
+            "root": "projects/confusion-matrix",
+            "sourceRoot": "projects/confusion-matrix/src",
+            "prefix": "lib",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:ng-packagr",
+                    "options": {
+                        "tsConfig": "projects/confusion-matrix/tsconfig.lib.json",
+                        "project": "projects/confusion-matrix/ng-package.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "projects/confusion-matrix/tsconfig.lib.prod.json"
+                        }
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "projects/confusion-matrix/src/test.ts",
+                        "tsConfig": "projects/confusion-matrix/tsconfig.spec.json",
+                        "karmaConfig": "projects/confusion-matrix/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "projects/confusion-matrix/tsconfig.lib.json",
+                            "projects/confusion-matrix/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
             }
-          }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/confusion-matrix/src/test.ts",
-            "tsConfig": "projects/confusion-matrix/tsconfig.spec.json",
-            "karmaConfig": "projects/confusion-matrix/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/confusion-matrix/tsconfig.lib.json",
-              "projects/confusion-matrix/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
+        "web-app": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
+                }
+            },
+            "root": "projects/web-app",
+            "sourceRoot": "projects/web-app/src",
+            "prefix": "app",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/web-app",
+                        "index": "projects/web-app/src/index.html",
+                        "main": "projects/web-app/src/main.ts",
+                        "polyfills": "projects/web-app/src/polyfills.ts",
+                        "tsConfig": "projects/web-app/tsconfig.app.json",
+                        "aot": true,
+                        "assets": [
+                            "projects/web-app/src/favicon.ico",
+                            "projects/web-app/src/assets"
+                        ],
+                        "styles": [
+                            "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+                            "projects/web-app/src/styles.scss"
+                        ],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "projects/web-app/src/environments/environment.ts",
+                                    "with": "projects/web-app/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb",
+                                    "maximumError": "10kb"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "web-app:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "web-app:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "web-app:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "projects/web-app/src/test.ts",
+                        "polyfills": "projects/web-app/src/polyfills.ts",
+                        "tsConfig": "projects/web-app/tsconfig.spec.json",
+                        "karmaConfig": "projects/web-app/karma.conf.js",
+                        "assets": [
+                            "projects/web-app/src/favicon.ico",
+                            "projects/web-app/src/assets"
+                        ],
+                        "styles": [
+                            "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+                            "projects/web-app/src/styles.scss"
+                        ],
+                        "scripts": []
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "projects/web-app/tsconfig.app.json",
+                            "projects/web-app/tsconfig.spec.json",
+                            "projects/web-app/e2e/tsconfig.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                },
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "options": {
+                        "protractorConfig": "projects/web-app/e2e/protractor.conf.js",
+                        "devServerTarget": "web-app:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "web-app:serve:production"
+                        }
+                    }
+                }
+            }
         }
-      }
+    },
+    "defaultProject": "confusion-matrix",
+    "cli": {
+        "analytics": false
     }
-  },
-  "defaultProject": "confusion-matrix",
-  "cli": {
-    "analytics": false
-  }
 }

@@ -1,71 +1,217 @@
-.confusion-matrix {
+.confusion-matrix-wrapper {
     display: flex;
+    align-items: center;
     justify-content: center;
+    flex-direction: column;
 
-    .lines-label {
-        display: flex;
-        flex-direction: column;
+    &.small {
+        font-size: 10px;
 
-        .line-label {
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .lines-label {
+            .line-label {
+                height: 20px !important;
+            }
+        }
+
+        .lines {
+            .line {
+                .columns-wrapper {
+                    .column {
+                        width: 20px !important;
+                        height: 20px !important;
+                    }
+                }
+            }
         }
     }
 
-    .lines {
-        display: flex;
+    &.medium {
+        font-size: 12px;
 
-        .line {
-            .columns-wrapper {
+        .lines-label {
+            .line-label {
+                height: 30px !important;
+            }
+        }
+
+        .lines {
+            .line {
+                .columns-wrapper {
+                    .column {
+                        width: 30px !important;
+                        height: 30px !important;
+                    }
+                }
+            }
+        }
+    }
+
+    &.large {
+        font-size: 14px;
+
+        .lines-label {
+            .line-label {
+                height: 40px !important;
+            }
+        }
+
+        .lines {
+            .line {
+                .columns-wrapper {
+                    .column {
+                        width: 40px !important;
+                        height: 40px !important;
+                    }
+                }
+            }
+        }
+    }
+
+    &.large {
+        font-size: 14px;
+
+        .lines-label {
+            .line-label {
+                height: 40px !important;
+            }
+        }
+
+        .lines {
+            .line {
+                .columns-wrapper {
+                    .column {
+                        width: 40px !important;
+                        height: 40px !important;
+                    }
+                }
+            }
+        }
+    }
+
+    &.extra-large {
+        font-size: 16px;
+
+        .lines-label {
+            .line-label {
+                height: 50px !important;
+            }
+        }
+
+        .lines {
+            .line {
+                .columns-wrapper {
+                    .column {
+                        width: 50px !important;
+                        height: 50px !important;
+                    }
+                }
+            }
+        }
+    }
+
+
+    .confusion-matrix {
+        display: flex;
+        justify-content: center;
+
+        .lines-label {
+            display: flex;
+            flex-direction: column;
+            margin-right: 10px;
+
+            .line-label {
+                height: 40px;
                 display: flex;
                 align-items: center;
-                justify-content: center;
-                flex-direction: column;
+                justify-content: flex-end;
+            }
+        }
 
-                .columns {
-                    width: 40px;
-                    height: 40px;
+        .lines {
+            display: flex;
+
+            .line {
+                .columns-wrapper {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-
-                    &.level-1 {
-                        background-color: #FADBD8;
-                    }
-
-                    &.level-2 {
-                        background-color: #F5B7B1;
-                    }
-
-                    &.level-3 {
-                        background-color: #F1948A;
-                    }
-
-                    &.level-4 {
-                        background-color: #EC7063;
-                    }
-
-                    &.level-5 {
-                        background-color: #E74C3C;
-                    }
+                    flex-direction: column;
 
                     .column {
+                        width: 40px;
+                        height: 40px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
+
+                        &.level-1 {
+                            background-color: #FADBD8;
+                        }
+
+                        &.level-2 {
+                            background-color: #F5B7B1;
+                        }
+
+                        &.level-3 {
+                            background-color: #F1948A;
+                        }
+
+                        &.level-4 {
+                            background-color: #EC7063;
+                        }
+
+                        &.level-5 {
+                            background-color: #E74C3C;
+                        }
+
+                        .column {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+
                     }
 
+                    .column-label {
+                        writing-mode: vertical-rl;
+                        margin-top: 10px;
+                    }
                 }
 
-                .column-label {
-                    padding: 5px;
-                    writing-mode: vertical-rl;
-                }
+            }
+        }
+
+        .intensity-bar {
+            margin-left: 20px;
+            display: flex;
+
+            .bar {
+                width: 10px;
+                height: 100%;
             }
 
+            .measure-wrapper {
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+                height: calc(100% + 19px);
+                margin-top: -9px;
+
+
+                .measure {
+                    display: flex;
+                    align-items: center;
+
+                    .dash {
+                        width: 13px;
+                        height: 1px;
+                        background: black;
+                        margin-right: 4px;
+                        z-index: -1;
+                    }
+                }
+
+            }
         }
     }
-
 }

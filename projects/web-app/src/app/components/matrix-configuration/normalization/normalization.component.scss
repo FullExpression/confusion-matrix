@@ -1,0 +1,14 @@
+.normalization {
+    .min-max {
+        margin-top: 10px;
+        display: flex;
+
+        :first-child {
+            margin-right: 10px;
+        }
+
+        :last-child {
+            margin-left: 10px;
+        }
+    }
+}

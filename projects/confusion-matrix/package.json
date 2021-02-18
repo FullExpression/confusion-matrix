@@ -1,11 +1,16 @@
 {
     "name": "@fullexpression/confusion-matrix",
+<<<<<<< HEAD
     "version": "0.0.7",
+=======
+    "version": "1.0.0-alpha.0",
+>>>>>>> origin/master
     "repository": {
         "url": "https://github.com/FullExpression/confusion-matrix.git"
     },
     "scripts": {
-        "build": "ng build --prod"
+        "build": "ng build --prod",
+        "compodoc": "npx compodoc -p tsconfig.lib.json src"
     },
     "peerDependencies": {
         "@angular/common": "^11.0.3",
@@ -16,5 +21,8 @@
     },
     "publishConfig": {
         "registry": "https://npm.pkg.github.com"
+    },
+    "devDependencies": {
+        "@compodoc/compodoc": "^1.1.11"
     }
 }
