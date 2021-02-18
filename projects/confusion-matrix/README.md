@@ -1,11 +1,40 @@
 # Confusion Matrix Library
 
-⚠️ This library works only in angular application! We are working on giving support to other frameworks as well! ⚠️
+⚠️ *This library only works in angular application!* ⚠️
 
-## Installation
+## Example
 
-*Eventually will be added more info.*
+You can see visually how the library looks like as well as some of different configurations [here](https://fe-confusion-matrix.web.app/).
 
-## API
+In [here](../web-app/src) you can find the source of the example shown before.
 
-*Eventually, will be added more info* 😁
+
+## How to use it
+
+1. Import the `ConfusionMatrixModule` angular module in your application:
+
+```ts
+@NgModule({
+    declarations: [...],
+    imports: [...],
+    providers: [...],
+    bootstrap: [...]
+})
+export class YourApplicationModule { }
+```
+
+2. Create a new `ConfusionMatrix` object:
+
+```ts
+const confusionMatrix = new ConfusionMatrix({
+    labels: ["Happiness", "Sadness"], 
+    matrix: [[50, 2],
+             [8, 50]]
+});
+```
+
+3. Import ConfusionMatrix component to your html and pass the confusion `confusionMatrix` created in the step before:
+
+```html
+<confusion-matrix [confusionMatrix]="confusionMatrix"></confusion-matrix>
+```

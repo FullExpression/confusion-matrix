@@ -4,9 +4,14 @@ import { NgIf } from "@angular/common";
  * Confusion matrix model.
  */
 export class ConfusionMatrix {
+    /** Confusion matrix labels. */
     labels = new Array<string>();
+
+    /** Confusion matrix values. */
     matrix = new Array<Array<number>>();
-    normalizations = new Array<ConfusionMatrix>();
+
+    /** Normalization history values. */
+    private normalizations = new Array<ConfusionMatrix>();
 
     /**
      * Creates new instance of confusion matrix.

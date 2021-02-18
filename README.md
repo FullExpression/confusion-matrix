@@ -1,3 +1,6 @@
 # Full Expression Confusion matrix
 
-*In some point will be described*. 
+*Only Compatible with angular application*.
+
+You can interact with confusion-matrix component [here](https://fe-confusion-matrix.web.app/) and see the source code [here](https://github.com/FullExpression/confusion-matrix/tree/master/projects/web-app).
+
