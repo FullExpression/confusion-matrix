@@ -34,7 +34,7 @@ jobs:
         run: |
           npm version
           ls
-          echo < "$(cat ./package.json)"
+          less package.json
           npm version prerelease
       - name: Build
         run: npm run build
