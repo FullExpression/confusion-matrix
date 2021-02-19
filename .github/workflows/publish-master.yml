@@ -31,11 +31,7 @@ jobs:
           git config --global user.name "Ricardo Rocha"
       - name: Increase version
         working-directory: ./projects/confusion-matrix
-        run: |
-          npm version
-          ls
-          less package.json
-          npm version prerelease
+        run: npm version prerelease
       - name: Build
         run: npm run build
       - name: Publish package
