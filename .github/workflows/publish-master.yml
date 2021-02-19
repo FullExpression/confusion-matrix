@@ -33,6 +33,7 @@ jobs:
         working-directory: ./projects/confusion-matrix
         run: |
           npm version
+          echo < package.json
           npm version prerelease
       - name: Build
         run: npm run build
