@@ -6,7 +6,8 @@
     },
     "scripts": {
         "build": "ng build --prod",
-        "compodoc": "npx compodoc -p tsconfig.lib.json src"
+        "generate-documentation": "npx compodoc -d ../../dist/documentation  -p tsconfig.lib.json src",
+        "publish-documentation": ""
     },
     "peerDependencies": {
         "@angular/common": "^11.0.3",

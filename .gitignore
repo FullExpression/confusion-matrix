@@ -13,6 +13,7 @@ node_modules
 # any generated folder
 generated-*
 
+
 # profiling files
 chrome-profiler-events*.json
 speed-measure-plugin*.json

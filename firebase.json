@@ -1,10 +1,22 @@
 {
-    "hosting": {
-        "public": "dist/web-app",
-        "ignore": [
-            "firebase.json",
-            "**/.*",
-            "**/node_modules/**"
-        ]
-    }
+    "hosting": [
+        {
+            "target": "web-app",
+            "public": "dist/web-app",
+            "ignore": [
+                "firebase.json",
+                "**/.*",
+                "**/node_modules/**"
+            ]
+        },
+        {
+            "target": "documentation",
+            "public": "dist/documentation",
+            "ignore": [
+                "firebase.json",
+                "**/.*",
+                "**/node_modules/**"
+            ]
+        }
+    ]
 }
