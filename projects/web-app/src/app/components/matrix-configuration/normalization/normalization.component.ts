@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ConfusionMatrix } from 'projects/confusion-matrix/src/public-api';
 
 @Component({
@@ -21,18 +21,34 @@ export class NormalizationComponent {
     min = 0;
     max = 1;
 
-    changeMinValue(event: any) {
-        this.min = Number(event.target.value ?? this.min);
-        this.confusionMatrix.revertNormalization();
-        this.confusionMatrix.normalize(this.min, this.max);
-        this.confusionMatrix = this.confusionMatrix.clone();
+    @ViewChild("minElement") minElement: ElementRef | undefined;
+
+    @ViewChild("maxElement") maxElement: ElementRef | undefined;
+
+    errorMessage = "";
+
+    changeMinValue() {
+        try {
+            this.min = Number(this.minElement?.nativeElement.value ?? this.min);
+            this.confusionMatrix.normalize(this.min, this.max);
+            this.confusionMatrixChange.emit(this.confusionMatrix);
+            this.errorMessage = "";
+        } catch (error) {
+            this.errorMessage = error;
+        }
+
     }
 
-    changeMaxValue(event: any) {
-        this.max = Number(event.target.value ?? this.max);
-        this.confusionMatrix.revertNormalization();
-        this.confusionMatrix.normalize(this.min, this.max);
-        this.confusionMatrixChange.emit(this.confusionMatrix);
+    changeMaxValue() {
+        try {
+            this.max = Number(this.maxElement?.nativeElement.value ?? this.max);
+            this.confusionMatrix.normalize(this.min, this.max);
+            this.confusionMatrixChange.emit(this.confusionMatrix);
+            this.errorMessage = "";
+        } catch (error) {
+            this.errorMessage = error;
+        }
+
     }
 
     changeCheckboxValue(event: any) {
@@ -40,10 +56,11 @@ export class NormalizationComponent {
         if (this.normalizeCheckboxValue) {
             this.confusionMatrix.normalize(this.min, this.max);
         } else {
-            this.confusionMatrix.revertNormalization();
+            this.confusionMatrix.revertAllNormalizations();
         }
 
         this.confusionMatrixChange.emit(this.confusionMatrix);
     }
+
 
 }

@@ -39,8 +39,10 @@ export class ConfusionMatrix {
      * @param confusionMatrix The confusion matrix.
      */
     setConfusionMatrix(confusionMatrix: ConfusionMatrix) {
-        this.labels = this.deepCopy(confusionMatrix.labels);
-        this.matrix = this.deepCopy(confusionMatrix.matrix);
+        if (confusionMatrix) {
+            this.labels = this.deepCopy(confusionMatrix.labels);
+            this.matrix = this.deepCopy(confusionMatrix.matrix);
+        }
     }
 
     /**
@@ -54,6 +56,9 @@ export class ConfusionMatrix {
      * @param max Maximum value of the normalized range values [min, max]. 
      */
     normalize(min: number = 0, max: number = 1) {
+        if (min >= max) {
+            throw "Min value cannot be equal or greater than max value.";
+        }
         const matrixMinMax = this.getMinAndMax();
         if (matrixMinMax) {
             this.normalizations.push(new ConfusionMatrix(this));
@@ -64,7 +69,6 @@ export class ConfusionMatrix {
                 }
             }
         }
-        this.normalize()
     }
 
     /**
@@ -114,6 +118,13 @@ export class ConfusionMatrix {
         }
 
         return { min, max };
+    }
+
+    /**
+     * Reverts all normalizations performed.
+     */
+    revertAllNormalizations() {
+        this.setConfusionMatrix(this.normalizations[0]);
     }
 
     /**
