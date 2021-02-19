@@ -6,7 +6,7 @@
 
 ## Example
 
-You can see visually how the library looks like as well as some of different configurations [here](https://fe-confusion-matrix.web.app/).
+You can see visually how the library looks like as well different configurations [here](https://fe-confusion-matrix.web.app/).
 
 In [here](../web-app/src) you can find the source code of the example shown before.
 
