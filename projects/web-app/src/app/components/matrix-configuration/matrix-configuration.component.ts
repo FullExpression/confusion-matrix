@@ -1,4 +1,4 @@
-import { ApplicationRef, Component } from '@angular/core';
+import { ApplicationRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { ConfusionMatrix, ConfusionMatrixSizes } from 'projects/confusion-matrix/src/lib/components/confusion-matrix.models';
 
@@ -33,41 +33,36 @@ export class MatrixConfiguration {
         return Object.keys(ConfusionMatrixSizes);
     }
 
-    constructor(private _applicationRef: ApplicationRef) { }
+    @ViewChild("labelElement") labelElement: ElementRef | undefined;
+
+    @ViewChild("valuesElement") valuesElement: ElementRef | undefined;
+
+    @ViewChild("titleElement") titleElement: ElementRef | undefined;
 
     changeTitle(event: any) {
-
-        // Waits for input to change is value 
-        setTimeout(() => {
-            this.matrixTitle = event.target.value;
-        });
+        this.matrixTitle = event.target.value;
     }
 
-    changeValues(event: any) {
-
-        // Waits for input to change is value 
-        setTimeout(() => {
-            try {
-                this.confusionMatrix.matrix = JSON.parse(event.target.value);
-            } catch (ex) {
-                console.warn(ex);
-            }
-
-        });
+    changeValues() {
+        this.confusionMatrix.matrix = JSON.parse(this.valuesElement?.nativeElement.value);
+        this.refreshMatrixValues();
     }
-    changeLabels(event: any) {
 
-        // Waits for input to change is value 
-        setTimeout(() => {
-            this.confusionMatrix.labels = JSON.parse(event.target.value);
-        });
+    changeLabels() {
+        this.confusionMatrix.labels = JSON.parse(this.labelElement?.nativeElement.value);
+        this.refreshMatrixValues();
     }
 
     changeConfusionMatrix(confusionMatrix: ConfusionMatrix) {
         this.confusionMatrix = confusionMatrix.clone();
+
     }
 
     selectionChange(event: MatSelectChange) {
         this.size = (<any>ConfusionMatrixSizes)[event.value];
+    }
+
+    private refreshMatrixValues() {
+        this.confusionMatrix = this.confusionMatrix.clone();
     }
 }

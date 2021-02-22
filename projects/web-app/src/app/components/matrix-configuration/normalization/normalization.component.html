@@ -4,13 +4,14 @@
     </mat-checkbox>
 
     <div class="min-max" *ngIf="this.normalizeCheckboxValue">
-        <mat-form-field>
+        <mat-form-field class="min">
             <mat-label>Minimum Value</mat-label>
-            <input matInput (keydown)="changeMinValue($event)" value="{{min}}">
+            <input matInput #minElement (keyup)="changeMinValue()" value="{{min}}">
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field class="max">
             <mat-label>Maximum Value</mat-label>
-            <input matInput (keydown)="changeMaxValue($event)" value="{{max}}">
+            <input matInput #maxElement (keyup)="changeMaxValue()" value="{{max}}">
         </mat-form-field>
+        <div class="error-message">{{errorMessage}}</div>
     </div>
 </div>

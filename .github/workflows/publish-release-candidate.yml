@@ -1,9 +1,9 @@
-name: "publish-master"
+name: "publish-release-candidate"
 
 on:
   push:
     branches:
-      - master
+      - release-candidate
       
 jobs:
   release:
@@ -34,3 +34,20 @@ jobs:
         run: npm version prerelease
       - name: Build
         run: npm run build
+      - name: Publish package
+        run: npm publish ./dist/confusion-matrix
+      - name: Commit new package version
+        working-directory: ./projects/confusion-matrix
+        run: |
+          git add package.json
+          git commit -m "Update version"
+          git push 
+      - name: Generate documentation
+        working-directory: ./projects/confusion-matrix
+        run: npm run generate-documentation
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting 
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

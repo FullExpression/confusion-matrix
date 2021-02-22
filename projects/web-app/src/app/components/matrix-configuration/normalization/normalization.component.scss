@@ -1,14 +1,27 @@
 .normalization {
+    margin-bottom: 10px;
+
     .min-max {
         margin-top: 10px;
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "min-element max-element"
+            "message message";
 
-        :first-child {
+        .min {
             margin-right: 10px;
+            grid-area: min-element;
         }
 
-        :last-child {
+        .max {
             margin-left: 10px;
+            grid-area: max-element;
+        }
+
+        .error-message {
+            grid-area: message;
+            color: #e74c3c;
         }
     }
 }
