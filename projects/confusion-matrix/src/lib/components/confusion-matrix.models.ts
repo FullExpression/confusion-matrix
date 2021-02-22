@@ -71,6 +71,42 @@ export class ConfusionMatrix {
         }
     }
 
+    accuracy(): number {
+        throw "not implemented yet";
+    }
+
+    missClassificationRate(): number {
+        throw "not implemented yet";
+    }
+
+    truePositiveRate(): number {
+        throw "not implemented yet";
+    }
+
+    falsePositiveRate(): number {
+        throw "not implemented yet";
+    }
+
+    trueNegativeRate(): number {
+        throw "not implemented yet";
+    }
+
+    precision(): number {
+        throw "not implemented yet";
+    }
+
+    prevalence(): number {
+        throw "not implemented yet";
+    }
+
+    nullErrorRate(): number {
+        throw "not implemented yet";
+    }
+
+    fScore(): number {
+        throw "not implemented yet";
+    }
+
     /**
      * Reverts the last normalization occur getting the current confusion matrix.
      * @return The confusion matrix object before the normalization. 

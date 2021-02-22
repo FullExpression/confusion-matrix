@@ -7,7 +7,9 @@
     "scripts": {
         "build": "ng build --prod",
         "generate-documentation": "npx compodoc -d ../../dist/documentation  -p tsconfig.lib.json src",
-        "publish-documentation": ""
+        "publish-documentation": "",
+        "test": "ng test",
+        "build-test": "ng test --watch=false --browsers=ChromeHeadless"
     },
     "peerDependencies": {
         "@angular/common": "^11.0.3",
