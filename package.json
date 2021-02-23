@@ -7,6 +7,7 @@
         "build": "ng build confusion-matrix --prod && ng build web-app",
         "test": "ng test",
         "build-test": "ng test --watch=false --browsers=ChromeHeadless",
+        "code-coverage": "ng test --no-watch --code-coverage",
         "lint": "ng lint",
         "publish": "npm run build && npm publish ./dist/confusion-matrix",
         "e2e": "ng e2e"

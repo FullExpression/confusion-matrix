@@ -8,15 +8,6 @@
                 "**/.*",
                 "**/node_modules/**"
             ]
-        },
-        {
-            "target": "documentation",
-            "public": "dist/documentation",
-            "ignore": [
-                "firebase.json",
-                "**/.*",
-                "**/node_modules/**"
-            ]
         }
     ]
 }

@@ -2,25 +2,84 @@ import { ConfusionMatrix } from "./confusion-matrix.models";
 
 describe("Confusion matrix model test suite", () => {
 
-    it("Can initialize correctly.", () => {
-        const confusionMatrix = new ConfusionMatrix({
-            labels:
-                ["Happiness", "Sadness", "Angry", "Neutral"],
-            matrix:
-                [[1, 2, 3, 4],
-                [5, 6, 7, 8],
-                [9, 10, 11, 12],
-                [13, 14, 15, 16]]
+    const getLabels = () => {
+        return ["Apple", "Orange", "Mango"];
+    }
+
+    const getMatrix = () => {
+        return [[7, 8, 9],
+        [1, 2, 3],
+        [3, 2, 1]];
+    }
+
+    const getConfusionMatrix = () => {
+        return new ConfusionMatrix({
+            labels: getLabels(),
+            matrix: getMatrix()
         });
-        expect(confusionMatrix.labels).toEqual(["Happiness", "Sadness", "Angry", "Neutral"]);
-        expect(confusionMatrix.matrix).toEqual([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]);
+    }
+
+    const getTrueClasses = () => {
+        return {
+            Apple: {
+                truePositive: 7,
+                trueNegative: 2 + 3 + 2 + 1,
+                falsePositive: 8 + 9,
+                falseNegative: 1 + 3
+            },
+            Orange: {
+                truePositive: 2,
+                trueNegative: 7 + 3 + 9 + 1,
+                falsePositive: 1 + 3,
+                falseNegative: 8 + 2
+            },
+            Mango: {
+                truePositive: 1,
+                trueNegative: 7 + 8 + 1 + 2,
+                falsePositive: 2 + 3,
+                falseNegative: 9 + 3
+            }
+        }
+    }
+
+    it("Can initialize correctly.", () => {
+        const confusionMatrix = getConfusionMatrix();
+        expect(confusionMatrix.labels).toEqual(getLabels());
+        expect(confusionMatrix.matrix).toEqual(getMatrix());
     });
 
-    it("Number of rows same as number of columns.", () => {
-        expect("Not Implemented Yet!").toBeFalsy();
+    it("Labels validation", () => {
+        // Verify if labels does not have same name
+        // Verify if labels has same dimensions as columns
+        const confusionMatrix = getConfusionMatrix();
+        expect(confusionMatrix.labels).toEqual(getLabels());
+        expect(confusionMatrix.matrix).toEqual(getMatrix());
     });
 
-    it("Number of labels equals number of columns.", () => {
-        expect("Not Implemented Yet!").toBeFalsy();
+    it("Can get true classes.", () => {
+        const confusionMatrix = getConfusionMatrix();
+        const { Apple, Orange, Mango } = getTrueClasses();
+
+        const appleTrueClass = confusionMatrix.getTrueClasses('Apple');
+        const orangeTrueClass = confusionMatrix.getTrueClasses('Orange');
+        const mangoTrueClass = confusionMatrix.getTrueClasses('Mango');
+
+        expect(appleTrueClass).toEqual(Apple);
+        expect(orangeTrueClass).toEqual(Orange);
+        expect(mangoTrueClass).toEqual(Mango);
+
     });
+
+    it("Can get all true classes.", () => {
+        const confusionMatrix = getConfusionMatrix();
+        const { Apple, Orange, Mango } = getTrueClasses();
+
+        const allTrueClasses = confusionMatrix.getAllTrueClasses();
+
+        expect(allTrueClasses[0].trueClasses).toEqual(Apple);
+        expect(allTrueClasses[1].trueClasses).toEqual(Orange);
+        expect(allTrueClasses[2].trueClasses).toEqual(Mango);
+
+    });
+
 });

@@ -71,12 +71,148 @@ export class ConfusionMatrix {
         }
     }
 
-    accuracy(): number {
-        throw "not implemented yet";
+    /**
+     * Gives the overall accuracy value for a given label or for the all confusion matrix.
+     *  
+     * Formula: 
+     * 
+     * labelAccuracy = (TP + TN) / (TP + TN + FP + FN)
+     * 
+     * allMatrix = Sum(n)(labelAccuracy[n])
+     * 
+     * labelWeight[] = (numberOfLabelPredictions / totalNumberOfPredictions) (repeat for each label);
+     * 
+     * allMatrixWeight =  Sum(n)(labelAccuracy[n] * labelWeight[n])
+     * 
+     * @param configuration Allows not set some configuration when calculating the accuracy number.
+     * 
+     * [[configuration.label]] : The label name which will be used to calculate the accuracy value.
+     * If undefined or null, will the accuracy value will be calculated for the all confusion matrix.
+     * 
+     * [[configuration.weighted]]: Defines if the accuracy value should be weighted. This means that the labels
+     * with more predictions will weight more in the final accuracy value comparing with labels with less
+     * predictions.
+     * 
+     * @return The accuracy value.
+     */
+    accuracy(configuration: {
+        label?: string,
+        weighted?: boolean
+    }): number {
+        const { label, weighted } = configuration;
+        if (label && label.length > 0) {
+            return this.labelAccuracy(label);
+        }
+        return this.matrixAccuracy(weighted);
+    }
+
+    /**
+     * Gives the accuracy value for a given matrix label.
+     * 
+     * Formula:
+     *
+     * labelAccuracy = (TP + TN) / (TP + TN + FP + FN)
+     * 
+     * @param label The label used to get the accuracy value.
+     * @return Accuracy value for a given label.
+     */
+    labelAccuracy(label: string): number {
+        const { truePositive, trueNegative, falsePositive, falseNegative } = this.getTrueClasses(label);
+        return (truePositive + trueNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
+    }
+
+    /**
+     * Gives the overall accuracy value for confusion matrix.
+     *
+     * Formula:
+     *
+     * labelAccuracy = (TP + TN) / (TP + TN + FP + FN)
+     *
+     * allMatrix = Sum(n)(labelAccuracy[n])
+     *
+     * labelWeight[] = (numberOfLabelPredictions / totalNumberOfPredictions) (repeat for each label);
+     *
+     * allMatrixWeight =  Sum(n)(labelAccuracy[n] * labelWeight[n])
+     *
+     * @param weighted Defines if the accuracy value should be weighted. This means that the labels
+     * with more predictions will weight more in the final accuracy value comparing with labels with less
+     * predictions.
+     *
+     * @return The accuracy value.
+     */
+    matrixAccuracy(weighted = false): number {
+        if (weighted) {
+            const sumLabels = new Array<number>().fill(0, 0, this.labels.length);
+            this.matrix.forEach((array) =>
+                array.forEach((value, index) => sumLabels[index] += value));
+            const itemsNumber = sumLabels.reduce((prev, next) => prev + next);
+
+            let sum = 0;
+            this.labels.forEach((label, index) => sum += (this.labelAccuracy(label) * sumLabels[index]));
+            return sum / itemsNumber
+        } else {
+            let sum = 0;
+            this.labels.forEach((label) => sum += this.labelAccuracy(label));
+            return sum / this.labels.length;
+        }
+
+    }
+
+    labelClassificationRate(label: string): number {
+        const { truePositive, trueNegative, falsePositive, falseNegative } = this.getTrueClasses(label);
+        return (truePositive + trueNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
     }
 
     missClassificationRate(): number {
-        throw "not implemented yet";
+        return -1;
+    }
+
+    labelMissClassificationRate(label: string): number {
+        const { truePositive, trueNegative, falsePositive, falseNegative } = this.getTrueClasses(label);
+        return (falsePositive + falseNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
+    }
+
+    matrixMissClassificationRate(): number {
+        let sum = 0;
+        this.labels.forEach((label) => sum += this.labelMissClassificationRate(label));
+        return sum / this.labels.length;
+    }
+
+    getAllTrueClasses(): Array<{ label: string, trueClasses: TrueClasses }> {
+        const all = new Array<{ label: string, trueClasses: TrueClasses }>();
+        this.labels.forEach((label) => all.push({
+            label: label,
+            trueClasses: this.getTrueClasses(label)
+        }));
+        return all;
+    }
+
+    getTrueClasses(label: string): TrueClasses {
+        if (!label) {
+            throw "A valid label should be passed";
+        }
+
+        const position = this.labels.findIndex(element => element === label);
+
+        if (position == null) {
+            throw "A valid label should be passed";
+        }
+
+        const matrixSum = this.sumMatrix(this.matrix);
+        const truePositive = this.matrix[position][position];
+        const falsePositive = this.matrix[position].reduce(
+            (previous, next) => previous + next) - truePositive;
+
+        let falseNegative = 0;
+
+        for (let i = 0; i < this.matrix.length; i++) {
+            falseNegative += this.matrix[i][position];
+        }
+
+        falseNegative -= truePositive;
+        const trueNegative = matrixSum - truePositive - falsePositive - falseNegative;
+
+        return { truePositive, trueNegative, falsePositive, falseNegative };
     }
 
     truePositiveRate(): number {
@@ -171,6 +307,13 @@ export class ConfusionMatrix {
     private deepCopy(object: any): any {
         return JSON.parse(JSON.stringify(object));
     }
+
+    private sumMatrix(matrix: Array<Array<number>>) {
+        let sum = 0;
+        matrix.forEach(array => array.forEach(value => sum += value))
+        return sum;
+    }
+
 }
 
 /**
@@ -181,4 +324,11 @@ export enum ConfusionMatrixSizes {
     Medium = 'medium',
     Large = 'large',
     ExtraLarge = 'extra-large'
+}
+
+export interface TrueClasses {
+    truePositive: number;
+    trueNegative: number;
+    falsePositive: number;
+    falseNegative: number;
 }
