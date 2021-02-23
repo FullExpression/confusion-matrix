@@ -48,12 +48,18 @@ describe("Confusion matrix model test suite", () => {
         expect(confusionMatrix.matrix).toEqual(getMatrix());
     });
 
-    it("Labels validation", () => {
-        // Verify if labels does not have same name
-        // Verify if labels has same dimensions as columns
-        const confusionMatrix = getConfusionMatrix();
+    it("Can validate confusion matrix on initialization correctly.", () => {
+        let confusionMatrix = new ConfusionMatrix()
         expect(confusionMatrix.labels).toEqual(getLabels());
         expect(confusionMatrix.matrix).toEqual(getMatrix());
+    });
+
+
+    it("Can validate labels format correctly.", () => {
+        let confusionMatrix = getConfusionMatrix();
+        expect(confusionMatrix.labels).toEqual(getLabels());
+        expect(confusionMatrix.matrix).toEqual(getMatrix());
+        expect(confusionMatrix.labels.length).toBe(getMatrix().length);
     });
 
     it("Can get true classes.", () => {

@@ -4,14 +4,50 @@ import { NgIf } from "@angular/common";
  * Confusion matrix model.
  */
 export class ConfusionMatrix {
-    /** Confusion matrix labels. */
-    labels = new Array<string>();
 
-    /** Confusion matrix values. */
-    matrix = new Array<Array<number>>();
+    /** Sets confusion matrix labels. */
+    set labels(labels: Array<string>) {
+        const oldLabels = this._labels;
+        try {
+            this.labels = labels;
+            this.validateMatrix();
+        } catch (error) {
+            this.labels = oldLabels;
+            throw error;
+        }
+    }
+
+    /** Gets confusion matrix labels. */
+    get labels(): Array<string> {
+        return this._labels;
+    }
+
+    /** Sets confusion matrix values. */
+    set matrix(matrix: Array<Array<number>>) {
+        const oldMatrix = this._matrix;
+        try {
+            this.matrix = matrix;
+            this.validateMatrix();
+        } catch (error) {
+            this.matrix = oldMatrix;
+            throw error;
+        }
+    }
+
+    /** Gets confusion matrix values. */
+    get matrix(): Array<Array<number>> {
+        return this._matrix;
+    }
 
     /** Normalization history values. */
     private normalizations = new Array<ConfusionMatrix>();
+
+    /** Local confusion matrix labels */
+    private _labels = new Array<string>();
+
+    /** Local confusion matrix values */
+    private _matrix = new Array<Array<number>>();
+
 
     /**
      * Creates new instance of confusion matrix.
@@ -32,6 +68,7 @@ export class ConfusionMatrix {
             this.labels = this.deepCopy(confusionMatrix.labels);
             this.matrix = this.deepCopy(confusionMatrix.matrix);
         }
+        this.validateMatrix();
     }
 
     /**
@@ -43,6 +80,7 @@ export class ConfusionMatrix {
             this.labels = this.deepCopy(confusionMatrix.labels);
             this.matrix = this.deepCopy(confusionMatrix.matrix);
         }
+        this.validateMatrix();
     }
 
     /**
@@ -312,6 +350,26 @@ export class ConfusionMatrix {
         let sum = 0;
         matrix.forEach(array => array.forEach(value => sum += value))
         return sum;
+    }
+
+    private validateMatrix() {
+        if (this.labels.length !== this.matrix.length) {
+            throw "The labels length should be equals to the matrix columns length."
+        }
+
+        for (let i = 0; i < this.labels.length - 1; i++) {
+            for (let j = i + 1; j < this.labels.length; j++) {
+                if (this.labels[i] === this.labels[j]) {
+                    throw `The label ${this.labels[i]} appears more than once in the labels array.`;
+                }
+            }
+        }
+
+        this.matrix.forEach(array => {
+            if (array.length !== this.matrix.length) {
+                throw "The confusion matrix does not have the columns/rows length."
+            }
+        });
     }
 
 }
