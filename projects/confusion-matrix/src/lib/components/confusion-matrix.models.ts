@@ -180,14 +180,12 @@ export class ConfusionMatrix {
      */
     matrixAccuracy(weighted = false): number {
         if (weighted) {
-            const sumLabels = new Array<number>().fill(0, 0, this.labels.length);
-            this.matrix.forEach((array) =>
-                array.forEach((value, index) => sumLabels[index] += value));
-            const itemsNumber = sumLabels.reduce((prev, next) => prev + next);
+            const sumLabels = this.getLabelsPredictionsSum();
+            const numberOfPredictions = this.getNumberOfPredictions();
 
             let sum = 0;
             this.labels.forEach((label, index) => sum += (this.labelAccuracy(label) * sumLabels[index]));
-            return sum / itemsNumber
+            return sum / numberOfPredictions
         } else {
             let sum = 0;
             this.labels.forEach((label) => sum += this.labelAccuracy(label));
@@ -196,13 +194,22 @@ export class ConfusionMatrix {
 
     }
 
-    labelClassificationRate(label: string): number {
-        const { truePositive, trueNegative, falsePositive, falseNegative } = this.getTrueClasses(label);
-        return (truePositive + trueNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
-    }
-
-    missClassificationRate(): number {
-        return -1;
+    /**
+     * Misclassification rate or 1-Accuracy, gives what fraction of predictions were incorrect.
+     *
+     * MISSING DOCUMENTATIOn
+     *
+     * @return The accuracy value.
+     */
+    missClassificationRate(configuration: {
+        label?: string,
+        weighted?: boolean
+    }): number {
+        const { label, weighted } = configuration;
+        if (label && label.length > 0) {
+            return this.labelMissClassificationRate(label);
+        }
+        return this.matrixMissClassificationRate(weighted);
     }
 
     labelMissClassificationRate(label: string): number {
@@ -210,10 +217,18 @@ export class ConfusionMatrix {
         return (falsePositive + falseNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
     }
 
-    matrixMissClassificationRate(): number {
-        let sum = 0;
-        this.labels.forEach((label) => sum += this.labelMissClassificationRate(label));
-        return sum / this.labels.length;
+    matrixMissClassificationRate(weighted?: boolean): number {
+        if (weighted) {
+            const sumLabels = this.getLabelsPredictionsSum();
+            const numberOfPredictions = this.getNumberOfPredictions();
+            let sum = 0;
+            this.labels.forEach((label, index) => sum += (this.labelMissClassificationRate(label) * sumLabels[index]));
+            return sum / numberOfPredictions;
+        } else {
+            let sum = 0;
+            this.labels.forEach((label) => sum += this.labelMissClassificationRate(label));
+            return sum / this.labels.length;
+        }
     }
 
     getAllTrueClasses(): Array<{ label: string, trueClasses: TrueClasses }> {
@@ -336,6 +351,27 @@ export class ConfusionMatrix {
     revertAllNormalizations() {
         this.setConfusionMatrix(this.normalizations[0]);
     }
+
+    getNumberOfPredictions(label?: string): number {
+        const sumLabels = this.getLabelsPredictionsSum();
+
+        if (label && label.length > 0) {
+            const index = this.labels.findIndex(value => value === label);
+            return sumLabels[index];
+        } else {
+            const numberOfPredictions = sumLabels.reduce((prev, next) => prev + next);
+            return numberOfPredictions;
+        }
+    }
+
+    getLabelsPredictionsSum(): Array<number> {
+        const sumLabels = new Array<number>().fill(0, 0, this.labels.length);
+        this.matrix.forEach((array) =>
+            array.forEach((value, index) => sumLabels[index] += value));
+        return sumLabels;
+    }
+
+
 
     /**
      * Deep copies a given object.
