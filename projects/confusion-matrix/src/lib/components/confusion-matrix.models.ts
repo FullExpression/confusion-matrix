@@ -268,21 +268,115 @@ export class ConfusionMatrix {
         return { truePositive, trueNegative, falsePositive, falseNegative };
     }
 
+    precision(configuration: {
+        label?: string,
+        weighted?: boolean
+    }): number {
+        const { label, weighted } = configuration;
+        if (label && label.length > 0) {
+            return this.labelPrecision(label);
+        }
+        return this.matrixPrecision(weighted);
+    }
+
+    labelPrecision(label: string): number {
+        const { truePositive, falsePositive } = this.getTrueClasses(label);
+        return (truePositive) / (truePositive + falsePositive);
+    }
+
+    matrixPrecision(weighted = false): number {
+        if (weighted) {
+            const sumLabels = this.getLabelsPredictionsSum();
+            const numberOfPredictions = this.getNumberOfPredictions();
+
+            let sum = 0;
+            this.labels.forEach((label, index) => sum += (this.labelPrecision(label) * sumLabels[index]));
+            return sum / numberOfPredictions
+        } else {
+            let sum = 0;
+            this.labels.forEach((label) => sum += this.labelPrecision(label));
+            return sum / this.labels.length;
+        }
+    }
+
+    recall(configuration: {
+        label?: string,
+        weighted?: boolean
+    }): number {
+        const { label, weighted } = configuration;
+        if (label && label.length > 0) {
+            return this.labelRecall(label);
+        }
+        return this.matrixRecall(weighted);
+    }
+
+    labelRecall(label: string): number {
+        const { truePositive, falseNegative } = this.getTrueClasses(label);
+        return (truePositive) / (truePositive + falseNegative);
+    }
+
+    matrixRecall(weighted = false): number {
+        if (weighted) {
+            const sumLabels = this.getLabelsPredictionsSum();
+            const numberOfPredictions = this.getNumberOfPredictions();
+
+            let sum = 0;
+            this.labels.forEach((label, index) => sum += (this.labelRecall(label) * sumLabels[index]));
+            return sum / numberOfPredictions
+        } else {
+            let sum = 0;
+            this.labels.forEach((label) => sum += this.labelRecall(label));
+            return sum / this.labels.length;
+        }
+    }
+
+    specificity(configuration: {
+        label?: string,
+        weighted?: boolean
+    }): number {
+        const { label, weighted } = configuration;
+        if (label && label.length > 0) {
+            return this.labelSpecificity(label);
+        }
+        return this.matrixSpecificity(weighted);
+    }
+
+    matrixSpecificity(weighted = false): number {
+        if (weighted) {
+            const sumLabels = this.getLabelsPredictionsSum();
+            const numberOfPredictions = this.getNumberOfPredictions();
+
+            let sum = 0;
+            this.labels.forEach((label, index) => sum += (this.labelRecall(label) * sumLabels[index]));
+            return sum / numberOfPredictions
+        } else {
+            let sum = 0;
+            this.labels.forEach((label) => sum += this.labelRecall(label));
+            return sum / this.labels.length;
+        }
+    }
+
+    labelSpecificity(label: string): number {
+        const { truePositive, falsePositive } = this.getTrueClasses(label);
+        return (truePositive) / (truePositive + falsePositive);
+    }
+
     truePositiveRate(): number {
         throw "not implemented yet";
     }
 
-    falsePositiveRate(): number {
-        throw "not implemented yet";
+    falsePositiveRate(configuration: {
+        label?: string,
+        weighted?: boolean
+    }): number {
+        return 0;
     }
 
     trueNegativeRate(): number {
         throw "not implemented yet";
     }
 
-    precision(): number {
-        throw "not implemented yet";
-    }
+
 
     prevalence(): number {
         throw "not implemented yet";
