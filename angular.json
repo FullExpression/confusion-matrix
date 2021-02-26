@@ -26,7 +26,8 @@
                     "options": {
                         "main": "projects/confusion-matrix/src/test.ts",
                         "tsConfig": "projects/confusion-matrix/tsconfig.spec.json",
-                        "karmaConfig": "projects/confusion-matrix/karma.conf.js"
+                        "karmaConfig": "projects/confusion-matrix/karma.conf.js",
+                        "codeCoverage": true
                     }
                 },
                 "lint": {
@@ -135,7 +136,8 @@
                             "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
                             "projects/web-app/src/styles.scss"
                         ],
-                        "scripts": []
+                        "scripts": [],
+                        "codeCoverage": true
                     }
                 },
                 "lint": {

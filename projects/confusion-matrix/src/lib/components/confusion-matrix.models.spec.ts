@@ -48,10 +48,36 @@ describe("Confusion matrix model test suite", () => {
         expect(confusionMatrix.matrix).toEqual(getMatrix());
     });
 
+    it("Should set confusion matrix from another confusion matrix.", () => {
+        const confusionMatrix = getConfusionMatrix();
+        const labels = ['Joy', 'Euphoria'];
+        const matrix = [[10, 20], [30, 40]]
+        const anotherConfusionMatrix = new ConfusionMatrix({
+            labels, matrix
+        });
+        confusionMatrix.setConfusionMatrix(anotherConfusionMatrix);
+        expect(confusionMatrix.labels).toEqual(labels);
+        expect(confusionMatrix.matrix).toEqual(matrix);
+    });
+
+    it("Should set/get labels and matrix", () => {
+        const confusionMatrix = new ConfusionMatrix()
+        const labels = ['Joy', 'Euphoria'];
+        const matrix = [[10, 20], [30, 40]]
+        confusionMatrix.labels = labels;
+        confusionMatrix.matrix = matrix;
+        expect(confusionMatrix.labels).toEqual(labels);
+        expect(confusionMatrix.matrix).toEqual(matrix);
+    });
+
+    it("Should normalize a matrix", () => {
+
+    });
+
     it("Can validate confusion matrix on initialization correctly.", () => {
-        let confusionMatrix = new ConfusionMatrix()
-        expect(confusionMatrix.labels).toEqual(getLabels());
-        expect(confusionMatrix.matrix).toEqual(getMatrix());
+        // let confusionMatrix = new ConfusionMatrix()
+        // expect(confusionMatrix.labels).toEqual(getLabels());
+        // expect(confusionMatrix.matrix).toEqual(getMatrix());
     });
 
 
