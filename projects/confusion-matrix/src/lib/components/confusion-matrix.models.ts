@@ -1,52 +1,16 @@
-import { NgIf } from "@angular/common";
-
 /**
  * Confusion matrix model.
  */
 export class ConfusionMatrix {
 
-    /** Sets confusion matrix labels. */
-    set labels(labels: Array<string>) {
-        const oldLabels = this._labels;
-        try {
-            this.labels = labels;
-            this.validateMatrix();
-        } catch (error) {
-            this.labels = oldLabels;
-            throw error;
-        }
-    }
+    /** Confusion matrix labels */
+    labels = new Array<string>();
 
-    /** Gets confusion matrix labels. */
-    get labels(): Array<string> {
-        return this._labels;
-    }
-
-    /** Sets confusion matrix values. */
-    set matrix(matrix: Array<Array<number>>) {
-        const oldMatrix = this._matrix;
-        try {
-            this.matrix = matrix;
-            this.validateMatrix();
-        } catch (error) {
-            this.matrix = oldMatrix;
-            throw error;
-        }
-    }
-
-    /** Gets confusion matrix values. */
-    get matrix(): Array<Array<number>> {
-        return this._matrix;
-    }
+    /** Local confusion matrix values */
+    matrix = new Array<Array<number>>();
 
     /** Normalization history values. */
     private normalizations = new Array<ConfusionMatrix>();
-
-    /** Local confusion matrix labels */
-    private _labels = new Array<string>();
-
-    /** Local confusion matrix values */
-    private _matrix = new Array<Array<number>>();
 
 
     /**
@@ -97,6 +61,7 @@ export class ConfusionMatrix {
         if (min >= max) {
             throw "Min value cannot be equal or greater than max value.";
         }
+        this.validateMatrix();
         const matrixMinMax = this.getMinAndMax();
         if (matrixMinMax) {
             this.normalizations.push(new ConfusionMatrix(this));
@@ -137,6 +102,7 @@ export class ConfusionMatrix {
         label?: string,
         weighted?: boolean
     }): number {
+        this.validateMatrix();
         const { label, weighted } = configuration;
         if (label && label.length > 0) {
             return this.labelAccuracy(label);
@@ -155,6 +121,7 @@ export class ConfusionMatrix {
      * @return Accuracy value for a given label.
      */
     labelAccuracy(label: string): number {
+        this.validateMatrix();
         const { truePositive, trueNegative, falsePositive, falseNegative } = this.getTrueClasses(label);
         return (truePositive + trueNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
     }
@@ -179,6 +146,7 @@ export class ConfusionMatrix {
      * @return The accuracy value.
      */
     matrixAccuracy(weighted = false): number {
+        this.validateMatrix();
         if (weighted) {
             const sumLabels = this.getLabelsPredictionsSum();
             const numberOfPredictions = this.getNumberOfPredictions();
@@ -205,6 +173,7 @@ export class ConfusionMatrix {
         label?: string,
         weighted?: boolean
     }): number {
+        this.validateMatrix();
         const { label, weighted } = configuration;
         if (label && label.length > 0) {
             return this.labelMissClassificationRate(label);
@@ -213,11 +182,13 @@ export class ConfusionMatrix {
     }
 
     labelMissClassificationRate(label: string): number {
+        this.validateMatrix();
         const { truePositive, trueNegative, falsePositive, falseNegative } = this.getTrueClasses(label);
         return (falsePositive + falseNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
     }
 
     matrixMissClassificationRate(weighted?: boolean): number {
+        this.validateMatrix();
         if (weighted) {
             const sumLabels = this.getLabelsPredictionsSum();
             const numberOfPredictions = this.getNumberOfPredictions();
@@ -232,6 +203,7 @@ export class ConfusionMatrix {
     }
 
     getAllTrueClasses(): Array<{ label: string, trueClasses: TrueClasses }> {
+        this.validateMatrix();
         const all = new Array<{ label: string, trueClasses: TrueClasses }>();
         this.labels.forEach((label) => all.push({
             label: label,
@@ -241,6 +213,7 @@ export class ConfusionMatrix {
     }
 
     getTrueClasses(label: string): TrueClasses {
+        this.validateMatrix();
         if (!label) {
             throw "A valid label should be passed";
         }
@@ -272,6 +245,7 @@ export class ConfusionMatrix {
         label?: string,
         weighted?: boolean
     }): number {
+        this.validateMatrix();
         const { label, weighted } = configuration;
         if (label && label.length > 0) {
             return this.labelPrecision(label);
@@ -280,11 +254,13 @@ export class ConfusionMatrix {
     }
 
     labelPrecision(label: string): number {
+        this.validateMatrix();
         const { truePositive, falsePositive } = this.getTrueClasses(label);
         return (truePositive) / (truePositive + falsePositive);
     }
 
     matrixPrecision(weighted = false): number {
+        this.validateMatrix();
         if (weighted) {
             const sumLabels = this.getLabelsPredictionsSum();
             const numberOfPredictions = this.getNumberOfPredictions();
@@ -303,6 +279,7 @@ export class ConfusionMatrix {
         label?: string,
         weighted?: boolean
     }): number {
+        this.validateMatrix();
         const { label, weighted } = configuration;
         if (label && label.length > 0) {
             return this.labelRecall(label);
@@ -311,11 +288,13 @@ export class ConfusionMatrix {
     }
 
     labelRecall(label: string): number {
+        this.validateMatrix();
         const { truePositive, falseNegative } = this.getTrueClasses(label);
         return (truePositive) / (truePositive + falseNegative);
     }
 
     matrixRecall(weighted = false): number {
+        this.validateMatrix();
         if (weighted) {
             const sumLabels = this.getLabelsPredictionsSum();
             const numberOfPredictions = this.getNumberOfPredictions();
@@ -334,6 +313,7 @@ export class ConfusionMatrix {
         label?: string,
         weighted?: boolean
     }): number {
+        this.validateMatrix();
         const { label, weighted } = configuration;
         if (label && label.length > 0) {
             return this.labelSpecificity(label);
@@ -342,6 +322,7 @@ export class ConfusionMatrix {
     }
 
     matrixSpecificity(weighted = false): number {
+        this.validateMatrix();
         if (weighted) {
             const sumLabels = this.getLabelsPredictionsSum();
             const numberOfPredictions = this.getNumberOfPredictions();
@@ -357,11 +338,13 @@ export class ConfusionMatrix {
     }
 
     labelSpecificity(label: string): number {
+        this.validateMatrix();
         const { truePositive, falsePositive } = this.getTrueClasses(label);
         return (truePositive) / (truePositive + falsePositive);
     }
 
     truePositiveRate(): number {
+        this.validateMatrix();
         throw "not implemented yet";
     }
 
@@ -369,24 +352,29 @@ export class ConfusionMatrix {
         label?: string,
         weighted?: boolean
     }): number {
+        this.validateMatrix();
         return 0;
     }
 
     trueNegativeRate(): number {
+        this.validateMatrix();
         throw "not implemented yet";
     }
 
 
 
     prevalence(): number {
+        this.validateMatrix();
         throw "not implemented yet";
     }
 
     nullErrorRate(): number {
+        this.validateMatrix();
         throw "not implemented yet";
     }
 
     fScore(): number {
+        this.validateMatrix();
         throw "not implemented yet";
     }
 
