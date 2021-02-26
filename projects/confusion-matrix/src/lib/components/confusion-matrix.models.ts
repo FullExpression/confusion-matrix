@@ -55,20 +55,28 @@ export class ConfusionMatrix {
      * 
      * Can be util if you want to convert the values to percentage or between [0, 1].
      * @param min Minimum value of the normalized range values [min, max].
-     * @param max Maximum value of the normalized range values [min, max]. 
+     * @param max Maximum value of the normalized range values [min, max].
+     * @param fractionDigits — Number of digits after the decimal point. Must be in the range 0 - 20, inclusive.
      */
-    normalize(min: number = 0, max: number = 1) {
+    normalize(min: number = 0, max: number = 1, fractionDigits?: FractionDigits) {
         if (min >= max) {
             throw "Min value cannot be equal or greater than max value.";
         }
+
         this.validateMatrix();
         const matrixMinMax = this.getMinAndMax();
         if (matrixMinMax) {
             this.normalizations.push(new ConfusionMatrix(this));
-            const ratio = matrixMinMax?.max / (max - min);
+            const minX = matrixMinMax.min;
+            const maxX = matrixMinMax.max;
             for (let i = 0; i < this.matrix.length; i++) {
                 for (let j = 0; j < this.matrix[i].length; j++) {
-                    this.matrix[i][j] = min + (this.matrix[i][j] / ratio);
+                    const x = this.matrix[i][j];
+                    this.matrix[i][j] = ((max - min) * ((x - minX) / (maxX - minX))) + min
+                    if (fractionDigits != undefined) {
+                        this.matrix[i][j] = +this.matrix[i][j].toFixed(fractionDigits);
+                    }
+
                 }
             }
         }
@@ -508,3 +516,6 @@ export interface TrueClasses {
     falsePositive: number;
     falseNegative: number;
 }
+
+type FractionDigits = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
+    13 | 14 | 15 | 16 | 17 | 18 | 19 | 20

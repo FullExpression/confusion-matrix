@@ -7,9 +7,9 @@ describe("Confusion matrix model test suite", () => {
     }
 
     const getMatrix = () => {
-        return [[7, 8, 9],
+        return [[7, 8, 10],
         [1, 2, 3],
-        [3, 2, 1]];
+        [3, 2, 0]];
     }
 
     const getConfusionMatrix = () => {
@@ -23,21 +23,21 @@ describe("Confusion matrix model test suite", () => {
         return {
             Apple: {
                 truePositive: 7,
-                trueNegative: 2 + 3 + 2 + 1,
-                falsePositive: 8 + 9,
+                trueNegative: 2 + 3 + 2 + 0,
+                falsePositive: 8 + 10,
                 falseNegative: 1 + 3
             },
             Orange: {
                 truePositive: 2,
-                trueNegative: 7 + 3 + 9 + 1,
+                trueNegative: 7 + 3 + 10 + 0,
                 falsePositive: 1 + 3,
                 falseNegative: 8 + 2
             },
             Mango: {
-                truePositive: 1,
+                truePositive: 0,
                 trueNegative: 7 + 8 + 1 + 2,
                 falsePositive: 2 + 3,
-                falseNegative: 9 + 3
+                falseNegative: 10 + 3
             }
         }
     }
@@ -71,7 +71,33 @@ describe("Confusion matrix model test suite", () => {
     });
 
     it("Should normalize a matrix", () => {
+        let confusionMatrix = getConfusionMatrix();
+        confusionMatrix.normalize(0, 1);
+        expect(confusionMatrix.matrix).toEqual([[0.7, 0.8, 1],
+        [0.1, 0.2, 0.3],
+        [0.3, 0.2, 0]]
+        );
 
+        confusionMatrix = getConfusionMatrix();
+        confusionMatrix.normalize(1, 2);
+        expect(confusionMatrix.matrix).toEqual([[1.7, 1.8, 2],
+        [1.1, 1.2, 1.3],
+        [1.3, 1.2, 1]]
+        );
+
+        confusionMatrix = getConfusionMatrix();
+        confusionMatrix.normalize(-1, 0, 1);
+        expect(confusionMatrix.matrix).toEqual([[-0.3, -0.2, 0],
+        [-0.9, -0.8, -0.7],
+        [-0.7, -0.8, -1]]
+        );
+
+        confusionMatrix = getConfusionMatrix();
+        confusionMatrix.normalize(-13.726, 89.93214, 5);
+        expect(confusionMatrix.matrix).toEqual([[58.8347, 69.20051, 89.93214],
+        [-3.36019, 7.00563, 17.37144],
+        [17.37144, 7.00563, -13.726]]
+        );
     });
 
     it("Can validate confusion matrix on initialization correctly.", () => {
