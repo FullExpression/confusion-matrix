@@ -98,6 +98,17 @@ describe("Confusion matrix model test suite", () => {
         [-3.36019, 7.00563, 17.37144],
         [17.37144, 7.00563, -13.726]]
         );
+
+        confusionMatrix.normalize(-13.726, 89.93214, 5);
+
+        expect(() => confusionMatrix.normalize(3, 3))
+            .toThrow("Min value cannot be equal or greater than max value.");
+
+        expect(() => confusionMatrix.normalize(4, 3))
+            .toThrow("Min value cannot be equal or greater than max value.");
+
+        expect(() => confusionMatrix.normalize(-1, -3))
+            .toThrow("Min value cannot be equal or greater than max value.");
     });
 
     it("Can validate confusion matrix on initialization correctly.", () => {
