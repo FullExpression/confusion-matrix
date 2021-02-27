@@ -106,16 +106,15 @@ export class ConfusionMatrix {
      * 
      * @return The accuracy value.
      */
-    accuracy(configuration: {
+    accuracy(configuration?: {
         label?: string,
         weighted?: boolean
     }): number {
         this.validateMatrix();
-        const { label, weighted } = configuration;
-        if (label && label.length > 0) {
-            return this.labelAccuracy(label);
+        if (configuration?.label && configuration?.label.length > 0) {
+            return this.labelAccuracy(configuration.label);
         }
-        return this.matrixAccuracy(weighted);
+        return this.matrixAccuracy(configuration?.weighted);
     }
 
     /**

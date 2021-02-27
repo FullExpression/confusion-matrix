@@ -31,4 +31,7 @@
         </mat-form-field>
         <color-intensity-picker [(colors)]="colors"></color-intensity-picker>
     </div>
+    <div class="statistics">
+        <statistic [title]="'accuracy'" [value]="confusionMatrix.accuracy()"></statistic>
+    </div>
 </div>
