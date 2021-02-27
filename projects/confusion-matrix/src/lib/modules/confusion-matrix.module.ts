@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { ConfusionMatrixComponent } from '../components/confusion-matrix.component';
 import { CommonModule, DecimalPipe } from '@angular/common';
+import { StatisticComponent } from '../components/statistic.component';
+
 @NgModule({
-    declarations: [ConfusionMatrixComponent],
+    declarations: [ConfusionMatrixComponent, StatisticComponent],
     imports: [CommonModule],
-    exports: [ConfusionMatrixComponent],
+    exports: [ConfusionMatrixComponent, StatisticComponent],
     providers: [DecimalPipe]
 })
 export class ConfusionMatrixModule { }
