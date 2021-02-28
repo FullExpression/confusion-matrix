@@ -222,13 +222,13 @@ export class ConfusionMatrix {
     getTrueClasses(label: string): TrueClasses {
         this.validateMatrix();
         if (!label) {
-            throw "A valid label should be passed";
+            throw "A valid label should be passed.";
         }
 
         const position = this.labels.findIndex(element => element === label);
 
         if (position == null) {
-            throw "A valid label should be passed";
+            throw "The label does not exists in the matrix.";
         }
 
         const matrixSum = this.sumMatrix(this.matrix);

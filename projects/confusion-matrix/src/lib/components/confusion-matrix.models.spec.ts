@@ -137,6 +137,12 @@ describe("Confusion matrix model test suite", () => {
         expect(orangeTrueClass).toEqual(Orange);
         expect(mangoTrueClass).toEqual(Mango);
 
+        expect(confusionMatrix.getTrueClasses(''))
+            .toThrow(new Error('A valid label should be passed.'));
+
+        expect(confusionMatrix.getTrueClasses(''))
+            .toThrow(new Error('The label does not exists in the matrix.'));
+
     });
 
     it("Can get all true classes.", () => {
