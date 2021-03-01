@@ -5,8 +5,10 @@
         "url": "https://github.com/FullExpression/confusion-matrix.git"
     },
     "scripts": {
+        "test": "ng test --watch=false --browsers=ChromeHeadless",
         "build": "ng build --prod",
         "generate-documentation": "npx compodoc -d ../../dist/documentation  -p tsconfig.lib.json src",
+        "build-test": "ng test --project=confusion-matrix --browsers=ChromeHeadlessCI",
         "code-coverage": "ng test --no-watch --code-coverage",
         "publish-documentation": ""
     },

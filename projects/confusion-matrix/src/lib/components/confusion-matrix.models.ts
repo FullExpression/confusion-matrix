@@ -227,7 +227,7 @@ export class ConfusionMatrix {
 
         const position = this.labels.findIndex(element => element === label);
 
-        if (position == null) {
+        if (position == undefined) {
             throw "The label does not exists in the matrix.";
         }
 
