@@ -6,7 +6,7 @@
         "start": "ng serve",
         "build": "ng build confusion-matrix --prod && ng build web-app",
         "test": "ng test ",
-        "build-test": "ng test --no-watch --browsers=ChromeHeadlessCI",
+        "cm-build-test": "ng test --no-watch --project=confusion-matrix --browsers=ChromeHeadlessCI",
         "code-coverage": "ng test --no-watch --code-coverage",
         "lint": "ng lint",
         "publish": "npm run build && npm publish ./dist/confusion-matrix",

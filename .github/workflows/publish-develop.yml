@@ -35,8 +35,7 @@ jobs:
       - name: Build
         run: npm run build
       - name: Test
-        run: npm run build-test
-        working-directory: ./projects/confusion-matrix
+        run: npm run cm-build-test
       - name: Publish package
         run: npm publish ./dist/confusion-matrix
       - name: Commit new package version
