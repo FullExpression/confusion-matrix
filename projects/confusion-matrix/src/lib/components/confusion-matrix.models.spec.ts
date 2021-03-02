@@ -331,4 +331,58 @@ describe("Confusion matrix model test suite", () => {
         expect(value).toBe(expectedWeightMatrixRateValue);
     });
 
+    it("Can calculate the matrix recall value.", () => {
+        const confusionMatrix = getConfusionMatrix();
+        const configuration = {
+            label: 'Apple',
+            weight: false
+        };
+        const { Apple, Orange, Mango } = getConfusionMatrixClasses();
+
+
+        // Expected values for each label
+        const expectedAppleRecallValue = (Apple.truePositive) /
+            (Apple.truePositive + Apple.falseNegative);
+
+        const expectedOrangeRecallValue = (Orange.truePositive) /
+            (Orange.truePositive + Orange.falseNegative);
+
+        const expectedMangoRecallValue = (Mango.truePositive) /
+            (Mango.truePositive + Mango.falseNegative);
+
+        // Test Apple precision.
+        let value = confusionMatrix.recall(configuration);
+        expect(value).toBe((expectedAppleRecallValue))
+
+        // Test Orange precision.
+        configuration.label = 'Orange';
+        value = confusionMatrix.recall(configuration);
+        expect(value).toBe((expectedOrangeRecallValue))
+
+        // Test Mango precision.
+        configuration.label = 'Mango';
+        value = confusionMatrix.recall(configuration);
+        expect(value).toBe((expectedMangoRecallValue));
+
+        // Expected matrix precision.
+        const expectedMatrixRateValue = (expectedAppleRecallValue + expectedOrangeRecallValue +
+            expectedMangoRecallValue) / 3
+
+        // Test matrix precision.
+        value = confusionMatrix.recall();
+        expect(value).toBe(expectedMatrixRateValue);
+
+        const predictionsLabel = getLabelsPredictionsSum();
+
+        // Expected matrix weight precision value.
+        const expectedWeightMatrixRateValue =
+            ((expectedAppleRecallValue * predictionsLabel.Apple) +
+                (expectedOrangeRecallValue * predictionsLabel.Orange) +
+                (expectedMangoRecallValue * predictionsLabel.Mango)) / getPredictionsSum();
+
+        // Test matrix weighted miss classification rate value..
+        value = confusionMatrix.recall({ weighted: true });
+        expect(value).toBe(expectedWeightMatrixRateValue);
+    });
+
 });

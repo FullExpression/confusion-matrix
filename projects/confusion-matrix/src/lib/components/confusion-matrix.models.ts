@@ -380,24 +380,86 @@ export class ConfusionMatrix {
         }
     }
 
-    recall(configuration: {
+    /**
+     * Recall also know as True Positive Rate, sensitivity, hit rate and probability of detection,
+     * gives what fraction of all positives samples correctly predicted as positive.
+     *
+     * Formula:
+     *
+     * labelRecall = TP / (TP + FN)
+     *
+     * allMatrix = Sum(n)(labelRecall[n])
+     *
+     * labelWeight[] = (numberOfLabelPredictions / totalNumberOfPredictions) (repeated for each label);
+     *
+     * allMatrixWeighted = Sum(n)(labelRecall[n] * labelWeight[n])
+     *
+     * @param configuration Allows not set some configuration when calculating the recall value.
+     *
+     * [[configuration.label]] : The label name which will be used to calculate the recall value.
+     * If undefined or null, the recall value will be calculated for all confusion matrix.
+     *
+     * [[configuration.weighted]]: Defines if the recall value should be weighted. This means the labels
+     * with more predictions will weight more in the final value comparing with labels with less
+     * predictions. Note: The weight will only be taken in account when the recall is being calculated to  all
+     * confusion matrix.
+     *
+     * @return The recall value.
+     */
+    recall(configuration?: {
         label?: string,
         weighted?: boolean
     }): number {
         this.validateMatrix();
-        const { label, weighted } = configuration;
-        if (label && label.length > 0) {
-            return this.labelRecall(label);
+        if (configuration?.label && configuration?.label.length > 0) {
+            return this.labelRecall(configuration.label);
         }
-        return this.matrixRecall(weighted);
+        return this.matrixRecall(configuration?.weighted);
     }
 
+    /**
+     * Recall also know as True Positive Rate, sensitivity, hit rate and probability of detection,
+     * gives what fraction of all positives samples correctly predicted as positive.
+     *
+     * Formula:
+     *
+     * labelRecall = TP / (TP + FN)
+     *
+     * @param label The label used to get the recall value.
+     * @return Recall value for a given label.
+     *
+     * @note Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more
+     * information regarding terminology, formulas and other theoretical concepts.
+     */
     labelRecall(label: string): number {
         this.validateMatrix();
         const { truePositive, falseNegative } = this.getConfusionMatrixClasses(label);
         return (truePositive) / (truePositive + falseNegative);
     }
 
+    /**
+     * Recall also know as True Positive Rate, sensitivity, hit rate and probability of detection,
+     * gives what fraction of all positives samples correctly predicted as positive.
+     *
+     * Formula:
+     *
+     * labelRecall = TP / (TP + FN)
+     *
+     * allMatrix = Sum(n)(labelRecall[n])
+     *
+     * labelWeight[] = (numberOfLabelPredictions / totalNumberOfPredictions) (repeated for each label);
+     *
+     * allMatrixWeighted = Sum(n)(labelRecall[n] * labelWeight[n])
+     *
+     * @param weighted Defines if the recall value should be weighted. This means that the labels
+     * with more predictions will weight more in the final rate value comparing with labels with less
+     * predictions.
+     *
+     * @return The recall value.
+     *
+     * @note Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more
+     * information regarding terminology, formulas and other theoretical concepts.
+     */
     matrixRecall(weighted = false): number {
         this.validateMatrix();
         if (weighted) {
