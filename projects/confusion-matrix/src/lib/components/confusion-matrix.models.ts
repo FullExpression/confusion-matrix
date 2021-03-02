@@ -1,12 +1,24 @@
 /**
- * Confusion matrix model.
+ * Confusion matrix model which summarizes the prediction results on a classification problem.
+ * 
+ * The number of correct/incorrect predictions are summarized with count values and grouped by each class.
+ * 
+ * The matrix columns represents the true classes and the columns the predicted classes.
+ * 
+ * Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more 
+ * information regarding terminology, formulas and other theoretical concepts.
+ * 
  */
 export class ConfusionMatrix {
 
     /** Confusion matrix labels */
     labels = new Array<string>();
 
-    /** Local confusion matrix values */
+    /** 
+     * Confusion matrix values. 
+     * 
+     * The columns represents the true classes and the columns the predicted classes.
+     */
     matrix = new Array<Array<number>>();
 
     /** Normalization history values. */
@@ -91,9 +103,9 @@ export class ConfusionMatrix {
      * 
      * allMatrix = Sum(n)(labelAccuracy[n])
      * 
-     * labelWeight[] = (numberOfLabelPredictions / totalNumberOfPredictions) (repeat for each label);
+     * labelWeight[] = (numberOfLabelPredictions / totalNumberOfPredictions) (repeated for each label);
      * 
-     * allMatrixWeight =  Sum(n)(labelAccuracy[n] * labelWeight[n])
+     * allMatrixWeighted =  Sum(n)(labelAccuracy[n] * labelWeight[n])
      * 
      * @param configuration Allows not set some configuration when calculating the accuracy number.
      * 
@@ -102,7 +114,9 @@ export class ConfusionMatrix {
      * 
      * [[configuration.weighted]]: Defines if the accuracy value should be weighted. This means that the labels
      * with more predictions will weight more in the final accuracy value comparing with labels with less
-     * predictions. Note: The weight will only be taken in account when the accuracy is being calculated to the all
+     * predictions. You should use this options whenever you have [unbalance data](https://machinelearningmastery.com/what-is-imbalanced-classification/).
+     * 
+     * Note: The weight will only be taken in account when the accuracy is being calculated to the all
      * confusion matrix.
      * 
      * @return The accuracy value.
@@ -117,6 +131,7 @@ export class ConfusionMatrix {
             return this.labelAccuracy(configuration.label);
         }
         return this.matrixAccuracy(configuration?.weighted);
+        ConfusionMatrix
     }
 
     /**
@@ -131,7 +146,7 @@ export class ConfusionMatrix {
      */
     labelAccuracy(label: string): number {
         this.validateMatrix();
-        const { truePositive, trueNegative, falsePositive, falseNegative } = this.getTrueClasses(label);
+        const { truePositive, trueNegative, falsePositive, falseNegative } = this.getMatrixClasses(label);
         return (truePositive + trueNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
     }
 
@@ -144,9 +159,9 @@ export class ConfusionMatrix {
      *
      * allMatrix = Sum(n)(labelAccuracy[n])
      *
-     * labelWeight[] = (numberOfLabelPredictions / totalNumberOfPredictions) (repeat for each label);
+     * labelWeight[] = (numberOfLabelPredictions / totalNumberOfPredictions) (repeated for each label);
      *
-     * allMatrixWeight =  Sum(n)(labelAccuracy[n] * labelWeight[n])
+     * allMatrixWeighted =  Sum(n)(labelAccuracy[n] * labelWeight[n])
      *
      * @param weighted Defines if the accuracy value should be weighted. This means that the labels
      * with more predictions will weight more in the final accuracy value comparing with labels with less
@@ -159,8 +174,6 @@ export class ConfusionMatrix {
         if (weighted) {
             const sumLabels = this.getLabelsPredictionsSum();
             const numberOfPredictions = this.getNumberOfPredictions();
-            console.log(numberOfPredictions);
-            console.log(sumLabels);
             let sum = 0;
             this.labels.forEach((label, index) => sum += (this.labelAccuracy(label) * sumLabels[index]));
             return sum / numberOfPredictions
@@ -175,28 +188,76 @@ export class ConfusionMatrix {
     /**
      * Misclassification rate or 1-Accuracy, gives what fraction of predictions were incorrect.
      *
-     * MISSING DOCUMENTATIOn
+     * Formula: 
+     * 
+     * labelMisclassification = (FP + FN) / ( TP + TN + FP + FN)
+     * 
+     * allMatrix = Sum(n)(labelMisclassification[n])
      *
-     * @return The accuracy value.
+     * labelWeight[] = (numberOfLabelPredictions / totalNumberOfPredictions) (repeated for each label);
+     *
+     * allMatrixWeighted = Sum(n)(labelAccuracy[n] * labelWeight[n])
+     *
+     * @param configuration Allows not set some configuration when calculating the miss classification rate.
+     *
+     * [[configuration.label]] : The label name which will be used to calculate the miss classification rate.
+     * If undefined or null, the rate value will be calculated for the all confusion matrix.
+     *
+     * [[configuration.weighted]]: Defines if the miss classification rate value should be weighted. This means the labels
+     * with more predictions will weight more in the final rate value comparing with labels with less
+     * predictions. Note: The weight will only be taken in account when the accuracy is being calculated to  all
+     * confusion matrix.
+     * 
+     * @return The miss classification rate value.
      */
-    missClassificationRate(configuration: {
+    missClassificationRate(configuration?: {
         label?: string,
         weighted?: boolean
     }): number {
         this.validateMatrix();
-        const { label, weighted } = configuration;
-        if (label && label.length > 0) {
-            return this.labelMissClassificationRate(label);
+        if (configuration?.label && configuration?.label.length > 0) {
+            return this.labelMissClassificationRate(configuration.label);
         }
-        return this.matrixMissClassificationRate(weighted);
+        return this.matrixMissClassificationRate(configuration?.weighted);
     }
 
+    /**
+     * Gives the miss classification value for a given matrix label.
+     * 
+     * Misclassification rate or 1-Accuracy, gives what fraction of predictions were incorrect.
+     * 
+     * Formula:
+     *
+     * labelMissclassificationRate = (FP + FN) / ( TP + TN + FP + FN)
+     *
+     * @param label The label used to get the miss classification rate value.
+     * @return Miss classification rate for a given label.
+     */
     labelMissClassificationRate(label: string): number {
         this.validateMatrix();
-        const { truePositive, trueNegative, falsePositive, falseNegative } = this.getTrueClasses(label);
+        const { truePositive, trueNegative, falsePositive, falseNegative } = this.getMatrixClasses(label);
         return (falsePositive + falseNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
     }
 
+    /**
+     * Gives the overall miss classification rate for the confusion matrix.
+     *
+     * Formula:
+     *
+     * labelMissclassificationRate = (FP + FN) / ( TP + TN + FP + FN)
+     *
+     * allMatrix = Sum(n)(labelMissclassificationRate[n])
+     *
+     * labelWeight[] = (numberOfLabelPredictions / totalNumberOfPredictions) (repeated for each label);
+     *
+     * allMatrixWeighted =  Sum(n)(labelMissclassificationRate[n] * labelWeight[n])
+     *
+     * @param weighted Defines if the miss classification rate should be weighted. This means that the labels
+     * with more predictions will weight more in the final rate value comparing with labels with less
+     * predictions.
+     *
+     * @return The accuracy value.
+     */
     matrixMissClassificationRate(weighted?: boolean): number {
         this.validateMatrix();
         if (weighted) {
@@ -212,17 +273,17 @@ export class ConfusionMatrix {
         }
     }
 
-    getAllTrueClasses(): Array<{ label: string, trueClasses: TrueClasses }> {
+    getAllMatrixClasses(): Array<{ label: string, trueClasses: MatrixClasses }> {
         this.validateMatrix();
-        const all = new Array<{ label: string, trueClasses: TrueClasses }>();
+        const all = new Array<{ label: string, trueClasses: MatrixClasses }>();
         this.labels.forEach((label) => all.push({
             label: label,
-            trueClasses: this.getTrueClasses(label)
+            trueClasses: this.getMatrixClasses(label)
         }));
         return all;
     }
 
-    getTrueClasses(label: string): TrueClasses {
+    getMatrixClasses(label: string): MatrixClasses {
         this.validateMatrix();
         if (!label) {
             throw new Error("A valid label should be passed.");
@@ -263,7 +324,7 @@ export class ConfusionMatrix {
 
     labelPrecision(label: string): number {
         this.validateMatrix();
-        const { truePositive, falsePositive } = this.getTrueClasses(label);
+        const { truePositive, falsePositive } = this.getMatrixClasses(label);
         return (truePositive) / (truePositive + falsePositive);
     }
 
@@ -297,7 +358,7 @@ export class ConfusionMatrix {
 
     labelRecall(label: string): number {
         this.validateMatrix();
-        const { truePositive, falseNegative } = this.getTrueClasses(label);
+        const { truePositive, falseNegative } = this.getMatrixClasses(label);
         return (truePositive) / (truePositive + falseNegative);
     }
 
@@ -347,7 +408,7 @@ export class ConfusionMatrix {
 
     labelSpecificity(label: string): number {
         this.validateMatrix();
-        const { truePositive, falsePositive } = this.getTrueClasses(label);
+        const { truePositive, falsePositive } = this.getMatrixClasses(label);
         return (truePositive) / (truePositive + falsePositive);
     }
 
@@ -513,7 +574,10 @@ export enum ConfusionMatrixSizes {
     ExtraLarge = 'extra-large'
 }
 
-export interface TrueClasses {
+/**
+ * 
+ */
+export interface MatrixClasses {
     truePositive: number;
     trueNegative: number;
     falsePositive: number;

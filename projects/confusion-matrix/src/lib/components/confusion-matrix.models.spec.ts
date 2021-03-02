@@ -55,7 +55,7 @@ describe("Confusion matrix model test suite", () => {
         }
     }
 
-    it("Can initialize correctly.", () => {
+    it("1Can initialize correctly.", () => {
         const confusionMatrix = getConfusionMatrix();
         expect(confusionMatrix.labels).toEqual(getLabels());
         expect(confusionMatrix.matrix).toEqual(getMatrix());
@@ -221,6 +221,60 @@ describe("Confusion matrix model test suite", () => {
         // Test matrix weighted accuracy.
         value = confusionMatrix.accuracy({ weighted: true });
         expect(value).toBe(expectedWeightMatrixAccuracyValue);
+    });
+
+    it("Can calculate the matrix miss classification rate", () => {
+        const confusionMatrix = getConfusionMatrix();
+        const configuration = {
+            label: 'Apple',
+            weight: false
+        };
+        const { Apple, Orange, Mango } = getTrueClasses();
+
+
+        // Expected values for each label
+        const expectedAppleRateValue = (Apple.falsePositive + Apple.falseNegative) /
+            (Apple.trueNegative + Apple.truePositive + Apple.falsePositive + Apple.falseNegative);
+
+        const expectedOrangeRateValue = (Orange.falsePositive + Orange.falseNegative) /
+            (Orange.trueNegative + Orange.truePositive + Orange.falsePositive + Orange.falseNegative);
+
+        const expectedMangoRateValue = (Mango.falsePositive + Mango.falseNegative) /
+            (Mango.trueNegative + Mango.truePositive + Mango.falsePositive + Mango.falseNegative);
+
+        // Test Apple miss classification.
+        let value = confusionMatrix.missClassificationRate(configuration);
+        expect(value).toBe((expectedAppleRateValue))
+
+        // Test Orange miss classification.
+        configuration.label = 'Orange';
+        value = confusionMatrix.missClassificationRate(configuration);
+        expect(value).toBe((expectedOrangeRateValue))
+
+        // Test Mango miss classification.
+        configuration.label = 'Mango';
+        value = confusionMatrix.missClassificationRate(configuration);
+        expect(value).toBe((expectedMangoRateValue));
+
+        // Expected matrix miss classification rate.
+        const expectedMatrixRateValue = (expectedAppleRateValue + expectedOrangeRateValue +
+            expectedMangoRateValue) / 3
+
+        // Test matrix miss classification rate.
+        value = confusionMatrix.missClassificationRate();
+        expect(value).toBe(expectedMatrixRateValue);
+
+        const predictionsLabel = getLabelsPredictionsSum();
+
+        // Expected matrix weight miss classification rate value.
+        const expectedWeightMatrixRateValue =
+            ((expectedAppleRateValue * predictionsLabel.Apple) +
+                (expectedOrangeRateValue * predictionsLabel.Orange) +
+                (expectedMangoRateValue * predictionsLabel.Mango)) / getPredictionsSum();
+
+        // Test matrix weighted miss classification rate value..
+        value = confusionMatrix.missClassificationRate({ weighted: true });
+        expect(value).toBe(expectedWeightMatrixRateValue);
     });
 
 });
