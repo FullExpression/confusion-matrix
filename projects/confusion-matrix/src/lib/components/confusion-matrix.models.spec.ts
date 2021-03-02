@@ -32,7 +32,7 @@ describe("Confusion matrix model test suite", () => {
         return Apple + Orange + Mango;
     }
 
-    const getTrueClasses = () => {
+    const getMatrixClasses = () => {
         return {
             Apple: {
                 truePositive: 7,
@@ -55,7 +55,7 @@ describe("Confusion matrix model test suite", () => {
         }
     }
 
-    it("1Can initialize correctly.", () => {
+    it("Can initialize correctly.", () => {
         const confusionMatrix = getConfusionMatrix();
         expect(confusionMatrix.labels).toEqual(getLabels());
         expect(confusionMatrix.matrix).toEqual(getMatrix());
@@ -140,33 +140,33 @@ describe("Confusion matrix model test suite", () => {
 
     it("Can get true classes.", () => {
         const confusionMatrix = getConfusionMatrix();
-        const { Apple, Orange, Mango } = getTrueClasses();
+        const { Apple, Orange, Mango } = getMatrixClasses();
 
-        const appleTrueClass = confusionMatrix.getTrueClasses('Apple');
-        const orangeTrueClass = confusionMatrix.getTrueClasses('Orange');
-        const mangoTrueClass = confusionMatrix.getTrueClasses('Mango');
+        const appleMatrixClass = confusionMatrix.getMatrixClasses('Apple');
+        const orangeMatrixClass = confusionMatrix.getMatrixClasses('Orange');
+        const mangoMatrixClass = confusionMatrix.getMatrixClasses('Mango');
 
-        expect(appleTrueClass).toEqual(Apple);
-        expect(orangeTrueClass).toEqual(Orange);
-        expect(mangoTrueClass).toEqual(Mango);
+        expect(appleMatrixClass).toEqual(Apple);
+        expect(orangeMatrixClass).toEqual(Orange);
+        expect(mangoMatrixClass).toEqual(Mango);
 
-        expect(() => confusionMatrix.getTrueClasses(''))
+        expect(() => confusionMatrix.getMatrixClasses(''))
             .toThrow(new Error('A valid label should be passed.'));
 
-        expect(() => confusionMatrix.getTrueClasses('abc'))
+        expect(() => confusionMatrix.getMatrixClasses('abc'))
             .toThrow(new Error('The label does not exists in the matrix.'));
 
     });
 
     it("Can get all true classes.", () => {
         const confusionMatrix = getConfusionMatrix();
-        const { Apple, Orange, Mango } = getTrueClasses();
+        const { Apple, Orange, Mango } = getMatrixClasses();
 
-        const allTrueClasses = confusionMatrix.getAllTrueClasses();
+        const allMatrixClasses = confusionMatrix.getAllMatrixClasses();
 
-        expect(allTrueClasses[0].trueClasses).toEqual(Apple);
-        expect(allTrueClasses[1].trueClasses).toEqual(Orange);
-        expect(allTrueClasses[2].trueClasses).toEqual(Mango);
+        expect(allMatrixClasses[0].trueClasses).toEqual(Apple);
+        expect(allMatrixClasses[1].trueClasses).toEqual(Orange);
+        expect(allMatrixClasses[2].trueClasses).toEqual(Mango);
 
     });
 
@@ -176,7 +176,7 @@ describe("Confusion matrix model test suite", () => {
             label: 'Apple',
             weight: false
         };
-        const { Apple, Orange, Mango } = getTrueClasses();
+        const { Apple, Orange, Mango } = getMatrixClasses();
 
         // Expected values for each label
         const expectedAppleAccuracyValue = (Apple.truePositive + Apple.trueNegative) /
@@ -229,7 +229,7 @@ describe("Confusion matrix model test suite", () => {
             label: 'Apple',
             weight: false
         };
-        const { Apple, Orange, Mango } = getTrueClasses();
+        const { Apple, Orange, Mango } = getMatrixClasses();
 
 
         // Expected values for each label
