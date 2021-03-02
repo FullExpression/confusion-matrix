@@ -288,63 +288,6 @@ export class ConfusionMatrix {
     }
 
     /**
-     * Get all matrix classes, containing information about true positives, true negatives, 
-     * false positives and false negatives, as well as the label associated with it.
-     * 
-     * @return An array of matrix classes containing information about true positives, true negatives,
-     * false positives and false negatives, as well as the label associated with it.
-     *
-     * @note Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more
-     * information regarding terminology, formulas and other theoretical concepts.
-     */
-    getAllMatrixClasses(): Array<{ label: string, confusionMatrixClasses: ConfusionMatrixClasses }> {
-        this.validateMatrix();
-        const all = new Array<{ label: string, confusionMatrixClasses: ConfusionMatrixClasses }>();
-        this.labels.forEach((label) => all.push({
-            label: label,
-            confusionMatrixClasses: this.getConfusionMatrixClasses(label)
-        }));
-        return all;
-    }
-
-    /**
-     * For one given label, returns the matrix classes (true positives, true negatives,
-     * false positives and false negatives).
-     * 
-     * @return The matrix classes (true positives, true negatives,
-     * false positives and false negatives).
-     * 
-     * @note Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more
-     * information regarding terminology, formulas and other theoretical concepts.
-     */
-    getConfusionMatrixClasses(label: string): ConfusionMatrixClasses {
-        this.validateMatrix();
-        if (!label) {
-            throw new Error("A valid label should be passed.");
-        }
-        const position = this.labels.findIndex(element => element === label);
-        if (position == -1) {
-            throw new Error("The label does not exists in the matrix.");
-        }
-
-        const matrixSum = this.sumMatrix(this.matrix);
-        const truePositive = this.matrix[position][position];
-        const falsePositive = this.matrix[position].reduce(
-            (previous, next) => previous + next) - truePositive;
-
-        let falseNegative = 0;
-
-        for (let i = 0; i < this.matrix.length; i++) {
-            falseNegative += this.matrix[i][position];
-        }
-
-        falseNegative -= truePositive;
-        const trueNegative = matrixSum - truePositive - falsePositive - falseNegative;
-
-        return { truePositive, trueNegative, falsePositive, falseNegative };
-    }
-
-    /**
      * Precision, gives what fraction of predictions a positive class were actual positive.
      *
      * Formula:
@@ -380,12 +323,47 @@ export class ConfusionMatrix {
         return this.matrixPrecision(configuration?.weighted);
     }
 
+    /**
+     * Precision, gives what fraction of predictions a positive class were actual positive.
+     *
+     * Formula:
+     *
+     * labelPrecision = TP / (TP + FP)
+     *
+     * @param label The label used to get the precision value.
+     * @return Precision value for a given label.
+     *
+     * @note Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more
+     * information regarding terminology, formulas and other theoretical concepts.
+     */
     labelPrecision(label: string): number {
         this.validateMatrix();
         const { truePositive, falsePositive } = this.getConfusionMatrixClasses(label);
         return (truePositive) / (truePositive + falsePositive);
     }
 
+    /**
+     * Precision, gives what fraction of predictions a positive class were actual positive.
+     *
+     * Formula:
+     *
+     * labelPrecision = TP / (TP + FP)
+     *
+     * allMatrix = Sum(n)(labelPrecision[n])
+     *
+     * labelWeight[] = (numberOfLabelPredictions / totalNumberOfPredictions) (repeated for each label);
+     *
+     * allMatrixWeighted = Sum(n)(labelAccuracy[n] * labelWeight[n])
+     *
+     * @param weighted Defines if the precision should be weighted. This means that the labels
+     * with more predictions will weight more in the final rate value comparing with labels with less
+     * predictions.
+     *
+     * @return The precision value.
+     *
+     * @note Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more
+     * information regarding terminology, formulas and other theoretical concepts.
+     */
     matrixPrecision(weighted = false): number {
         this.validateMatrix();
         if (weighted) {
@@ -503,6 +481,64 @@ export class ConfusionMatrix {
     fScore(): number {
         this.validateMatrix();
         throw "not implemented yet";
+    }
+
+
+    /**
+     * Get all matrix classes, containing information about true positives, true negatives, 
+     * false positives and false negatives, as well as the label associated with it.
+     * 
+     * @return An array of matrix classes containing information about true positives, true negatives,
+     * false positives and false negatives, as well as the label associated with it.
+     *
+     * @note Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more
+     * information regarding terminology, formulas and other theoretical concepts.
+     */
+    getAllMatrixClasses(): Array<{ label: string, confusionMatrixClasses: ConfusionMatrixClasses }> {
+        this.validateMatrix();
+        const all = new Array<{ label: string, confusionMatrixClasses: ConfusionMatrixClasses }>();
+        this.labels.forEach((label) => all.push({
+            label: label,
+            confusionMatrixClasses: this.getConfusionMatrixClasses(label)
+        }));
+        return all;
+    }
+
+    /**
+     * For one given label, returns the matrix classes (true positives, true negatives,
+     * false positives and false negatives).
+     * 
+     * @return The matrix classes (true positives, true negatives,
+     * false positives and false negatives).
+     * 
+     * @note Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more
+     * information regarding terminology, formulas and other theoretical concepts.
+     */
+    getConfusionMatrixClasses(label: string): ConfusionMatrixClasses {
+        this.validateMatrix();
+        if (!label) {
+            throw new Error("A valid label should be passed.");
+        }
+        const position = this.labels.findIndex(element => element === label);
+        if (position == -1) {
+            throw new Error("The label does not exists in the matrix.");
+        }
+
+        const matrixSum = this.sumMatrix(this.matrix);
+        const truePositive = this.matrix[position][position];
+        const falsePositive = this.matrix[position].reduce(
+            (previous, next) => previous + next) - truePositive;
+
+        let falseNegative = 0;
+
+        for (let i = 0; i < this.matrix.length; i++) {
+            falseNegative += this.matrix[i][position];
+        }
+
+        falseNegative -= truePositive;
+        const trueNegative = matrixSum - truePositive - falsePositive - falseNegative;
+
+        return { truePositive, trueNegative, falsePositive, falseNegative };
     }
 
     /**
