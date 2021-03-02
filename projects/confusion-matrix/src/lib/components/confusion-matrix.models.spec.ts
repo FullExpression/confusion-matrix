@@ -19,6 +19,19 @@ describe("Confusion matrix model test suite", () => {
         });
     }
 
+    const getLabelsPredictionsSum = () => {
+        return {
+            Apple: 7 + 1 + 3,
+            Orange: 8 + 2 + 2,
+            Mango: 10 + 3 + 0
+        }
+    };
+
+    const getPredictionsSum = () => {
+        const { Apple, Orange, Mango } = getLabelsPredictionsSum();
+        return Apple + Orange + Mango;
+    }
+
     const getTrueClasses = () => {
         return {
             Apple: {
@@ -155,6 +168,59 @@ describe("Confusion matrix model test suite", () => {
         expect(allTrueClasses[1].trueClasses).toEqual(Orange);
         expect(allTrueClasses[2].trueClasses).toEqual(Mango);
 
+    });
+
+    it("Can calculate the matrix accuracy", () => {
+        const confusionMatrix = getConfusionMatrix();
+        const configuration = {
+            label: 'Apple',
+            weight: false
+        };
+        const { Apple, Orange, Mango } = getTrueClasses();
+
+        // Expected values for each label
+        const expectedAppleAccuracyValue = (Apple.truePositive + Apple.trueNegative) /
+            (Apple.trueNegative + Apple.truePositive + Apple.falsePositive + Apple.falseNegative);
+
+        const expectedOrangeAccuracyValue = (Orange.truePositive + Orange.trueNegative) /
+            (Orange.trueNegative + Orange.truePositive + Orange.falsePositive + Orange.falseNegative);
+
+        const expectedMangoAccuracyValue = (Mango.truePositive + Mango.trueNegative) /
+            (Mango.trueNegative + Mango.truePositive + Mango.falsePositive + Mango.falseNegative);
+
+        // Test Apple accuracy.
+        let value = confusionMatrix.accuracy(configuration);
+        expect(value).toBe((expectedAppleAccuracyValue))
+
+        // Test Orange accuracy.
+        configuration.label = 'Orange';
+        value = confusionMatrix.accuracy(configuration);
+        expect(value).toBe((expectedOrangeAccuracyValue))
+
+        // Test Mango accuracy.
+        configuration.label = 'Mango';
+        value = confusionMatrix.accuracy(configuration);
+        expect(value).toBe((expectedMangoAccuracyValue));
+
+        // Expected matrix accuracy value.
+        const expectedMatrixAccuracyValue = (expectedAppleAccuracyValue + expectedOrangeAccuracyValue +
+            expectedMangoAccuracyValue) / 3
+
+        // Test matrix accuracy.
+        value = confusionMatrix.accuracy();
+        expect(value).toBe(expectedMatrixAccuracyValue);
+
+        const predictionsLabel = getLabelsPredictionsSum();
+
+        // Expected matrix weight accuracy value.
+        const expectedWeightMatrixAccuracyValue =
+            ((expectedAppleAccuracyValue * predictionsLabel.Apple) +
+                (expectedOrangeAccuracyValue * predictionsLabel.Orange) +
+                (expectedMangoAccuracyValue * predictionsLabel.Mango)) / getPredictionsSum();
+
+        // Test matrix weighted accuracy.
+        value = confusionMatrix.accuracy({ weighted: true });
+        expect(value).toBe(expectedWeightMatrixAccuracyValue);
     });
 
 });

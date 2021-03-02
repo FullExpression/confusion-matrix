@@ -102,7 +102,8 @@ export class ConfusionMatrix {
      * 
      * [[configuration.weighted]]: Defines if the accuracy value should be weighted. This means that the labels
      * with more predictions will weight more in the final accuracy value comparing with labels with less
-     * predictions.
+     * predictions. Note: The weight will only be taken in account when the accuracy is being calculated to the all
+     * confusion matrix.
      * 
      * @return The accuracy value.
      */
@@ -112,6 +113,7 @@ export class ConfusionMatrix {
     }): number {
         this.validateMatrix();
         if (configuration?.label && configuration?.label.length > 0) {
+
             return this.labelAccuracy(configuration.label);
         }
         return this.matrixAccuracy(configuration?.weighted);
@@ -157,7 +159,8 @@ export class ConfusionMatrix {
         if (weighted) {
             const sumLabels = this.getLabelsPredictionsSum();
             const numberOfPredictions = this.getNumberOfPredictions();
-
+            console.log(numberOfPredictions);
+            console.log(sumLabels);
             let sum = 0;
             this.labels.forEach((label, index) => sum += (this.labelAccuracy(label) * sumLabels[index]));
             return sum / numberOfPredictions
@@ -452,9 +455,12 @@ export class ConfusionMatrix {
     }
 
     getLabelsPredictionsSum(): Array<number> {
-        const sumLabels = new Array<number>().fill(0, 0, this.labels.length);
+        let sumLabels = new Array<number>(this.labels.length)
+            .fill(0, 0, this.labels.length);
         this.matrix.forEach((array) =>
-            array.forEach((value, index) => sumLabels[index] += value));
+            array.forEach((value, index) => {
+                sumLabels[index] += value;
+            }));
         return sumLabels;
     }
 
