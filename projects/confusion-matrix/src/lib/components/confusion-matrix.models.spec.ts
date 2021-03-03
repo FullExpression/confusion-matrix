@@ -385,4 +385,58 @@ describe("Confusion matrix model test suite", () => {
         expect(value).toBe(expectedWeightMatrixRateValue);
     });
 
+    it("Can calculate the matrix specificity value.", () => {
+        const confusionMatrix = getConfusionMatrix();
+        const configuration = {
+            label: 'Apple',
+            weight: false
+        };
+        const { Apple, Orange, Mango } = getConfusionMatrixClasses();
+
+
+        // Expected values for each label
+        const expectedAppleSpecificityValue = (Apple.trueNegative) /
+            (Apple.trueNegative + Apple.falsePositive);
+
+        const expectedOrangeSpecificityValue = (Orange.trueNegative) /
+            (Orange.trueNegative + Orange.falsePositive);
+
+        const expectedMangoSpecificityValue = (Mango.trueNegative) /
+            (Mango.trueNegative + Mango.falsePositive);
+
+        // Test Apple specificity.
+        let value = confusionMatrix.specificity(configuration);
+        expect(value).toBe((expectedAppleSpecificityValue))
+
+        // Test Orange specificity.
+        configuration.label = 'Orange';
+        value = confusionMatrix.specificity(configuration);
+        expect(value).toBe((expectedOrangeSpecificityValue))
+
+        // Test Mango specificity.
+        configuration.label = 'Mango';
+        value = confusionMatrix.specificity(configuration);
+        expect(value).toBe((expectedMangoSpecificityValue));
+
+        // Expected matrix specificity.
+        const expectedMatrixSpecificityValue = (expectedAppleSpecificityValue + expectedOrangeSpecificityValue +
+            expectedMangoSpecificityValue) / 3
+
+        // Test matrix specificity.
+        value = confusionMatrix.specificity();
+        expect(value).toBe(expectedMatrixSpecificityValue);
+
+        const predictionsLabel = getLabelsPredictionsSum();
+
+        // Expected matrix weight specificity value.
+        const expectedWeightMatrixSpecificityValue =
+            ((expectedAppleSpecificityValue * predictionsLabel.Apple) +
+                (expectedOrangeSpecificityValue * predictionsLabel.Orange) +
+                (expectedMangoSpecificityValue * predictionsLabel.Mango)) / getPredictionsSum();
+
+        // Test matrix weighted miss classification rate value..
+        value = confusionMatrix.specificity({ weighted: true });
+        expect(value).toBe(expectedWeightMatrixSpecificityValue);
+    });
+
 });

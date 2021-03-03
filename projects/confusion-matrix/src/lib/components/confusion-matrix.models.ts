@@ -476,18 +476,66 @@ export class ConfusionMatrix {
         }
     }
 
-    specificity(configuration: {
+    /**
+     * Specificity also know as selectivity or true negative rate,
+     * gives what fraction of all negatives samples are correctly as negative.
+     *
+     * Formula:
+     *
+     * labelSpecificity = TP / (TN + FN)
+     *
+     * allMatrix = Sum(n)(labelSpecificity[n])
+     *
+     * labelWeight[] = (numberOfLabelPredictions / totalNumberOfPredictions) (repeated for each label);
+     *
+     * allMatrixWeighted = Sum(n)(labelSpecificity[n] * labelWeight[n])
+     *
+     * @param configuration Allows not set some configuration when calculating the specificity value.
+     *
+     * [[configuration.label]] : The label name which will be used to calculate the specificity value.
+     * If undefined or null, the recall value will be calculated for all confusion matrix.
+     *
+     * [[configuration.weighted]]: Defines if the specificity value should be weighted. This means the labels
+     * with more predictions will weight more in the final value comparing with labels with less
+     * predictions. Note: The weight will only be taken in account when the specificity is being calculated to  all
+     * confusion matrix.
+     *
+     * @return The specificity value.
+     */
+    specificity(configuration?: {
         label?: string,
         weighted?: boolean
     }): number {
         this.validateMatrix();
-        const { label, weighted } = configuration;
-        if (label && label.length > 0) {
-            return this.labelSpecificity(label);
+        if (configuration?.label && configuration?.label.length > 0) {
+            return this.labelSpecificity(configuration.label);
         }
-        return this.matrixSpecificity(weighted);
+        return this.matrixSpecificity(configuration?.weighted);
     }
 
+    /**
+      * Specificity also know as selectivity or true negative rate,
+      * gives what fraction of all negatives samples are correctly as negative.
+      *
+      * Formula:
+      *
+      * labelSpecificity = TP / (TN + FN)
+      *
+      * allMatrix = Sum(n)(labelSpecificity[n])
+      *
+      * labelWeight[] = (numberOfLabelPredictions / totalNumberOfPredictions) (repeated for each label);
+      *
+      * allMatrixWeighted = Sum(n)(labelSpecificity[n] * labelWeight[n])
+      *
+      * @param weighted Defines if the specificity value should be weighted. This means that the labels
+      * with more predictions will weight more in the final rate value comparing with labels with less
+      * predictions.
+      *
+      * @return The specificity value.
+      *
+      * @note Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more
+      * information regarding terminology, formulas and other theoretical concepts.
+      */
     matrixSpecificity(weighted = false): number {
         this.validateMatrix();
         if (weighted) {
@@ -495,52 +543,36 @@ export class ConfusionMatrix {
             const numberOfPredictions = this.getNumberOfPredictions();
 
             let sum = 0;
-            this.labels.forEach((label, index) => sum += (this.labelRecall(label) * sumLabels[index]));
+            this.labels.forEach((label, index) => sum += (this.labelSpecificity(label) * sumLabels[index]));
             return sum / numberOfPredictions
         } else {
             let sum = 0;
-            this.labels.forEach((label) => sum += this.labelRecall(label));
+            this.labels.forEach((label) => sum += this.labelSpecificity(label));
             return sum / this.labels.length;
         }
     }
 
+    /**
+     * Specificity also know as selectivity or true negative rate,
+     * gives what fraction of all negatives samples are correctly as negative.
+     *
+     * Formula:
+     *
+     * labelSpecificity = TP / (TN + FN)
+     *
+     * @param label The label used to get the specificity value.
+     * @return Specificity value for a given label.
+     *
+     * @note Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more
+     * information regarding terminology, formulas and other theoretical concepts.
+     */
     labelSpecificity(label: string): number {
         this.validateMatrix();
-        const { truePositive, falsePositive } = this.getConfusionMatrixClasses(label);
-        return (truePositive) / (truePositive + falsePositive);
+        const { trueNegative, falsePositive } = this.getConfusionMatrixClasses(label);
+        return (trueNegative) / (trueNegative + falsePositive);
     }
 
-    truePositiveRate(): number {
-        this.validateMatrix();
-        throw "not implemented yet";
-    }
-
-    falsePositiveRate(configuration: {
-        label?: string,
-        weighted?: boolean
-    }): number {
-        this.validateMatrix();
-        return 0;
-    }
-
-    trueNegativeRate(): number {
-        this.validateMatrix();
-        throw "not implemented yet";
-    }
-
-
-
-    prevalence(): number {
-        this.validateMatrix();
-        throw "not implemented yet";
-    }
-
-    nullErrorRate(): number {
-        this.validateMatrix();
-        throw "not implemented yet";
-    }
-
-    fScore(): number {
+    f1Score(): number {
         this.validateMatrix();
         throw "not implemented yet";
     }
