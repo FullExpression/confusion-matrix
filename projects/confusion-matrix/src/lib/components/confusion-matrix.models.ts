@@ -44,7 +44,7 @@ export class ConfusionMatrix {
             this.labels = this.deepCopy(confusionMatrix.labels);
             this.matrix = this.deepCopy(confusionMatrix.matrix);
         }
-        this.validateMatrix();
+        this.validate();
     }
 
     /**
@@ -56,7 +56,7 @@ export class ConfusionMatrix {
             this.labels = this.deepCopy(confusionMatrix.labels);
             this.matrix = this.deepCopy(confusionMatrix.matrix);
         }
-        this.validateMatrix();
+        this.validate();
     }
 
     /**
@@ -73,10 +73,10 @@ export class ConfusionMatrix {
      */
     normalize(min: number = 0, max: number = 1, fractionDigits?: FractionDigits) {
         if (min >= max) {
-            throw "Min value cannot be equal or greater than max value.";
+            throw new Error('Min value cannot be equal or greater than max value.');
         }
 
-        this.validateMatrix();
+        this.validate();
         const matrixMinMax = this.getMinAndMax();
         if (matrixMinMax) {
             this.normalizations.push(new ConfusionMatrix(this));
@@ -92,8 +92,6 @@ export class ConfusionMatrix {
 
                 }
             }
-        } else {
-            throw new Error("Error getting the min and max value. Please, verify the matrix dimensions.");
         }
 
     }
@@ -129,7 +127,7 @@ export class ConfusionMatrix {
         label?: string,
         average?: AverageMethod
     } = { average: AverageMethod.Weighted }): number {
-        this.validateMatrix();
+        this.validate();
         if (configuration?.label && configuration?.label.length > 0) {
             return this.labelAccuracy(configuration.label);
         }
@@ -150,7 +148,7 @@ export class ConfusionMatrix {
      * @return Accuracy value for a given label.
      */
     labelAccuracy(label: string): number {
-        this.validateMatrix();
+        this.validate();
         const { truePositive, trueNegative, falsePositive, falseNegative } = this.getConfusionMatrixClasses(label);
         const result = (truePositive + trueNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
         return result || 0;
@@ -178,7 +176,7 @@ export class ConfusionMatrix {
      * @return The accuracy value.
      */
     matrixAccuracy(average = AverageMethod.Weighted): number {
-        this.validateMatrix();
+        this.validate();
         switch (average) {
             case AverageMethod.Micro: return this.microAccuracy();
             case AverageMethod.Macro: return this.macroAccuracy();
@@ -269,7 +267,7 @@ export class ConfusionMatrix {
         label?: string,
         average?: AverageMethod
     } = { average: AverageMethod.Weighted }): number {
-        this.validateMatrix();
+        this.validate();
         if (configuration?.label && configuration?.label.length > 0) {
             return this.labelMissClassificationRate(configuration.label);
         }
@@ -290,7 +288,7 @@ export class ConfusionMatrix {
      * @return Miss classification rate for a given label.
      */
     labelMissClassificationRate(label: string): number {
-        this.validateMatrix();
+        this.validate();
         const { truePositive, trueNegative, falsePositive, falseNegative } = this.getConfusionMatrixClasses(label);
         const result = (falsePositive + falseNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
         return result || 0;
@@ -319,7 +317,7 @@ export class ConfusionMatrix {
      * @return The miss classification value.
      */
     matrixMissClassificationRate(average = AverageMethod.Weighted): number {
-        this.validateMatrix();
+        this.validate();
         switch (average) {
             case AverageMethod.Micro: return this.microMissClassificationRate();
             case AverageMethod.Macro: return this.macroMissClassificationRate();
@@ -412,7 +410,7 @@ export class ConfusionMatrix {
         label?: string,
         average?: AverageMethod
     } = { average: AverageMethod.Weighted }): number {
-        this.validateMatrix();
+        this.validate();
         if (configuration?.label && configuration?.label.length > 0) {
             return this.labelPrecision(configuration.label);
         }
@@ -432,7 +430,7 @@ export class ConfusionMatrix {
      * @return Precision value for a given label.
      */
     labelPrecision(label: string): number {
-        this.validateMatrix();
+        this.validate();
         const { truePositive, falsePositive } = this.getConfusionMatrixClasses(label);
         const result = ((truePositive) / (truePositive + falsePositive));
         return result || 0;
@@ -460,7 +458,7 @@ export class ConfusionMatrix {
      * @return The precision value.
      */
     matrixPrecision(average = AverageMethod.Weighted): number {
-        this.validateMatrix();
+        this.validate();
         switch (average) {
             case AverageMethod.Micro: return this.microPrecision();
             case AverageMethod.Macro: return this.macroPrecision();
@@ -552,7 +550,7 @@ export class ConfusionMatrix {
         label?: string,
         average?: AverageMethod
     } = { average: AverageMethod.Weighted }): number {
-        this.validateMatrix();
+        this.validate();
         if (configuration?.label && configuration?.label.length > 0) {
             return this.labelRecall(configuration.label);
         }
@@ -573,7 +571,7 @@ export class ConfusionMatrix {
      * @return Recall value for a given label.
      */
     labelRecall(label: string): number {
-        this.validateMatrix();
+        this.validate();
         const { truePositive, falseNegative } = this.getConfusionMatrixClasses(label);
         const result = ((truePositive) / (truePositive + falseNegative));
         return result || 0;
@@ -602,7 +600,7 @@ export class ConfusionMatrix {
      * @return The recall value.
      */
     matrixRecall(average = AverageMethod.Weighted): number {
-        this.validateMatrix();
+        this.validate();
         switch (average) {
             case AverageMethod.Micro: return this.microRecall();
             case AverageMethod.Macro: return this.macroRecall();
@@ -697,7 +695,7 @@ export class ConfusionMatrix {
         label?: string,
         average?: AverageMethod
     } = { average: AverageMethod.Weighted }): number {
-        this.validateMatrix();
+        this.validate();
         if (configuration?.label && configuration?.label.length > 0) {
             return this.labelSpecificity(configuration.label);
         }
@@ -727,7 +725,7 @@ export class ConfusionMatrix {
      * @return The specificity value.
      */
     matrixSpecificity(average = AverageMethod.Weighted): number {
-        this.validateMatrix();
+        this.validate();
         switch (average) {
             case AverageMethod.Micro: return this.microSpecificity();
             case AverageMethod.Macro: return this.macroSpecificity();
@@ -805,7 +803,7 @@ export class ConfusionMatrix {
      * @return Specificity value for a given label.
      */
     labelSpecificity(label: string): number {
-        this.validateMatrix();
+        this.validate();
         const { trueNegative, falsePositive } = this.getConfusionMatrixClasses(label);
         const result = (trueNegative) / (trueNegative + falsePositive);
         return result || 0;
@@ -841,7 +839,7 @@ export class ConfusionMatrix {
         label?: string,
         average?: AverageMethod
     }): number {
-        this.validateMatrix();
+        this.validate();
         if (configuration?.label && configuration?.label.length > 0) {
             return this.labelF1Score(configuration.label);
         }
@@ -870,7 +868,7 @@ export class ConfusionMatrix {
      * @return The F1 Score value.
      */
     matrixF1Score(average = AverageMethod.Weighted): number {
-        this.validateMatrix();
+        this.validate();
         switch (average) {
             case AverageMethod.Micro: return this.microF1Score();
             case AverageMethod.Macro: return this.macroF1Score();
@@ -891,7 +889,7 @@ export class ConfusionMatrix {
      * @return F1 Score value for a given label.
      */
     labelF1Score(label: string): number {
-        this.validateMatrix();
+        this.validate();
         const precision = this.precision({ label });
         const recall = this.recall({ label });
         const result = 2 * ((precision * recall) / (precision + recall));
@@ -962,7 +960,7 @@ export class ConfusionMatrix {
      * information regarding terminology, formulas and other theoretical concepts.
      */
     getAllMatrixClasses(): Array<{ label: string, confusionMatrixClasses: ConfusionMatrixClasses }> {
-        this.validateMatrix();
+        this.validate();
         const all = new Array<{ label: string, confusionMatrixClasses: ConfusionMatrixClasses }>();
         this.labels.forEach((label) => all.push({
             label: label,
@@ -971,6 +969,10 @@ export class ConfusionMatrix {
         return all;
     }
 
+    /**
+     * Gets the sum of all confusion matrix predictions, defined by classes.
+     * @return Sum of all predictions, defined by classes.
+     */
     getSumConfusionMatrixClasses(): ConfusionMatrixClasses {
         const classesSum: ConfusionMatrixClasses = {
             truePositive: 0,
@@ -999,13 +1001,13 @@ export class ConfusionMatrix {
      * information regarding terminology, formulas and other theoretical concepts.
      */
     getConfusionMatrixClasses(label: string): ConfusionMatrixClasses {
-        this.validateMatrix();
+        this.validate();
         if (!label) {
-            throw new Error("A valid label should be passed.");
+            throw new Error('A valid label should be passed.');
         }
         const position = this.labels.findIndex(element => element === label);
         if (position == -1) {
-            throw new Error("The label does not exists in the matrix.");
+            throw new Error('The label does not exists in the matrix.');
         }
 
         const numberOfPredictions = this.getNumberOfPredictions();
@@ -1035,6 +1037,7 @@ export class ConfusionMatrix {
             const cm = this.normalizations.pop();
             if (cm) {
                 this.setConfusionMatrix(cm);
+                return cm;
             }
         }
         return null;
@@ -1078,7 +1081,9 @@ export class ConfusionMatrix {
      * Reverts all normalizations performed.
      */
     revertAllNormalizations() {
-        this.setConfusionMatrix(this.normalizations[0]);
+        if (this.normalizations && this.normalizations.length > 0) {
+            this.setConfusionMatrix(this.normalizations[0]);
+        }
     }
 
     /**
@@ -1120,22 +1125,22 @@ export class ConfusionMatrix {
      * Validate if the confusion matrix is valid.
      * If not, an error describing the issue will be thrown.
      */
-    validateMatrix() {
+    validate() {
         if (this.labels.length !== this.matrix.length) {
-            throw "The labels length should be equals to the matrix columns length."
+            throw new Error('The labels length should be equals to the matrix columns length.');
         }
 
         for (let i = 0; i < this.labels.length - 1; i++) {
             for (let j = i + 1; j < this.labels.length; j++) {
                 if (this.labels[i] === this.labels[j]) {
-                    throw `The label ${this.labels[i]} appears more than once in the labels array.`;
+                    throw new Error(`The label ${this.labels[i]} appears more than once in the labels array.`);
                 }
             }
         }
 
         this.matrix.forEach(array => {
             if (array.length !== this.matrix.length) {
-                throw "The confusion matrix does not have the columns/rows length."
+                throw new Error('The confusion matrix does not have the columns/rows length.');
             }
         });
     }

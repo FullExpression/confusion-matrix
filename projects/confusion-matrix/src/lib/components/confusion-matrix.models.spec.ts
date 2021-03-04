@@ -163,19 +163,65 @@ describe("Confusion matrix model test suite", () => {
         confusionMatrix.normalize(-13.726, 89.93214, 5);
 
         expect(() => confusionMatrix.normalize(3, 3))
-            .toThrow("Min value cannot be equal or greater than max value.");
+            .toThrow(new Error('Min value cannot be equal or greater than max value.'));
 
         expect(() => confusionMatrix.normalize(4, 3))
-            .toThrow("Min value cannot be equal or greater than max value.");
+            .toThrow(new Error('Min value cannot be equal or greater than max value.'));
 
         expect(() => confusionMatrix.normalize(-1, -3))
-            .toThrow("Min value cannot be equal or greater than max value.");
+            .toThrow(new Error('Min value cannot be equal or greater than max value.'));
+
     });
 
-    it("Can validate confusion matrix on initialization correctly.", () => {
-        // let confusionMatrix = new ConfusionMatrix()
-        // expect(confusionMatrix.labels).toEqual(getLabels());
-        // expect(confusionMatrix.matrix).toEqual(getMatrix());
+    it("Can revert normalizations.", () => {
+        const confusionMatrix = getConfusionMatrix();
+        confusionMatrix.normalize(0, 1);
+        expect(confusionMatrix.matrix).toEqual([[0.7, 0.8, 1],
+        [0.1, 0.2, 0.3],
+        [0.3, 0.2, 0]]
+        );
+        let result = confusionMatrix.revertNormalization() as ConfusionMatrix;
+        expect(confusionMatrix.matrix).toEqual(getConfusionMatrix().matrix);
+        expect(result.matrix).toEqual(getConfusionMatrix().matrix);
+
+        let result2 = confusionMatrix.revertNormalization();
+        expect(confusionMatrix.matrix).toEqual(getConfusionMatrix().matrix);
+        expect(result2).toBeNull();
+
+    });
+
+    it("Can revert all normalizations.", () => {
+        const confusionMatrix = getConfusionMatrix();
+        confusionMatrix.revertAllNormalizations();
+        expect(confusionMatrix.matrix).toEqual(getConfusionMatrix().matrix);
+        confusionMatrix.normalize(0, 1);
+        confusionMatrix.normalize(1, 2);
+        confusionMatrix.normalize(3, 4);
+        confusionMatrix.normalize(-1, 6);
+        confusionMatrix.revertAllNormalizations();
+        expect(confusionMatrix.matrix).toEqual(getConfusionMatrix().matrix);
+
+    });
+
+    it("Can get min and max.", () => {
+        const confusionMatrix = getConfusionMatrix();
+        let matrixMinMax = confusionMatrix.getMinAndMax();
+        expect(matrixMinMax).toEqual({ min: 0, max: 10 });
+        confusionMatrix.matrix = [[]];
+        matrixMinMax = confusionMatrix.getMinAndMax();
+        expect(matrixMinMax).toBeNull();
+
+    });
+
+    it("Can clone confusion matrix.", () => {
+        const confusionMatrix = getConfusionMatrix();
+        const clonedConfusionMatrix = confusionMatrix.clone();
+
+        expect(confusionMatrix).toEqual(clonedConfusionMatrix);
+
+        clonedConfusionMatrix.normalize(1, 2);
+        expect(confusionMatrix).not.toEqual(clonedConfusionMatrix);
+
     });
 
 
@@ -217,6 +263,40 @@ describe("Confusion matrix model test suite", () => {
         expect(allMatrixClasses[2].confusionMatrixClasses).toEqual(Mango);
 
     });
+
+    it("Can validate the confusion matrix.", () => {
+        let confusionMatrix = getConfusionMatrix();
+
+        confusionMatrix.labels = [];
+        expect(() => confusionMatrix.validate()).toThrow(new Error('The labels length should be equals to the matrix columns length.'));
+
+        confusionMatrix = getConfusionMatrix();
+        confusionMatrix.matrix = [[1]];
+        expect(() => confusionMatrix.validate()).toThrow(new Error('The labels length should be equals to the matrix columns length.'));
+
+        confusionMatrix = getConfusionMatrix();
+        confusionMatrix.labels = ['Apple', 'OOOO', 'Apple'];
+        expect(() => confusionMatrix.validate()).toThrow(new Error('The label Apple appears more than once in the labels array.'));
+
+        confusionMatrix = getConfusionMatrix();
+        confusionMatrix.matrix = [[1, 2], [1, 2], [1, 2]];
+        expect(() => confusionMatrix.validate()).toThrow(new Error('The confusion matrix does not have the columns/rows length.'));
+
+    });
+
+    it("Can get the total number of predictions", () => {
+        const confusionMatrix = getConfusionMatrix();
+        const sum = getLabelsPredictionsSum();
+        expect(confusionMatrix.getNumberOfPredictions()).toBe(sum.Apple + sum.Mango + sum.Orange);
+
+        confusionMatrix.matrix = [[1, 1, 1], [1, 1, 1], [1, 1, 1]];
+        expect(confusionMatrix.getNumberOfPredictions()).toBe(9);
+
+        confusionMatrix.matrix = getConfusionMatrix().matrix;
+
+        expect(confusionMatrix.getNumberOfPredictions('Orange')).toBe(sum.Orange);
+    });
+
 
     it("Can calculate the matrix accuracy", () => {
         const confusionMatrix = getConfusionMatrix();
