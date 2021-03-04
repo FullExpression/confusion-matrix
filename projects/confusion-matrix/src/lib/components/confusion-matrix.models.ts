@@ -127,8 +127,8 @@ export class ConfusionMatrix {
      */
     accuracy(configuration: {
         label?: string,
-        average?: Average
-    } = { average: Average.Weighted }): number {
+        average?: AverageMethod
+    } = { average: AverageMethod.Weighted }): number {
         this.validateMatrix();
         if (configuration?.label && configuration?.label.length > 0) {
             return this.labelAccuracy(configuration.label);
@@ -177,12 +177,12 @@ export class ConfusionMatrix {
      * 
      * @return The accuracy value.
      */
-    matrixAccuracy(average = Average.Weighted): number {
+    matrixAccuracy(average = AverageMethod.Weighted): number {
         this.validateMatrix();
         switch (average) {
-            case Average.Micro: return this.microAccuracy();
-            case Average.Macro: return this.macroAccuracy();
-            case Average.Weighted: return this.weightedAccuracy();
+            case AverageMethod.Micro: return this.microAccuracy();
+            case AverageMethod.Macro: return this.macroAccuracy();
+            case AverageMethod.Weighted: return this.weightedAccuracy();
         }
     }
 
@@ -267,8 +267,8 @@ export class ConfusionMatrix {
      */
     missClassificationRate(configuration: {
         label?: string,
-        average?: Average
-    } = { average: Average.Weighted }): number {
+        average?: AverageMethod
+    } = { average: AverageMethod.Weighted }): number {
         this.validateMatrix();
         if (configuration?.label && configuration?.label.length > 0) {
             return this.labelMissClassificationRate(configuration.label);
@@ -318,12 +318,12 @@ export class ConfusionMatrix {
      *
      * @return The miss classification value.
      */
-    matrixMissClassificationRate(average = Average.Weighted): number {
+    matrixMissClassificationRate(average = AverageMethod.Weighted): number {
         this.validateMatrix();
         switch (average) {
-            case Average.Micro: return this.microMissClassificationRate();
-            case Average.Macro: return this.macroMissClassificationRate();
-            case Average.Weighted: return this.weightedMissClassificationRate();
+            case AverageMethod.Micro: return this.microMissClassificationRate();
+            case AverageMethod.Macro: return this.macroMissClassificationRate();
+            case AverageMethod.Weighted: return this.weightedMissClassificationRate();
         }
     }
 
@@ -410,8 +410,8 @@ export class ConfusionMatrix {
      */
     precision(configuration: {
         label?: string,
-        average?: Average
-    } = { average: Average.Weighted }): number {
+        average?: AverageMethod
+    } = { average: AverageMethod.Weighted }): number {
         this.validateMatrix();
         if (configuration?.label && configuration?.label.length > 0) {
             return this.labelPrecision(configuration.label);
@@ -459,12 +459,12 @@ export class ConfusionMatrix {
      *
      * @return The precision value.
      */
-    matrixPrecision(average = Average.Weighted): number {
+    matrixPrecision(average = AverageMethod.Weighted): number {
         this.validateMatrix();
         switch (average) {
-            case Average.Micro: return this.microPrecision();
-            case Average.Macro: return this.macroPrecision();
-            case Average.Weighted: return this.weightedPrecision();
+            case AverageMethod.Micro: return this.microPrecision();
+            case AverageMethod.Macro: return this.macroPrecision();
+            case AverageMethod.Weighted: return this.weightedPrecision();
         }
     }
 
@@ -550,8 +550,8 @@ export class ConfusionMatrix {
      */
     recall(configuration: {
         label?: string,
-        average?: Average
-    } = { average: Average.Weighted }): number {
+        average?: AverageMethod
+    } = { average: AverageMethod.Weighted }): number {
         this.validateMatrix();
         if (configuration?.label && configuration?.label.length > 0) {
             return this.labelRecall(configuration.label);
@@ -601,12 +601,12 @@ export class ConfusionMatrix {
      *
      * @return The recall value.
      */
-    matrixRecall(average = Average.Weighted): number {
+    matrixRecall(average = AverageMethod.Weighted): number {
         this.validateMatrix();
         switch (average) {
-            case Average.Micro: return this.microRecall();
-            case Average.Macro: return this.macroRecall();
-            case Average.Weighted: return this.weightedRecall();
+            case AverageMethod.Micro: return this.microRecall();
+            case AverageMethod.Macro: return this.macroRecall();
+            case AverageMethod.Weighted: return this.weightedRecall();
         }
     }
 
@@ -695,8 +695,8 @@ export class ConfusionMatrix {
      */
     specificity(configuration: {
         label?: string,
-        average?: Average
-    } = { average: Average.Weighted }): number {
+        average?: AverageMethod
+    } = { average: AverageMethod.Weighted }): number {
         this.validateMatrix();
         if (configuration?.label && configuration?.label.length > 0) {
             return this.labelSpecificity(configuration.label);
@@ -726,12 +726,12 @@ export class ConfusionMatrix {
      *
      * @return The specificity value.
      */
-    matrixSpecificity(average = Average.Weighted): number {
+    matrixSpecificity(average = AverageMethod.Weighted): number {
         this.validateMatrix();
         switch (average) {
-            case Average.Micro: return this.microSpecificity();
-            case Average.Macro: return this.macroSpecificity();
-            case Average.Weighted: return this.weightedSpecificity();
+            case AverageMethod.Micro: return this.microSpecificity();
+            case AverageMethod.Macro: return this.macroSpecificity();
+            case AverageMethod.Weighted: return this.weightedSpecificity();
         }
     }
 
@@ -839,7 +839,7 @@ export class ConfusionMatrix {
      */
     f1Score(configuration?: {
         label?: string,
-        average?: Average
+        average?: AverageMethod
     }): number {
         this.validateMatrix();
         if (configuration?.label && configuration?.label.length > 0) {
@@ -869,12 +869,12 @@ export class ConfusionMatrix {
      *
      * @return The F1 Score value.
      */
-    matrixF1Score(average = Average.Weighted): number {
+    matrixF1Score(average = AverageMethod.Weighted): number {
         this.validateMatrix();
         switch (average) {
-            case Average.Micro: return this.microF1Score();
-            case Average.Macro: return this.macroF1Score();
-            case Average.Weighted: return this.weightedF1Score();
+            case AverageMethod.Micro: return this.microF1Score();
+            case AverageMethod.Macro: return this.macroF1Score();
+            case AverageMethod.Weighted: return this.weightedF1Score();
         }
     }
 
@@ -1008,7 +1008,7 @@ export class ConfusionMatrix {
             throw new Error("The label does not exists in the matrix.");
         }
 
-        const matrixSum = this.sumMatrix(this.matrix);
+        const numberOfPredictions = this.getNumberOfPredictions();
         const truePositive = this.matrix[position][position];
         const falsePositive = this.matrix[position].reduce(
             (previous, next) => previous + next) - truePositive;
@@ -1020,7 +1020,7 @@ export class ConfusionMatrix {
         }
 
         falseNegative -= truePositive;
-        const trueNegative = matrixSum - truePositive - falsePositive - falseNegative;
+        const trueNegative = numberOfPredictions - truePositive - falsePositive - falseNegative;
 
         return { truePositive, trueNegative, falsePositive, falseNegative };
     }
@@ -1081,6 +1081,13 @@ export class ConfusionMatrix {
         this.setConfusionMatrix(this.normalizations[0]);
     }
 
+    /**
+     * Gets the total of predictions (samples) in a given label or
+     * on all confusion matrix.
+     * @param label Number of prediction for the given label.
+     * If null, undefined or empty, return the number of predictions
+     * for all confusion matrix.
+     */
     getNumberOfPredictions(label?: string): number {
         const sumLabels = this.getLabelsPredictionsSum();
 
@@ -1093,6 +1100,12 @@ export class ConfusionMatrix {
         }
     }
 
+    /**
+     * Returns the sum of predictions for all labels.
+     * @return Array with the sum of predictions for all labels.
+     * The position of the array corresponds to the label position
+     * on the confusion matrix.
+     */
     getLabelsPredictionsSum(): Array<number> {
         let sumLabels = new Array<number>(this.labels.length)
             .fill(0, 0, this.labels.length);
@@ -1103,24 +1116,11 @@ export class ConfusionMatrix {
         return sumLabels;
     }
 
-
-
     /**
-     * Deep copies a given object.
-     * @param object The object to be deep cloned.
-     * @return The deep cloned object.
+     * Validate if the confusion matrix is valid.
+     * If not, an error describing the issue will be thrown.
      */
-    private deepCopy(object: any): any {
-        return JSON.parse(JSON.stringify(object));
-    }
-
-    private sumMatrix(matrix: Array<Array<number>>) {
-        let sum = 0;
-        matrix.forEach(array => array.forEach(value => sum += value))
-        return sum;
-    }
-
-    private validateMatrix() {
+    validateMatrix() {
         if (this.labels.length !== this.matrix.length) {
             throw "The labels length should be equals to the matrix columns length."
         }
@@ -1140,7 +1140,20 @@ export class ConfusionMatrix {
         });
     }
 
+    /**
+     * Deep copies a given object.
+     * @param object The object to be deep cloned.
+     * @return The deep cloned object.
+     */
+    private deepCopy(object: any): any {
+        return JSON.parse(JSON.stringify(object));
+    }
 
+    /**
+     * Applies the F1 Score formula
+     * @param precision The precision value.
+     * @param recall The recall value.
+     */
     private applyF1ScoreFormula(precision: number, recall: number): number {
         return 2 * ((precision * recall) / (precision + recall));
     }
@@ -1157,21 +1170,42 @@ export enum ConfusionMatrixSizes {
     ExtraLarge = 'extra-large'
 }
 
-export enum Average {
+/**
+ * Define the average method to be use in some confusion matrix calculation.
+ */
+export enum AverageMethod {
+    /** 
+     * Calculates the TP, TN, FP and FN for the matrix globally and then applies
+     * the correspond formula.
+     */
     Micro,
+    /**
+     * Calculates and sums the value for each individual label and divides for
+     * the number of labels.
+    */
     Macro,
+    /**
+    * Defines if the value calculation should be weighted. This means the labels
+    * with more predictions will weight more in the final value 
+    * comparing with labels with less predictions.
+    */
     Weighted
 }
 
 /**
- * 
+ * Confusion matrix classes definition.
  */
 export interface ConfusionMatrixClasses {
+    /** Number of predictions correctly predicted as positives */
     truePositive: number;
+    /** Number of predictions correctly predicted as negatives */
     trueNegative: number;
+    /** Number of predictions incorrectly predicted as positives */
     falsePositive: number;
+    /** Number of predictions incorrectly predicted as negatives */
     falseNegative: number;
 }
 
+/** Number of fraction digits a number can have. */
 type FractionDigits = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
     13 | 14 | 15 | 16 | 17 | 18 | 19 | 20
