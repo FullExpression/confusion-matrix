@@ -122,16 +122,16 @@ export class ConfusionMatrix {
      * 
      * @return The accuracy value.
      */
-    accuracy(configuration?: {
+    accuracy(configuration: {
         label?: string,
-        weighted?: boolean
-    }): number {
+        average?: Average
+    } = { average: Average.Weighted }): number {
         this.validateMatrix();
         if (configuration?.label && configuration?.label.length > 0) {
             return this.labelAccuracy(configuration.label);
         }
-        return this.matrixAccuracy(configuration?.weighted);
-        ConfusionMatrix
+        return this.matrixAccuracy(configuration?.average);
+
     }
 
     /**
@@ -153,41 +153,32 @@ export class ConfusionMatrix {
         return (truePositive + trueNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
     }
 
-    /**
-     * Gives the overall accuracy value for confusion matrix.
-     *
-     * Formula:
-     *
-     * labelAccuracy = (TP + TN) / (TP + TN + FP + FN)
-     *
-     * allMatrix = Sum(n)(labelAccuracy[n])
-     *
-     * labelWeight[] = (numberOfLabelPredictions / totalNumberOfPredictions) (repeated for each label);
-     *
-     * allMatrixWeighted =  Sum(n)(labelAccuracy[n] * labelWeight[n])
-     * 
-     * @param weighted Defines if the accuracy value should be weighted. This means that the labels
-     * with more predictions will weight more in the final accuracy value comparing with labels with less
-     * predictions.
-     *
-     * @return The accuracy value.
-     * 
-     * @note Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more
-     * information regarding terminology, formulas and other theoretical concepts.
-     */
-    matrixAccuracy(weighted = false): number {
+    matrixAccuracy(average = Average.Weighted): number {
         this.validateMatrix();
-        if (weighted) {
-            const sumLabels = this.getLabelsPredictionsSum();
-            const numberOfPredictions = this.getNumberOfPredictions();
-            let sum = 0;
-            this.labels.forEach((label, index) => sum += (this.labelAccuracy(label) * sumLabels[index]));
-            return sum / numberOfPredictions
-        } else {
-            let sum = 0;
-            this.labels.forEach((label) => sum += this.labelAccuracy(label));
-            return sum / this.labels.length;
+        switch (average) {
+            case Average.Micro: return this.microAccuracy();
+            case Average.Macro: return this.macroAccuracy();
+            case Average.Weighted: return this.weightedAccuracy();
         }
+    }
+
+    microAccuracy(): number {
+        const { truePositive, trueNegative, falsePositive, falseNegative } = this.getSumConfusionMatrixClasses();
+        return (truePositive + trueNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
+    }
+
+    macroAccuracy(): number {
+        let sum = 0;
+        this.labels.forEach((label) => sum += this.labelAccuracy(label));
+        return sum / this.labels.length;
+    }
+
+    weightedAccuracy(): number {
+        const sumLabels = this.getLabelsPredictionsSum();
+        const numberOfPredictions = this.getNumberOfPredictions();
+        let sum = 0;
+        this.labels.forEach((label, index) => sum += (this.labelAccuracy(label) * sumLabels[index]));
+        return sum / numberOfPredictions
     }
 
     /**
@@ -218,15 +209,15 @@ export class ConfusionMatrix {
      * @note Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more
      * information regarding terminology, formulas and other theoretical concepts.
      */
-    missClassificationRate(configuration?: {
+    missClassificationRate(configuration: {
         label?: string,
-        weighted?: boolean
-    }): number {
+        average?: Average
+    } = { average: Average.Weighted }): number {
         this.validateMatrix();
         if (configuration?.label && configuration?.label.length > 0) {
             return this.labelMissClassificationRate(configuration.label);
         }
-        return this.matrixMissClassificationRate(configuration?.weighted);
+        return this.matrixMissClassificationRate(configuration?.average);
     }
 
     /**
@@ -250,41 +241,33 @@ export class ConfusionMatrix {
         return (falsePositive + falseNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
     }
 
-    /**
-     * Gives the overall miss classification rate for the confusion matrix.
-     *
-     * Formula:
-     *
-     * labelMissclassificationRate = (FP + FN) / ( TP + TN + FP + FN)
-     *
-     * allMatrix = Sum(n)(labelMissclassificationRate[n])
-     *
-     * labelWeight[] = (numberOfLabelPredictions / totalNumberOfPredictions) (repeated for each label);
-     *
-     * allMatrixWeighted =  Sum(n)(labelMissclassificationRate[n] * labelWeight[n])
-     * 
-     * @param weighted Defines if the miss classification rate should be weighted. This means that the labels
-     * with more predictions will weight more in the final rate value comparing with labels with less
-     * predictions.
-     *
-     * @return The accuracy value.
-     * 
-     * @note Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more
-     * information regarding terminology, formulas and other theoretical concepts.
-     */
-    matrixMissClassificationRate(weighted?: boolean): number {
+
+    matrixMissClassificationRate(average = Average.Weighted): number {
         this.validateMatrix();
-        if (weighted) {
-            const sumLabels = this.getLabelsPredictionsSum();
-            const numberOfPredictions = this.getNumberOfPredictions();
-            let sum = 0;
-            this.labels.forEach((label, index) => sum += (this.labelMissClassificationRate(label) * sumLabels[index]));
-            return sum / numberOfPredictions;
-        } else {
-            let sum = 0;
-            this.labels.forEach((label) => sum += this.labelMissClassificationRate(label));
-            return sum / this.labels.length;
+        switch (average) {
+            case Average.Micro: return this.microMissClassificationRate();
+            case Average.Macro: return this.macroMissClassificationRate();
+            case Average.Weighted: return this.weightedMissClassificationRate();
         }
+    }
+
+    microMissClassificationRate(): number {
+        const { truePositive, trueNegative, falsePositive, falseNegative } = this.getSumConfusionMatrixClasses();
+        return (falsePositive + falseNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
+    }
+
+    macroMissClassificationRate(): number {
+        let sum = 0;
+        this.labels.forEach((label) => sum += this.labelMissClassificationRate(label));
+        return sum / this.labels.length;
+    }
+
+    weightedMissClassificationRate(): number {
+        const sumLabels = this.getLabelsPredictionsSum();
+        const numberOfPredictions = this.getNumberOfPredictions();
+        let sum = 0;
+        this.labels.forEach((label, index) => sum += (this.labelMissClassificationRate(label) * sumLabels[index]));
+        return sum / numberOfPredictions;
     }
 
     /**
@@ -312,15 +295,15 @@ export class ConfusionMatrix {
      *
      * @return The precision value.
      */
-    precision(configuration?: {
+    precision(configuration: {
         label?: string,
-        weighted?: boolean
-    }): number {
+        average?: Average
+    } = { average: Average.Weighted }): number {
         this.validateMatrix();
         if (configuration?.label && configuration?.label.length > 0) {
             return this.labelPrecision(configuration.label);
         }
-        return this.matrixPrecision(configuration?.weighted);
+        return this.matrixPrecision(configuration?.average);
     }
 
     /**
@@ -342,42 +325,33 @@ export class ConfusionMatrix {
         return (truePositive) / (truePositive + falsePositive);
     }
 
-    /**
-     * Precision, gives what fraction of predictions a positive class were actual positive.
-     *
-     * Formula:
-     *
-     * labelPrecision = TP / (TP + FP)
-     *
-     * allMatrix = Sum(n)(labelPrecision[n])
-     *
-     * labelWeight[] = (numberOfLabelPredictions / totalNumberOfPredictions) (repeated for each label);
-     *
-     * allMatrixWeighted = Sum(n)(labelAccuracy[n] * labelWeight[n])
-     *
-     * @param weighted Defines if the precision should be weighted. This means that the labels
-     * with more predictions will weight more in the final rate value comparing with labels with less
-     * predictions.
-     *
-     * @return The precision value.
-     *
-     * @note Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more
-     * information regarding terminology, formulas and other theoretical concepts.
-     */
-    matrixPrecision(weighted = false): number {
+    matrixPrecision(average = Average.Weighted): number {
         this.validateMatrix();
-        if (weighted) {
-            const sumLabels = this.getLabelsPredictionsSum();
-            const numberOfPredictions = this.getNumberOfPredictions();
-
-            let sum = 0;
-            this.labels.forEach((label, index) => sum += (this.labelPrecision(label) * sumLabels[index]));
-            return sum / numberOfPredictions
-        } else {
-            let sum = 0;
-            this.labels.forEach((label) => sum += this.labelPrecision(label));
-            return sum / this.labels.length;
+        switch (average) {
+            case Average.Micro: return this.microPrecision();
+            case Average.Macro: return this.macroPrecision();
+            case Average.Weighted: return this.weightedPrecision();
         }
+    }
+
+    microPrecision(): number {
+        const { truePositive, falsePositive } = this.getSumConfusionMatrixClasses();
+        return (truePositive) / (truePositive + falsePositive);
+    }
+
+    macroPrecision(): number {
+        let sum = 0;
+        this.labels.forEach((label) => sum += this.labelPrecision(label));
+        return sum / this.labels.length;
+    }
+
+    weightedPrecision(): number {
+        const sumLabels = this.getLabelsPredictionsSum();
+        const numberOfPredictions = this.getNumberOfPredictions();
+
+        let sum = 0;
+        this.labels.forEach((label, index) => sum += (this.labelPrecision(label) * sumLabels[index]));
+        return sum / numberOfPredictions;
     }
 
     /**
@@ -406,15 +380,15 @@ export class ConfusionMatrix {
      *
      * @return The recall value.
      */
-    recall(configuration?: {
+    recall(configuration: {
         label?: string,
-        weighted?: boolean
-    }): number {
+        average?: Average
+    } = { average: Average.Weighted }): number {
         this.validateMatrix();
         if (configuration?.label && configuration?.label.length > 0) {
             return this.labelRecall(configuration.label);
         }
-        return this.matrixRecall(configuration?.weighted);
+        return this.matrixRecall(configuration?.average);
     }
 
     /**
@@ -437,43 +411,33 @@ export class ConfusionMatrix {
         return (truePositive) / (truePositive + falseNegative);
     }
 
-    /**
-     * Recall also know as True Positive Rate, sensitivity, hit rate and probability of detection,
-     * gives what fraction of all positives samples correctly predicted as positive.
-     *
-     * Formula:
-     *
-     * labelRecall = TP / (TP + FN)
-     *
-     * allMatrix = Sum(n)(labelRecall[n])
-     *
-     * labelWeight[] = (numberOfLabelPredictions / totalNumberOfPredictions) (repeated for each label);
-     *
-     * allMatrixWeighted = Sum(n)(labelRecall[n] * labelWeight[n])
-     *
-     * @param weighted Defines if the recall value should be weighted. This means that the labels
-     * with more predictions will weight more in the final rate value comparing with labels with less
-     * predictions.
-     *
-     * @return The recall value.
-     *
-     * @note Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more
-     * information regarding terminology, formulas and other theoretical concepts.
-     */
-    matrixRecall(weighted = false): number {
+    matrixRecall(average = Average.Weighted): number {
         this.validateMatrix();
-        if (weighted) {
-            const sumLabels = this.getLabelsPredictionsSum();
-            const numberOfPredictions = this.getNumberOfPredictions();
-
-            let sum = 0;
-            this.labels.forEach((label, index) => sum += (this.labelRecall(label) * sumLabels[index]));
-            return sum / numberOfPredictions
-        } else {
-            let sum = 0;
-            this.labels.forEach((label) => sum += this.labelRecall(label));
-            return sum / this.labels.length;
+        switch (average) {
+            case Average.Micro: return this.microRecall();
+            case Average.Macro: return this.macroRecall();
+            case Average.Weighted: return this.weightedRecall();
         }
+    }
+
+    microRecall(): number {
+        const { truePositive, falseNegative } = this.getSumConfusionMatrixClasses();
+        return (truePositive) / (truePositive + falseNegative);
+    }
+
+    macroRecall(): number {
+        let sum = 0;
+        this.labels.forEach((label) => sum += this.labelRecall(label));
+        return sum / this.labels.length;
+    }
+
+    weightedRecall(): number {
+        const sumLabels = this.getLabelsPredictionsSum();
+        const numberOfPredictions = this.getNumberOfPredictions();
+
+        let sum = 0;
+        this.labels.forEach((label, index) => sum += (this.labelRecall(label) * sumLabels[index]));
+        return sum / numberOfPredictions;
     }
 
     /**
@@ -502,54 +466,44 @@ export class ConfusionMatrix {
      *
      * @return The specificity value.
      */
-    specificity(configuration?: {
+    specificity(configuration: {
         label?: string,
-        weighted?: boolean
-    }): number {
+        average?: Average
+    } = { average: Average.Weighted }): number {
         this.validateMatrix();
         if (configuration?.label && configuration?.label.length > 0) {
             return this.labelSpecificity(configuration.label);
         }
-        return this.matrixSpecificity(configuration?.weighted);
+        return this.matrixSpecificity(configuration?.average);
     }
 
-    /**
-      * Specificity also know as selectivity or true negative rate,
-      * gives what fraction of all negatives samples are correctly as negative.
-      *
-      * Formula:
-      *
-      * labelSpecificity = TP / (TN + FN)
-      *
-      * allMatrix = Sum(n)(labelSpecificity[n])
-      *
-      * labelWeight[] = (numberOfLabelPredictions / totalNumberOfPredictions) (repeated for each label);
-      *
-      * allMatrixWeighted = Sum(n)(labelSpecificity[n] * labelWeight[n])
-      *
-      * @param weighted Defines if the specificity value should be weighted. This means that the labels
-      * with more predictions will weight more in the final rate value comparing with labels with less
-      * predictions.
-      *
-      * @return The specificity value.
-      *
-      * @note Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more
-      * information regarding terminology, formulas and other theoretical concepts.
-      */
-    matrixSpecificity(weighted = false): number {
+    matrixSpecificity(average = Average.Weighted): number {
         this.validateMatrix();
-        if (weighted) {
-            const sumLabels = this.getLabelsPredictionsSum();
-            const numberOfPredictions = this.getNumberOfPredictions();
-
-            let sum = 0;
-            this.labels.forEach((label, index) => sum += (this.labelSpecificity(label) * sumLabels[index]));
-            return sum / numberOfPredictions
-        } else {
-            let sum = 0;
-            this.labels.forEach((label) => sum += this.labelSpecificity(label));
-            return sum / this.labels.length;
+        switch (average) {
+            case Average.Micro: return this.microSpecificity();
+            case Average.Macro: return this.macroSpecificity();
+            case Average.Weighted: return this.weightedSpecificity();
         }
+    }
+
+    microSpecificity(): number {
+        const { trueNegative, falsePositive } = this.getSumConfusionMatrixClasses();
+        return (trueNegative) / (trueNegative + falsePositive);
+    }
+
+    macroSpecificity(): number {
+        let sum = 0;
+        this.labels.forEach((label) => sum += this.labelSpecificity(label));
+        return sum / this.labels.length;
+    }
+
+    weightedSpecificity(): number {
+        const sumLabels = this.getLabelsPredictionsSum();
+        const numberOfPredictions = this.getNumberOfPredictions();
+
+        let sum = 0;
+        this.labels.forEach((label, index) => sum += (this.labelSpecificity(label) * sumLabels[index]));
+        return sum / numberOfPredictions;
     }
 
     /**
@@ -572,9 +526,40 @@ export class ConfusionMatrix {
         return (trueNegative) / (trueNegative + falsePositive);
     }
 
-    f1Score(): number {
+    f1Score(configuration?: {
+        label?: string,
+        average?: 'Micro' | 'Macro' | 'Weighted'
+    }): number {
         this.validateMatrix();
         throw "not implemented yet";
+    }
+
+    labelF1Score(label: string): number {
+        this.validateMatrix();
+        const { truePositive, falseNegative } = this.getConfusionMatrixClasses(label);
+        return (truePositive) / (truePositive + falseNegative);
+    }
+
+    microF1() {
+        const precision = this.microPrecision();
+        const recall = this.microRecall();
+        return this.applyF1ScoreFormula(precision, recall);
+    }
+
+    macroF1Score(): number {
+        const precision = this.macroPrecision();
+        const recall = this.macroRecall();
+        return this.applyF1ScoreFormula(precision, recall);
+    }
+
+    weightedF1Score(): number {
+        const precision = this.weightedPrecision();
+        const recall = this.weightedRecall();
+        return this.applyF1ScoreFormula(precision, recall);
+    }
+
+    applyF1ScoreFormula(precision: number, recall: number) {
+        return 2 * ((precision * recall) / (precision + recall));
     }
 
 
@@ -596,6 +581,23 @@ export class ConfusionMatrix {
             confusionMatrixClasses: this.getConfusionMatrixClasses(label)
         }));
         return all;
+    }
+
+    getSumConfusionMatrixClasses(): ConfusionMatrixClasses {
+        const classesSum: ConfusionMatrixClasses = {
+            truePositive: 0,
+            trueNegative: 0,
+            falsePositive: 0,
+            falseNegative: 0
+        }
+        const classes = this.getAllMatrixClasses();
+        classes.forEach((value) => {
+            classesSum.truePositive += value.confusionMatrixClasses.truePositive;
+            classesSum.trueNegative += value.confusionMatrixClasses.trueNegative;
+            classesSum.falsePositive += value.confusionMatrixClasses.falsePositive;
+            classesSum.falseNegative += value.confusionMatrixClasses.falseNegative;
+        });
+        return classesSum;
     }
 
     /**
@@ -760,6 +762,12 @@ export enum ConfusionMatrixSizes {
     Medium = 'medium',
     Large = 'large',
     ExtraLarge = 'extra-large'
+}
+
+export enum Average {
+    Micro,
+    Macro,
+    Weighted
 }
 
 /**

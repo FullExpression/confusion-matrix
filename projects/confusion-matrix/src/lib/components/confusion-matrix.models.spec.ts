@@ -1,4 +1,4 @@
-import { ConfusionMatrix } from "./confusion-matrix.models";
+import { Average, ConfusionMatrix, ConfusionMatrixClasses } from "./confusion-matrix.models";
 
 describe("Confusion matrix model test suite", () => {
 
@@ -52,6 +52,16 @@ describe("Confusion matrix model test suite", () => {
                 falsePositive: 2 + 3,
                 falseNegative: 10 + 3
             }
+        }
+    }
+
+    const getSumConfusionMatrixClasses = (): ConfusionMatrixClasses => {
+        const { Apple, Orange, Mango } = getConfusionMatrixClasses();
+        return {
+            truePositive: Apple.truePositive + Orange.truePositive + Mango.truePositive,
+            trueNegative: Apple.trueNegative + Orange.trueNegative + Mango.trueNegative,
+            falsePositive: Apple.falsePositive + Orange.falsePositive + Mango.falsePositive,
+            falseNegative: Apple.falseNegative + Orange.falseNegative + Mango.falseNegative
         }
     }
 
@@ -202,13 +212,23 @@ describe("Confusion matrix model test suite", () => {
         value = confusionMatrix.accuracy(configuration);
         expect(value).toBe((expectedMangoAccuracyValue));
 
-        // Expected matrix accuracy value.
-        const expectedMatrixAccuracyValue = (expectedAppleAccuracyValue + expectedOrangeAccuracyValue +
-            expectedMangoAccuracyValue) / 3
+        const sumMatrixClasses = getSumConfusionMatrixClasses();
+
+        // Expected micro accuracy value.
+        const microAccuracyValue = (sumMatrixClasses.truePositive + sumMatrixClasses.trueNegative) /
+            (sumMatrixClasses.truePositive + sumMatrixClasses.trueNegative + sumMatrixClasses.falsePositive + sumMatrixClasses.falseNegative);
 
         // Test matrix accuracy.
-        value = confusionMatrix.accuracy();
-        expect(value).toBe(expectedMatrixAccuracyValue);
+        value = confusionMatrix.accuracy({ average: Average.Micro });
+        expect(value).toBe(microAccuracyValue);
+
+        // Expected micro accuracy value.
+        const macroAccuracyValue = (expectedAppleAccuracyValue + expectedOrangeAccuracyValue
+            + expectedMangoAccuracyValue) / 3;
+
+        // Test matrix accuracy.
+        value = confusionMatrix.accuracy({ average: Average.Macro });
+        expect(value).toBe(macroAccuracyValue);
 
         const predictionsLabel = getLabelsPredictionsSum();
 
@@ -219,7 +239,10 @@ describe("Confusion matrix model test suite", () => {
                 (expectedMangoAccuracyValue * predictionsLabel.Mango)) / getPredictionsSum();
 
         // Test matrix weighted accuracy.
-        value = confusionMatrix.accuracy({ weighted: true });
+        value = confusionMatrix.accuracy({ average: Average.Weighted });
+        expect(value).toBe(expectedWeightMatrixAccuracyValue);
+
+        value = confusionMatrix.accuracy();
         expect(value).toBe(expectedWeightMatrixAccuracyValue);
     });
 
@@ -233,47 +256,60 @@ describe("Confusion matrix model test suite", () => {
 
 
         // Expected values for each label
-        const expectedAppleRateValue = (Apple.falsePositive + Apple.falseNegative) /
+        const expectedAppleMissClassificationValue = (Apple.falsePositive + Apple.falseNegative) /
             (Apple.trueNegative + Apple.truePositive + Apple.falsePositive + Apple.falseNegative);
 
-        const expectedOrangeRateValue = (Orange.falsePositive + Orange.falseNegative) /
+        const expectedOrangeMissClassificationValue = (Orange.falsePositive + Orange.falseNegative) /
             (Orange.trueNegative + Orange.truePositive + Orange.falsePositive + Orange.falseNegative);
 
-        const expectedMangoRateValue = (Mango.falsePositive + Mango.falseNegative) /
+        const expectedMangoMissClassificationValue = (Mango.falsePositive + Mango.falseNegative) /
             (Mango.trueNegative + Mango.truePositive + Mango.falsePositive + Mango.falseNegative);
 
-        // Test Apple miss classification.
+        // Test Apple miss classification value.
         let value = confusionMatrix.missClassificationRate(configuration);
-        expect(value).toBe((expectedAppleRateValue))
+        expect(value).toBe((expectedAppleMissClassificationValue))
 
-        // Test Orange miss classification.
+        // Test Orange miss classification value.
         configuration.label = 'Orange';
         value = confusionMatrix.missClassificationRate(configuration);
-        expect(value).toBe((expectedOrangeRateValue))
+        expect(value).toBe((expectedOrangeMissClassificationValue))
 
-        // Test Mango miss classification.
+        // Test Mango miss classification value.
         configuration.label = 'Mango';
         value = confusionMatrix.missClassificationRate(configuration);
-        expect(value).toBe((expectedMangoRateValue));
+        expect(value).toBe((expectedMangoMissClassificationValue));
 
-        // Expected matrix miss classification rate.
-        const expectedMatrixRateValue = (expectedAppleRateValue + expectedOrangeRateValue +
-            expectedMangoRateValue) / 3
+        const sumMatrixClasses = getSumConfusionMatrixClasses();
 
-        // Test matrix miss classification rate.
-        value = confusionMatrix.missClassificationRate();
-        expect(value).toBe(expectedMatrixRateValue);
+        // Expected micro miss classification value.
+        const microMissClassificationValue = (sumMatrixClasses.truePositive + sumMatrixClasses.trueNegative) /
+            (sumMatrixClasses.truePositive + sumMatrixClasses.trueNegative + sumMatrixClasses.falsePositive + sumMatrixClasses.falseNegative);
+
+        // Test matrix rate value.
+        value = confusionMatrix.missClassificationRate({ average: Average.Micro });
+        expect(value).toBe(microMissClassificationValue);
+
+        // Expected micro rate value.
+        const macroMissClassificationValue = (expectedAppleMissClassificationValue + expectedOrangeMissClassificationValue
+            + expectedMangoMissClassificationValue) / 3;
+
+        // Test matrix rate.
+        value = confusionMatrix.missClassificationRate({ average: Average.Macro });
+        expect(value).toBe(macroMissClassificationValue);
 
         const predictionsLabel = getLabelsPredictionsSum();
 
-        // Expected matrix weight miss classification rate value.
+        // Expected matrix weight rate value.
         const expectedWeightMatrixRateValue =
-            ((expectedAppleRateValue * predictionsLabel.Apple) +
-                (expectedOrangeRateValue * predictionsLabel.Orange) +
-                (expectedMangoRateValue * predictionsLabel.Mango)) / getPredictionsSum();
+            ((expectedAppleMissClassificationValue * predictionsLabel.Apple) +
+                (expectedOrangeMissClassificationValue * predictionsLabel.Orange) +
+                (expectedMangoMissClassificationValue * predictionsLabel.Mango)) / getPredictionsSum();
 
-        // Test matrix weighted miss classification rate value..
-        value = confusionMatrix.missClassificationRate({ weighted: true });
+        // Test matrix weighted miss classification value.
+        value = confusionMatrix.missClassificationRate({ average: Average.Weighted });
+        expect(value).toBe(expectedWeightMatrixRateValue);
+
+        value = confusionMatrix.missClassificationRate();
         expect(value).toBe(expectedWeightMatrixRateValue);
     });
 
@@ -305,29 +341,38 @@ describe("Confusion matrix model test suite", () => {
         value = confusionMatrix.precision(configuration);
         expect(value).toBe((expectedOrangePrecisionValue))
 
-        // Test Mango precision.
-        configuration.label = 'Mango';
-        value = confusionMatrix.precision(configuration);
-        expect(value).toBe((expectedMangoPrecisionValue));
+        const sumMatrixClasses = getSumConfusionMatrixClasses();
 
-        // Expected matrix precision.
-        const expectedMatrixRateValue = (expectedApplePrecisionValue + expectedOrangePrecisionValue +
-            expectedMangoPrecisionValue) / 3
+        // Expected micro precision value.
+        const microPrecisionValue = (sumMatrixClasses.truePositive) /
+            (sumMatrixClasses.truePositive + sumMatrixClasses.falsePositive);
 
-        // Test matrix precision.
-        value = confusionMatrix.precision();
-        expect(value).toBe(expectedMatrixRateValue);
+        // Test matrix precision value.
+        value = confusionMatrix.precision({ average: Average.Micro });
+        expect(value).toBe(microPrecisionValue);
+
+        // Expected micro rate value.
+        const macroPrecisionValue = (expectedApplePrecisionValue + expectedOrangePrecisionValue
+            + expectedMangoPrecisionValue) / 3;
+
+        // Test matrix rate.
+        value = confusionMatrix.precision({ average: Average.Macro });
+        expect(value).toBe(macroPrecisionValue);
 
         const predictionsLabel = getLabelsPredictionsSum();
 
-        // Expected matrix weight precision value.
+        // Expected matrix weight rate value.
         const expectedWeightMatrixRateValue =
             ((expectedApplePrecisionValue * predictionsLabel.Apple) +
                 (expectedOrangePrecisionValue * predictionsLabel.Orange) +
                 (expectedMangoPrecisionValue * predictionsLabel.Mango)) / getPredictionsSum();
 
-        // Test matrix weighted miss classification rate value..
-        value = confusionMatrix.precision({ weighted: true });
+        // Test matrix weighted precision value.
+        value = confusionMatrix.precision({ average: Average.Weighted });
+        expect(value).toBe(expectedWeightMatrixRateValue);
+
+        // Should use weighted as default average value.
+        value = confusionMatrix.precision();
         expect(value).toBe(expectedWeightMatrixRateValue);
     });
 
@@ -364,25 +409,39 @@ describe("Confusion matrix model test suite", () => {
         value = confusionMatrix.recall(configuration);
         expect(value).toBe((expectedMangoRecallValue));
 
-        // Expected matrix precision.
-        const expectedMatrixRateValue = (expectedAppleRecallValue + expectedOrangeRecallValue +
-            expectedMangoRecallValue) / 3
+        const sumMatrixClasses = getSumConfusionMatrixClasses();
 
-        // Test matrix precision.
-        value = confusionMatrix.recall();
-        expect(value).toBe(expectedMatrixRateValue);
+        // Expected micro recall value.
+        const microRecallValue = (sumMatrixClasses.truePositive) /
+            (sumMatrixClasses.truePositive + sumMatrixClasses.falseNegative);
+
+        // Test matrix precision value.
+        value = confusionMatrix.recall({ average: Average.Micro });
+        expect(value).toBe(microRecallValue);
+
+        // Expected macro recall value.
+        const macroRecallValue = (expectedAppleRecallValue + expectedOrangeRecallValue
+            + expectedMangoRecallValue) / 3;
+
+        // Test matrix recall value..
+        value = confusionMatrix.recall({ average: Average.Macro });
+        expect(value).toBe(macroRecallValue);
 
         const predictionsLabel = getLabelsPredictionsSum();
 
-        // Expected matrix weight precision value.
-        const expectedWeightMatrixRateValue =
+        // Expected matrix weight recall value.
+        const expectedWeightMatrixRecallValue =
             ((expectedAppleRecallValue * predictionsLabel.Apple) +
                 (expectedOrangeRecallValue * predictionsLabel.Orange) +
                 (expectedMangoRecallValue * predictionsLabel.Mango)) / getPredictionsSum();
 
-        // Test matrix weighted miss classification rate value..
-        value = confusionMatrix.recall({ weighted: true });
-        expect(value).toBe(expectedWeightMatrixRateValue);
+        // Test matrix weighted recall value.
+        value = confusionMatrix.recall({ average: Average.Weighted });
+        expect(value).toBe(expectedWeightMatrixRecallValue);
+
+        // Should use weighted as default recall value.
+        value = confusionMatrix.recall();
+        expect(value).toBe(expectedWeightMatrixRecallValue);
     });
 
     it("Can calculate the matrix specificity value.", () => {
@@ -418,25 +477,39 @@ describe("Confusion matrix model test suite", () => {
         value = confusionMatrix.specificity(configuration);
         expect(value).toBe((expectedMangoSpecificityValue));
 
-        // Expected matrix specificity.
-        const expectedMatrixSpecificityValue = (expectedAppleSpecificityValue + expectedOrangeSpecificityValue +
-            expectedMangoSpecificityValue) / 3
+        const sumMatrixClasses = getSumConfusionMatrixClasses();
 
-        // Test matrix specificity.
-        value = confusionMatrix.specificity();
-        expect(value).toBe(expectedMatrixSpecificityValue);
+        // Expected micro precision value.
+        const microSpecificityValue = (sumMatrixClasses.trueNegative) /
+            (sumMatrixClasses.trueNegative + sumMatrixClasses.falsePositive);
+
+        // Test matrix precision value.
+        value = confusionMatrix.specificity({ average: Average.Micro });
+        expect(value).toBe(microSpecificityValue);
+
+        // Expected macro specificity value.
+        const macroSpecificityValue = (expectedAppleSpecificityValue + expectedOrangeSpecificityValue
+            + expectedMangoSpecificityValue) / 3;
+
+        // Test matrix rate.
+        value = confusionMatrix.specificity({ average: Average.Macro });
+        expect(value).toBe(macroSpecificityValue);
 
         const predictionsLabel = getLabelsPredictionsSum();
 
         // Expected matrix weight specificity value.
-        const expectedWeightMatrixSpecificityValue =
+        const expectedWeightMatrixRateValue =
             ((expectedAppleSpecificityValue * predictionsLabel.Apple) +
                 (expectedOrangeSpecificityValue * predictionsLabel.Orange) +
                 (expectedMangoSpecificityValue * predictionsLabel.Mango)) / getPredictionsSum();
 
-        // Test matrix weighted miss classification rate value..
-        value = confusionMatrix.specificity({ weighted: true });
-        expect(value).toBe(expectedWeightMatrixSpecificityValue);
+        // Test matrix weighted specificity value.
+        value = confusionMatrix.specificity({ average: Average.Weighted });
+        expect(value).toBe(expectedWeightMatrixRateValue);
+
+        // Should use weighted as default specificity value.
+        value = confusionMatrix.specificity();
+        expect(value).toBe(expectedWeightMatrixRateValue);
     });
 
 });
