@@ -154,6 +154,25 @@ export class ConfusionMatrix {
         return result || 0;
     }
 
+    /**
+     * Gives the accuracy value for all confusion matrix, taking in account a given 
+     * average method of calculation.
+     * 
+     * @param average Defines which type of average should be used. This average will only be taken in account.
+     * on matrix calculations (when label = null || undefined).
+     *
+     * [[average.Micro]]: Calculates the TP, TN, FP and FN for the matrix globally and then applies the
+     * accuracy formula.
+     *
+     * [[average.Macro]]: Calculates and sums the accuracy for each individual label and divides for
+     * the number of labels.
+     *
+     * [[average.Weighted]]: Defines if the accuracy calculations should be weighted. This means the labels
+     * with more predictions will weight more in the final accuracy value comparing with labels with less.
+     * predictions.
+     * 
+     * @return The accuracy value.
+     */
     matrixAccuracy(average = Average.Weighted): number {
         this.validateMatrix();
         switch (average) {
@@ -243,7 +262,28 @@ export class ConfusionMatrix {
         return result || 0;
     }
 
-
+    /**
+     * Gives the miss classification rate value for all confusion matrix, 
+     * taking in account a given average method of calculation.
+     * 
+     * Misclassification rate, also know as classification error and 1-Accuracy,
+     * calculates the faction of predictions were incorrect.
+     * 
+     * @param average Defines which type of average should be used. This average will only be taken in account.
+     * on matrix calculations (when label = null || undefined).
+     *
+     * [[average.Micro]]: Calculates the TP, TN, FP and FN for the matrix globally and then applies the
+     * miss classification formula.
+     *
+     * [[average.Macro]]: Calculates and sums the miss classification for each individual label and divides for
+     * the number of labels.
+     *
+     * [[average.Weighted]]: Defines if the miss classification calculations should be weighted. This means the labels
+     * with more predictions will weight more in the final miss classification value comparing with labels with less.
+     * predictions.
+     *
+     * @return The miss classification value.
+     */
     matrixMissClassificationRate(average = Average.Weighted): number {
         this.validateMatrix();
         switch (average) {
@@ -331,6 +371,27 @@ export class ConfusionMatrix {
         return result || 0;
     }
 
+    /**
+     * Gives the precision value for all confusion matrix,
+     * taking in account a given average method of calculation.
+     *
+     * Precision, stands for what fraction of predictions as a positive class were actual positive.
+     *
+     * @param average Defines which type of average should be used. This average will only be taken in account.
+     * on matrix calculations (when label = null || undefined).
+     *
+     * [[average.Micro]]: Calculates the TP, TN, FP and FN for the matrix globally and then applies the
+     * precision formula.
+     *
+     * [[average.Macro]]: Calculates and sums the precision for each individual label and divides for
+     * the number of labels.
+     *
+     * [[average.Weighted]]: Defines if the precision calculations should be weighted. This means the labels
+     * with more predictions will weight more in the final precision value comparing with labels with less.
+     * predictions.
+     *
+     * @return The precision value.
+     */
     matrixPrecision(average = Average.Weighted): number {
         this.validateMatrix();
         switch (average) {
@@ -421,6 +482,28 @@ export class ConfusionMatrix {
         return result || 0;
     }
 
+    /**
+     * Gives the recall value for all confusion matrix,
+     * taking in account a given average method of calculation.
+     *
+     * Recall, also know as true positive rate, sensitivity, hit rate and probability of detection,
+     * gives what fraction of all positives classes correctly predicted as positive.
+     *
+     * @param average Defines which type of average should be used. This average will only be taken in account.
+     * on matrix calculations (when label = null || undefined).
+     *
+     * [[average.Micro]]: Calculates the TP, TN, FP and FN for the matrix globally and then applies the
+     * recall formula.
+     *
+     * [[average.Macro]]: Calculates and sums the recall for each individual label and divides for
+     * the number of labels.
+     *
+     * [[average.Weighted]]: Defines if the recall calculations should be weighted. This means the labels
+     * with more predictions will weight more in the final recall value comparing with labels with less.
+     * predictions.
+     *
+     * @return The recall value.
+     */
     matrixRecall(average = Average.Weighted): number {
         this.validateMatrix();
         switch (average) {
@@ -491,6 +574,28 @@ export class ConfusionMatrix {
         return this.matrixSpecificity(configuration?.average);
     }
 
+    /**
+     * Gives the specificity value for all confusion matrix,
+     * taking in account a given average method of calculation.
+     *
+     * Specificity also know as selectivity or true negative rate,
+     * gives what fraction of all negatives samples are correctly as negative.
+     *
+     * @param average Defines which type of average should be used. This average will only be taken in account.
+     * on matrix calculations (when label = null || undefined).
+     *
+     * [[average.Micro]]: Calculates the TP, TN, FP and FN for the matrix globally and then applies the
+     * specificity formula.
+     *
+     * [[average.Macro]]: Calculates and sums the specificity for each individual label and divides for
+     * the number of labels.
+     *
+     * [[average.Weighted]]: Defines if the specificity calculations should be weighted. This means the labels
+     * with more predictions will weight more in the final specificity value comparing with labels with less.
+     * predictions.
+     *
+     * @return The specificity value.
+     */
     matrixSpecificity(average = Average.Weighted): number {
         this.validateMatrix();
         switch (average) {
@@ -580,6 +685,27 @@ export class ConfusionMatrix {
         return this.matrixF1Score(configuration?.average);
     }
 
+    /**
+     * Gives the F1 Score value for all confusion matrix,
+     * taking in account a given average method of calculation.
+     *
+     * F1 Score is the harmonic mean of precision and recall.
+     *
+     * @param average Defines which type of average should be used. This average will only be taken in account.
+     * on matrix calculations (when label = null || undefined).
+     *
+     * [[average.Micro]]: Calculates the TP, TN, FP and FN for the matrix globally and then applies the
+     * F1 Score formula.
+     *
+     * [[average.Macro]]: Calculates and sums the F1 Score for each individual label and divides for
+     * the number of labels.
+     *
+     * [[average.Weighted]]: Defines if the F1 Score calculations should be weighted. This means the labels
+     * with more predictions will weight more in the final F1 Score value comparing with labels with less.
+     * predictions.
+     *
+     * @return The F1 Score value.
+     */
     matrixF1Score(average = Average.Weighted): number {
         this.validateMatrix();
         switch (average) {
