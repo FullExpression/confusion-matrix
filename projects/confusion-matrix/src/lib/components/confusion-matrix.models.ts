@@ -99,7 +99,7 @@ export class ConfusionMatrix {
     }
 
     /**
-     * Gives the overall accuracy value for a given label or for all confusion matrix.
+     * Accuracy gives the fraction of total predictions which were correctly classified.
      *
      * Formula:
      *
@@ -140,6 +140,8 @@ export class ConfusionMatrix {
     /**
      * Gives the accuracy value for a given matrix label.
      * 
+     * Accuracy gives the fraction of total predictions which were correctly classified.
+     * 
      * Formula:
      *
      * accuracy = (TP + TN) / (TP + TN + FP + FN)
@@ -157,6 +159,8 @@ export class ConfusionMatrix {
     /**
      * Gives the accuracy value for all confusion matrix, taking in account a given 
      * average method of calculation.
+     * 
+     * Accuracy gives the fraction of total predictions which were correctly classified.
      * 
      * @param average Defines which type of average should be used. This average will only be taken in account.
      * on matrix calculations (when label = null || undefined).
@@ -182,6 +186,16 @@ export class ConfusionMatrix {
         }
     }
 
+    /**
+    * Gives the accuracy value for all confusion matrix, taking in account the micro average method.
+    * 
+    * Accuracy gives the fraction of total predictions which were correctly classified.
+    * 
+    * The micro average method calculates and sums the accuracy for each individual label and divides for
+    * the number of labels.
+    *
+    * @return The micro accuracy value.
+    */
     microAccuracy(): number {
         const { truePositive, trueNegative, falsePositive, falseNegative } = this.getSumConfusionMatrixClasses();
         const result = (truePositive + trueNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
@@ -293,6 +307,17 @@ export class ConfusionMatrix {
         }
     }
 
+    /**
+    * Gives the miss classification value for all confusion matrix, taking in account the micro average method.
+    * 
+    * Misclassification rate, also know as classification error and 1-Accuracy,
+    * calculates the faction of predictions were incorrect.
+    
+    * The micro average method calculates and sums the miss classification for each individual label and divides for
+    * the number of labels.
+    *
+    * @return The micro miss classification value.
+    */
     microMissClassificationRate(): number {
         const { truePositive, trueNegative, falsePositive, falseNegative } = this.getSumConfusionMatrixClasses();
         const result = (falsePositive + falseNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
@@ -401,6 +426,16 @@ export class ConfusionMatrix {
         }
     }
 
+    /**
+    * Gives the precision value for all confusion matrix, taking in account the micro average method.
+    *
+    * Precision, gives what fraction of predictions as a positive class were actual positive.
+    * 
+    * The micro average method calculates and sums the precision for each individual label and divides for
+    * the number of labels.
+    *
+    * @return The micro precision value.
+    */
     microPrecision(): number {
         const { truePositive, falsePositive } = this.getSumConfusionMatrixClasses();
         const result = ((truePositive) / (truePositive + falsePositive));
@@ -513,6 +548,17 @@ export class ConfusionMatrix {
         }
     }
 
+    /**
+    * Gives the recall value for all confusion matrix, taking in account the micro average method.
+    *
+    * Recall, also know as true positive rate, sensitivity, hit rate and probability of detection,
+    * gives what fraction of all positives classes correctly predicted as positive.
+    * 
+    * The micro average method calculates and sums the recall for each individual label and divides for
+    * the number of labels.
+    *
+    * @return The micro recall value.
+    */
     microRecall(): number {
         const { truePositive, falseNegative } = this.getSumConfusionMatrixClasses();
         const result = (truePositive) / (truePositive + falseNegative);
@@ -605,6 +651,17 @@ export class ConfusionMatrix {
         }
     }
 
+    /**
+    * Gives the specificity value for all confusion matrix, taking in account the micro average method.
+    *
+    * Specificity also know as selectivity or true negative rate,
+    * gives what fraction of all negatives samples are correctly as negative.
+    * 
+    * The micro average method calculates and sums the specificity for each individual label and divides for
+    * the number of labels.
+    *
+    * @return The micro specificity value.
+    */
     microSpecificity(): number {
         const { trueNegative, falsePositive } = this.getSumConfusionMatrixClasses();
         const result = (trueNegative) / (trueNegative + falsePositive);
@@ -735,6 +792,16 @@ export class ConfusionMatrix {
         return result || 0;
     }
 
+    /**
+    * Gives the F1 Score value for all confusion matrix, taking in account the micro average method.
+    *
+    * F1 Score is the harmonic mean of precision and recall.
+    * 
+    * The micro average method calculates and sums the F1 Score for each individual label and divides for
+    * the number of labels.
+    *
+    * @return The micro F1 Score value.
+    */
     microF1Score() {
         const precision = this.microPrecision();
         const recall = this.microRecall()
