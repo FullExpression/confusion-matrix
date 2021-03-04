@@ -370,28 +370,29 @@ export class ConfusionMatrix {
     }
 
     /**
-     * Recall also know as True Positive Rate, sensitivity, hit rate and probability of detection,
-     * gives what fraction of all positives samples correctly predicted as positive.
+     * Recall, also know as true positive rate, sensitivity, hit rate and probability of detection,
+     * gives what fraction of all positives classes correctly predicted as positive.
      *
      * Formula:
      *
-     * labelRecall = TP / (TP + FN)
+     * recall = TP / (TP + FN)
      *
-     * allMatrix = Sum(n)(labelRecall[n])
-     *
-     * labelWeight[] = (numberOfLabelPredictions / totalNumberOfPredictions) (repeated for each label);
-     *
-     * allMatrixWeighted = Sum(n)(labelRecall[n] * labelWeight[n])
-     *
-     * @param configuration Allows not set some configuration when calculating the recall value.
+     * @param configuration Set of configurations used on recall calculations.
      *
      * [[configuration.label]] : The label name which will be used to calculate the recall value.
-     * If undefined or null, the recall value will be calculated for all confusion matrix.
+     * If undefined or null, the value will be calculated for all confusion matrix.
      *
-     * [[configuration.weighted]]: Defines if the recall value should be weighted. This means the labels
-     * with more predictions will weight more in the final value comparing with labels with less
-     * predictions. Note: The weight will only be taken in account when the recall is being calculated to  all
-     * confusion matrix.
+     * [[configuration.average]]: Defines which type of average should be used. This average will only be taken in account.
+     * on matrix calculations (when label = null || undefined).
+     *
+     * [[configuration.average.Micro]]: Calculates the TP, TN, FP and FN for the matrix globally and then applies the
+     * recall formula.
+     *
+     * [[configuration.average.Macro]]: Calculates and sums the miss classification rate for each individual label and divides for
+     * the number of labels.
+     *
+     * [[configuration.average.Weighted]]: Defines if the recall calculations should be weighted. This means the labels
+     * with more predictions will weight more in the final value comparing with labels with less predictions.
      *
      * @return The recall value.
      */
@@ -465,23 +466,24 @@ export class ConfusionMatrix {
      *
      * Formula:
      *
-     * labelSpecificity = TP / (TN + FN)
+     * specificity = TP / (TN + FN)
      *
-     * allMatrix = Sum(n)(labelSpecificity[n])
-     *
-     * labelWeight[] = (numberOfLabelPredictions / totalNumberOfPredictions) (repeated for each label);
-     *
-     * allMatrixWeighted = Sum(n)(labelSpecificity[n] * labelWeight[n])
-     *
-     * @param configuration Allows not set some configuration when calculating the specificity value.
+     * @param configuration Set of configurations used on specificity calculations.
      *
      * [[configuration.label]] : The label name which will be used to calculate the specificity value.
-     * If undefined or null, the recall value will be calculated for all confusion matrix.
+     * If undefined or null, the value will be calculated for all confusion matrix.
      *
-     * [[configuration.weighted]]: Defines if the specificity value should be weighted. This means the labels
-     * with more predictions will weight more in the final value comparing with labels with less
-     * predictions. Note: The weight will only be taken in account when the specificity is being calculated to  all
-     * confusion matrix.
+     * [[configuration.average]]: Defines which type of average should be used. This average will only be taken in account.
+     * on matrix calculations (when label = null || undefined).
+     *
+     * [[configuration.average.Micro]]: Calculates the TP, TN, FP and FN for the matrix globally and then applies the
+     * specificity formula.
+     *
+     * [[configuration.average.Macro]]: Calculates and sums the miss classification rate for each individual label and divides for
+     * the number of labels.
+     *
+     * [[configuration.average.Weighted]]: Defines if the specificity calculations should be weighted. This means the labels
+     * with more predictions will weight more in the final value comparing with labels with less predictions.
      *
      * @return The specificity value.
      */
@@ -549,6 +551,32 @@ export class ConfusionMatrix {
         return result || 0;
     }
 
+    /**
+     * F1 Score is the harmonic mean of precision and recall. 
+     *
+     * Formula:
+     *
+     * f1Score = TP / (TN + FN)
+     *
+     * @param configuration Set of configurations used on F1 Score calculations.
+     *
+     * [[configuration.label]] : The label name which will be used to calculate the F1 Score value.
+     * If undefined or null, the value will be calculated for all confusion matrix.
+     *
+     * [[configuration.average]]: Defines which type of average should be used. This average will only be taken in account.
+     * on matrix calculations (when label = null || undefined).
+     *
+     * [[configuration.average.Micro]]: Calculates the TP, TN, FP and FN for the matrix globally and then applies the
+     * F1 Score formula.
+     *
+     * [[configuration.average.Macro]]: Calculates and sums the miss classification rate for each individual label and divides for
+     * the number of labels.
+     *
+     * [[configuration.average.Weighted]]: Defines if the F1 Score calculations should be weighted. This means the labels
+     * with more predictions will weight more in the final value comparing with labels with less predictions.
+     *
+     * @return The F1 Score value.
+     */
     f1Score(configuration?: {
         label?: string,
         average?: Average
