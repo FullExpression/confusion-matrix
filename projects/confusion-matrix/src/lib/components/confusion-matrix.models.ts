@@ -202,6 +202,16 @@ export class ConfusionMatrix {
         return result || 0;
     }
 
+    /**
+    * Gives the accuracy value for all confusion matrix, taking in account the macro average method.
+    *
+    * Accuracy gives the fraction of total predictions which were correctly classified.
+    *
+    * The macro average method calculates and sums the accuracy for each individual label and divides for
+    * the number of labels.
+    *
+    * @return The macro accuracy value.
+    */
     macroAccuracy(): number {
         let sum = 0;
         this.labels.forEach((label) => sum += this.labelAccuracy(label));
@@ -209,6 +219,16 @@ export class ConfusionMatrix {
         return result || 0;
     }
 
+    /**
+    * Gives the accuracy value for all confusion matrix, taking in account the average weighted method.
+    *
+    * Accuracy gives the fraction of total predictions which were correctly classified.
+    *
+    * The weighted average method gives the labels with more predictions more importance (weight)
+    * in the final accuracy value comparing with labels with less predictions.
+    *
+    * @return The weighted accuracy value.
+    */
     weightedAccuracy(): number {
         const sumLabels = this.getLabelsPredictionsSum();
         const numberOfPredictions = this.getNumberOfPredictions();
@@ -312,7 +332,7 @@ export class ConfusionMatrix {
     * 
     * Misclassification rate, also know as classification error and 1-Accuracy,
     * calculates the faction of predictions were incorrect.
-    
+    *
     * The micro average method calculates and sums the miss classification for each individual label and divides for
     * the number of labels.
     *
@@ -324,6 +344,17 @@ export class ConfusionMatrix {
         return result || 0;
     }
 
+    /**
+    * Gives the miss classification value for all confusion matrix, taking in account the macro average method.
+    *
+    * Misclassification rate, also know as classification error and 1-Accuracy,
+    * calculates the faction of predictions were incorrect.
+    *
+    * The macro average method calculates and sums the miss classification for each individual label and divides for
+    * the number of labels.
+    *
+    * @return The macro miss classification value.
+    */
     macroMissClassificationRate(): number {
         let sum = 0;
         this.labels.forEach((label) => sum += this.labelMissClassificationRate(label));
@@ -331,6 +362,17 @@ export class ConfusionMatrix {
         return result || 0;
     }
 
+    /**
+    * Gives the miss classification value for all confusion matrix, taking in account the average weighted method.
+    *
+    * Misclassification rate, also know as classification error and 1-Accuracy,
+    * calculates the faction of predictions were incorrect.
+    *
+    * The weighted average method gives the labels with more predictions more importance (weight)
+    * in the final miss classification value comparing with labels with less predictions.
+    *
+    * @return The weighted miss classification value.
+    */
     weightedMissClassificationRate(): number {
         const sumLabels = this.getLabelsPredictionsSum();
         const numberOfPredictions = this.getNumberOfPredictions();
@@ -442,6 +484,16 @@ export class ConfusionMatrix {
         return result || 0;
     }
 
+    /**
+    * Gives the precision value for all confusion matrix, taking in account the macro average method.
+    *
+    * Precision, gives what fraction of predictions as a positive class were actual positive.
+    *
+    * The macro average method calculates and sums the precision for each individual label and divides for
+    * the number of labels.
+    *
+    * @return The macro precision value.
+    */
     macroPrecision(): number {
         let sum = 0;
         this.labels.forEach((label) => sum += this.labelPrecision(label));
@@ -565,6 +617,17 @@ export class ConfusionMatrix {
         return result || 0;
     }
 
+    /**
+    * Gives the recall value for all confusion matrix, taking in account the macro average method.
+    *
+    * Recall, also know as true positive rate, sensitivity, hit rate and probability of detection,
+    * gives what fraction of all positives classes correctly predicted as positive.
+    *
+    * The macro average method calculates and sums the recall for each individual label and divides for
+    * the number of labels.
+    *
+    * @return The macro recall value.
+    */
     macroRecall(): number {
         let sum = 0;
         this.labels.forEach((label) => sum += this.labelRecall(label));
@@ -572,6 +635,17 @@ export class ConfusionMatrix {
         return result || 0;
     }
 
+    /**
+    * Gives the recall value for all confusion matrix, taking in account the average weighted method.
+    *
+    * Recall, also know as true positive rate, sensitivity, hit rate and probability of detection,
+    * gives what fraction of all positives classes correctly predicted as positive.
+    *
+    * The weighted average method gives the labels with more predictions more importance (weight)
+    * in the final recall value comparing with labels with less predictions.
+    *
+    * @return The weighted recall value.
+    */
     weightedRecall(): number {
         const sumLabels = this.getLabelsPredictionsSum();
         const numberOfPredictions = this.getNumberOfPredictions();
@@ -668,6 +742,17 @@ export class ConfusionMatrix {
         return result || 0;
     }
 
+    /**
+    * Gives the specificity value for all confusion matrix, taking in account the macro average method.
+    *
+    * Specificity also know as selectivity or true negative rate,
+    * gives what fraction of all negatives samples are correctly as negative.
+    *
+    * The macro average method calculates and sums the specificity for each individual label and divides for
+    * the number of labels.
+    *
+    * @return The macro specificity value.
+    */
     macroSpecificity(): number {
         let sum = 0;
         this.labels.forEach((label) => sum += this.labelSpecificity(label));
@@ -675,6 +760,17 @@ export class ConfusionMatrix {
         return result || 0;
     }
 
+    /**
+    * Gives the specificity value for all confusion matrix, taking in account the average weighted method.
+    *
+    * Specificity also know as selectivity or true negative rate,
+    * gives what fraction of all negatives samples are correctly as negative.
+    *
+    * The weighted average method gives the labels with more predictions more importance (weight)
+    * in the final specificity value comparing with labels with less predictions.
+    *
+    * @return The weighted specificity value.
+    */
     weightedSpecificity(): number {
         const sumLabels = this.getLabelsPredictionsSum();
         const numberOfPredictions = this.getNumberOfPredictions();
@@ -808,6 +904,16 @@ export class ConfusionMatrix {
         return this.applyF1ScoreFormula(precision, recall);
     }
 
+    /**
+    * Gives the F1 Score value for all confusion matrix, taking in account the macro average method.
+    *
+    * F1 Score is the harmonic mean of precision and recall.
+    *
+    * The macro average method calculates and sums the F1 Score for each individual label and divides for
+    * the number of labels.
+    *
+    * @return The macro F1 Score value.
+    */
     macroF1Score(): number {
         let sum = 0;
         this.labels.forEach((label) => sum += this.labelF1Score(label));
@@ -815,6 +921,16 @@ export class ConfusionMatrix {
         return result || 0;
     }
 
+    /**
+    * Gives the F1 Score value for all confusion matrix, taking in account the average weighted method.
+    *
+    * F1 Score is the harmonic mean of precision and recall.
+    *
+    * The weighted average method gives the labels with more predictions more importance (weight)
+    * in the final F1 Score value comparing with labels with less predictions.
+    *
+    * @return The weighted F1 Score value.
+    */
     weightedF1Score(): number {
         const sumLabels = this.getLabelsPredictionsSum();
         const numberOfPredictions = this.getNumberOfPredictions();
