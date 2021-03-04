@@ -501,6 +501,16 @@ export class ConfusionMatrix {
         return result || 0;
     }
 
+    /**
+    * Gives the precision value for all confusion matrix, taking in account the average weighted method.
+    *
+    * Precision, gives what fraction of predictions as a positive class were actual positive.
+    *
+    * The weighted average method gives the labels with more predictions more importance (weight)
+    * in the final precision value comparing with labels with less predictions.
+    *
+    * @return The weighted precision value.
+    */
     weightedPrecision(): number {
         const sumLabels = this.getLabelsPredictionsSum();
         const numberOfPredictions = this.getNumberOfPredictions();
