@@ -5,8 +5,8 @@
  * 
  * The matrix columns represents the true classes and the columns the predicted classes.
  *
- * @note Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more
- * information regarding terminology, formulas and other theoretical concepts.
+ * @note Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) and [Joydwip Mohajon, 2020](https://towardsdatascience.com/confusion-matrix-for-your-multi-class-machine-learning-model-ff9aa3bf7826)
+ * for more information regarding terminology, formulas and other theoretical concepts.
  *
  */
 export class ConfusionMatrix {
@@ -65,7 +65,8 @@ export class ConfusionMatrix {
      * All normalizations will be saved in history and it is possible to revert last normalizations 
      * by calling the function @see {@link ConfusionMatrix.revertNormalization}.
      * 
-     * Can be util if you want to convert the values to percentage or between [0, 1].
+     * @note Can be special util if you want to convert the values to percentage or between [0, 1].
+     * 
      * @param min Minimum value of the normalized range values [min, max].
      * @param max Maximum value of the normalized range values [min, max].
      * @param fractionDigits — Number of digits after the decimal point. Must be in the range 0 - 20, inclusive.
@@ -84,42 +85,44 @@ export class ConfusionMatrix {
             for (let i = 0; i < this.matrix.length; i++) {
                 for (let j = 0; j < this.matrix[i].length; j++) {
                     const x = this.matrix[i][j];
-                    this.matrix[i][j] = ((max - min) * ((x - minX) / (maxX - minX))) + min
+                    this.matrix[i][j] = ((max - min) * ((x - minX) / (maxX - minX))) + min;
                     if (fractionDigits != undefined) {
                         this.matrix[i][j] = +this.matrix[i][j].toFixed(fractionDigits);
                     }
 
                 }
             }
+        } else {
+            throw new Error("Error getting the min and max value. Please, verify the matrix dimensions.");
         }
+
     }
 
     /**
-     * Gives the overall accuracy value for a given label or for the all confusion matrix.
-     *  
-     * Formula: 
-     * 
-     * labelAccuracy = (TP + TN) / (TP + TN + FP + FN)
-     * 
-     * allMatrix = Sum(n)(labelAccuracy[n])
-     * 
-     * labelWeight[] = (numberOfLabelPredictions / totalNumberOfPredictions) (repeated for each label);
-     * 
-     * allMatrixWeighted =  Sum(n)(labelAccuracy[n] * labelWeight[n])
-     * 
-     * @param configuration Allows not set some configuration when calculating the accuracy number.
-     * 
+     * Gives the overall accuracy value for a given label or for all confusion matrix.
+     *
+     * Formula:
+     *
+     * accuracy = (TP + TN) / (TP + TN + FP + FN)
+     *
+     * @param configuration Set of configurations used on accuracy calculations.
+     *
      * [[configuration.label]] : The label name which will be used to calculate the accuracy value.
-     * If undefined or null, will the accuracy value will be calculated for the all confusion matrix.
-     * 
-     * [[configuration.weighted]]: Defines if the accuracy value should be weighted. This means that the labels
-     * with more predictions will weight more in the final accuracy value comparing with labels with less
-     * predictions. You should use this options whenever you have [unbalance data](https://machinelearningmastery.com/what-is-imbalanced-classification/). 
-     * 
-     * @note The weight will only be taken in account when the accuracy is being calculated to the all
-     * confusion matrix. Moreover, Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more
-     * information regarding terminology, formulas and other theoretical concepts.
-     * 
+     * If undefined or null, the accuracy value will be calculated for all confusion matrix.
+     *
+     * [[configuration.average]]: Defines which type of average should be used. This average will only be taken in account.
+     * on matrix calculations (when label = null || undefined).
+     *
+     * [[configuration.average.Micro]]: Calculates the TP, TN, FP and FN for the matrix globally and then applies the
+     * accuracy formula.
+     *
+     * [[configuration.average.Macro]]: Calculates and sums the accuracy for each individual label and divides for
+     * the number of labels.
+     *
+     * [[configuration.average.Weighted]]: Defines if the accuracy calculations should be weighted. This means the labels
+     * with more predictions will weight more in the final accuracy value comparing with labels with less.
+     * predictions.
+     *
      * @return The accuracy value.
      */
     accuracy(configuration: {
@@ -186,32 +189,31 @@ export class ConfusionMatrix {
     }
 
     /**
-     * Misclassification rate or 1-Accuracy, gives what fraction of predictions were incorrect.
+     * Misclassification rate, also know as classification error and 1-Accuracy, 
+     * calculates the faction of predictions were incorrect.
      *
-     * Formula: 
-     * 
-     * labelMisclassification = (FP + FN) / ( TP + TN + FP + FN)
-     * 
-     * allMatrix = Sum(n)(labelMisclassification[n])
+     * Formula:
      *
-     * labelWeight[] = (numberOfLabelPredictions / totalNumberOfPredictions) (repeated for each label);
+     * accuracy = (FP + FN) / (TP + TN + FP + FN)
      *
-     * allMatrixWeighted = Sum(n)(labelAccuracy[n] * labelWeight[n])
-     * 
-     * @param configuration Allows not set some configuration when calculating the miss classification rate.
+     * @param configuration Set of configurations used on miss classification rate calculations.
      *
      * [[configuration.label]] : The label name which will be used to calculate the miss classification rate.
-     * If undefined or null, the rate value will be calculated for the all confusion matrix.
+     * If undefined or null, the value will be calculated for all confusion matrix.
      *
-     * [[configuration.weighted]]: Defines if the miss classification rate value should be weighted. This means the labels
-     * with more predictions will weight more in the final rate value comparing with labels with less
-     * predictions. Note: The weight will only be taken in account when the accuracy is being calculated to  all
-     * confusion matrix.
-     * 
+     * [[configuration.average]]: Defines which type of average should be used. This average will only be taken in account.
+     * on matrix calculations (when label = null || undefined).
+     *
+     * [[configuration.average.Micro]]: Calculates the TP, TN, FP and FN for the matrix globally and then applies the
+     * miss classification formula.
+     *
+     * [[configuration.average.Macro]]: Calculates and sums the miss classification rate for each individual label and divides for
+     * the number of labels.
+     *
+     * [[configuration.average.Weighted]]: Defines if the miss classification calculations should be weighted. This means the labels
+     * with more predictions will weight more in the final rate value comparing with labels with less predictions.
+     *
      * @return The miss classification rate value.
-     * 
-     * @note Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more
-     * information regarding terminology, formulas and other theoretical concepts.
      */
     missClassificationRate(configuration: {
         label?: string,
@@ -279,27 +281,28 @@ export class ConfusionMatrix {
     }
 
     /**
-     * Precision, gives what fraction of predictions a positive class were actual positive.
+     * Precision, gives what fraction of predictions as a positive class were actual positive.
      *
      * Formula:
      *
-     * labelPrecision = TP / (TP + FP)
+     * precision = (TP) / (TP + FP)
      *
-     * allMatrix = Sum(n)(labelPrecision[n])
+     * @param configuration Set of configurations used on precision calculations.
      *
-     * labelWeight[] = (numberOfLabelPredictions / totalNumberOfPredictions) (repeated for each label);
+     * [[configuration.label]] : The label name which will be used to calculate the precision value.
+     * If undefined or null, the value will be calculated for all confusion matrix.
      *
-     * allMatrixWeighted = Sum(n)(labelAccuracy[n] * labelWeight[n])
+     * [[configuration.average]]: Defines which type of average should be used. This average will only be taken in account.
+     * on matrix calculations (when label = null || undefined).
      *
-     * @param configuration Allows not set some configuration when calculating the miss classification rate.
+     * [[configuration.average.Micro]]: Calculates the TP, TN, FP and FN for the matrix globally and then applies the
+     * precision formula.
      *
-     * [[configuration.label]] : The label name which will be used to calculate the precision rate.
-     * If undefined or null, the precision value will be calculated for all confusion matrix.
+     * [[configuration.average.Macro]]: Calculates and sums the miss classification rate for each individual label and divides for
+     * the number of labels.
      *
-     * [[configuration.weighted]]: Defines if the precision value should be weighted. This means the labels
-     * with more predictions will weight more in the final value comparing with labels with less
-     * predictions. Note: The weight will only be taken in account when the precision is being calculated to  all
-     * confusion matrix.
+     * [[configuration.average.Weighted]]: Defines if the precision calculations should be weighted. This means the labels
+     * with more predictions will weight more in the final value comparing with labels with less predictions.
      *
      * @return The precision value.
      */
