@@ -142,13 +142,10 @@ export class ConfusionMatrix {
      * 
      * Formula:
      *
-     * labelAccuracy = (TP + TN) / (TP + TN + FP + FN)
+     * accuracy = (TP + TN) / (TP + TN + FP + FN)
      * 
      * @param label The label used to get the accuracy value.
      * @return Accuracy value for a given label.
-     * 
-     * @note Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more
-     * information regarding terminology, formulas and other theoretical concepts.
      */
     labelAccuracy(label: string): number {
         this.validateMatrix();
@@ -227,19 +224,17 @@ export class ConfusionMatrix {
     }
 
     /**
-     * Gives the miss classification value for a given matrix label.
+     * Gives the miss classification rate for a given matrix label.
      * 
-     * Misclassification rate or 1-Accuracy, gives what fraction of predictions were incorrect.
+     * Misclassification rate, also know as classification error and 1-Accuracy,
+     * calculates the faction of predictions were incorrect.
      * 
      * Formula:
      *
-     * labelMissclassificationRate = (FP + FN) / ( TP + TN + FP + FN)
+     * missClassification = (FP + FN) / (TP + TN + FP + FN)
      *
      * @param label The label used to get the miss classification rate value.
      * @return Miss classification rate for a given label.
-     * 
-     * @note Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more
-     * information regarding terminology, formulas and other theoretical concepts.
      */
     labelMissClassificationRate(label: string): number {
         this.validateMatrix();
@@ -318,17 +313,16 @@ export class ConfusionMatrix {
     }
 
     /**
-     * Precision, gives what fraction of predictions a positive class were actual positive.
-     *
+     * Gives the precision value for a given matrix label.
+     * 
+     * Precision, stands for what fraction of predictions as a positive class were actual positive.
+     * 
      * Formula:
      *
-     * labelPrecision = TP / (TP + FP)
+     * precision = (TP) / (TP + FP)
      *
      * @param label The label used to get the precision value.
      * @return Precision value for a given label.
-     *
-     * @note Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more
-     * information regarding terminology, formulas and other theoretical concepts.
      */
     labelPrecision(label: string): number {
         this.validateMatrix();
@@ -408,18 +402,17 @@ export class ConfusionMatrix {
     }
 
     /**
-     * Recall also know as True Positive Rate, sensitivity, hit rate and probability of detection,
-     * gives what fraction of all positives samples correctly predicted as positive.
+     * Gives the recall value for a given matrix label.
+     *
+     * Recall, also know as true positive rate, sensitivity, hit rate and probability of detection,
+     * gives what fraction of all positives classes correctly predicted as positive.
      *
      * Formula:
      *
-     * labelRecall = TP / (TP + FN)
+     * recall = TP / (TP + FN)
      *
      * @param label The label used to get the recall value.
      * @return Recall value for a given label.
-     *
-     * @note Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more
-     * information regarding terminology, formulas and other theoretical concepts.
      */
     labelRecall(label: string): number {
         this.validateMatrix();
@@ -531,18 +524,17 @@ export class ConfusionMatrix {
     }
 
     /**
+     * Gives the specificity value for a given matrix label.
+     *
      * Specificity also know as selectivity or true negative rate,
      * gives what fraction of all negatives samples are correctly as negative.
      *
      * Formula:
      *
-     * labelSpecificity = TP / (TN + FN)
+     * specificity = TP / (TN + FN)
      *
      * @param label The label used to get the specificity value.
      * @return Specificity value for a given label.
-     *
-     * @note Consult [wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) for more
-     * information regarding terminology, formulas and other theoretical concepts.
      */
     labelSpecificity(label: string): number {
         this.validateMatrix();
@@ -597,7 +589,18 @@ export class ConfusionMatrix {
         }
     }
 
-
+    /**
+     * Gives the F1 Score value for a given matrix label.
+     *
+     * F1 Score is the harmonic mean of precision and recall.
+     *
+     * Formula:
+     *
+     * f1Score = TP / (TN + FN)
+     * 
+     * @param label The label used to get theF 1 Score value.
+     * @return F1 Score value for a given label.
+     */
     labelF1Score(label: string): number {
         this.validateMatrix();
         const precision = this.precision({ label });
