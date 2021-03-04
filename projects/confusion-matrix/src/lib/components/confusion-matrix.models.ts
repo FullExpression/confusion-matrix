@@ -150,7 +150,8 @@ export class ConfusionMatrix {
     labelAccuracy(label: string): number {
         this.validateMatrix();
         const { truePositive, trueNegative, falsePositive, falseNegative } = this.getConfusionMatrixClasses(label);
-        return (truePositive + trueNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
+        const result = (truePositive + trueNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
+        return result || 0;
     }
 
     matrixAccuracy(average = Average.Weighted): number {
@@ -164,13 +165,15 @@ export class ConfusionMatrix {
 
     microAccuracy(): number {
         const { truePositive, trueNegative, falsePositive, falseNegative } = this.getSumConfusionMatrixClasses();
-        return (truePositive + trueNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
+        const result = (truePositive + trueNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
+        return result || 0;
     }
 
     macroAccuracy(): number {
         let sum = 0;
         this.labels.forEach((label) => sum += this.labelAccuracy(label));
-        return sum / this.labels.length;
+        const result = sum / this.labels.length;
+        return result || 0;
     }
 
     weightedAccuracy(): number {
@@ -178,7 +181,8 @@ export class ConfusionMatrix {
         const numberOfPredictions = this.getNumberOfPredictions();
         let sum = 0;
         this.labels.forEach((label, index) => sum += (this.labelAccuracy(label) * sumLabels[index]));
-        return sum / numberOfPredictions
+        const result = sum / numberOfPredictions;
+        return result || 0;
     }
 
     /**
@@ -238,7 +242,8 @@ export class ConfusionMatrix {
     labelMissClassificationRate(label: string): number {
         this.validateMatrix();
         const { truePositive, trueNegative, falsePositive, falseNegative } = this.getConfusionMatrixClasses(label);
-        return (falsePositive + falseNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
+        const result = (falsePositive + falseNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
+        return result || 0;
     }
 
 
@@ -253,13 +258,15 @@ export class ConfusionMatrix {
 
     microMissClassificationRate(): number {
         const { truePositive, trueNegative, falsePositive, falseNegative } = this.getSumConfusionMatrixClasses();
-        return (falsePositive + falseNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
+        const result = (falsePositive + falseNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
+        return result || 0;
     }
 
     macroMissClassificationRate(): number {
         let sum = 0;
         this.labels.forEach((label) => sum += this.labelMissClassificationRate(label));
-        return sum / this.labels.length;
+        const result = sum / this.labels.length;
+        return result || 0;
     }
 
     weightedMissClassificationRate(): number {
@@ -267,7 +274,8 @@ export class ConfusionMatrix {
         const numberOfPredictions = this.getNumberOfPredictions();
         let sum = 0;
         this.labels.forEach((label, index) => sum += (this.labelMissClassificationRate(label) * sumLabels[index]));
-        return sum / numberOfPredictions;
+        const result = sum / numberOfPredictions;
+        return result || 0;
     }
 
     /**
@@ -322,7 +330,8 @@ export class ConfusionMatrix {
     labelPrecision(label: string): number {
         this.validateMatrix();
         const { truePositive, falsePositive } = this.getConfusionMatrixClasses(label);
-        return (truePositive) / (truePositive + falsePositive);
+        const result = ((truePositive) / (truePositive + falsePositive));
+        return result || 0;
     }
 
     matrixPrecision(average = Average.Weighted): number {
@@ -336,13 +345,15 @@ export class ConfusionMatrix {
 
     microPrecision(): number {
         const { truePositive, falsePositive } = this.getSumConfusionMatrixClasses();
-        return (truePositive) / (truePositive + falsePositive);
+        const result = ((truePositive) / (truePositive + falsePositive));
+        return result || 0;
     }
 
     macroPrecision(): number {
         let sum = 0;
         this.labels.forEach((label) => sum += this.labelPrecision(label));
-        return sum / this.labels.length;
+        const result = sum / this.labels.length;
+        return result || 0;
     }
 
     weightedPrecision(): number {
@@ -351,7 +362,8 @@ export class ConfusionMatrix {
 
         let sum = 0;
         this.labels.forEach((label, index) => sum += (this.labelPrecision(label) * sumLabels[index]));
-        return sum / numberOfPredictions;
+        const result = sum / numberOfPredictions;
+        return result || 0;
     }
 
     /**
@@ -408,7 +420,8 @@ export class ConfusionMatrix {
     labelRecall(label: string): number {
         this.validateMatrix();
         const { truePositive, falseNegative } = this.getConfusionMatrixClasses(label);
-        return (truePositive) / (truePositive + falseNegative);
+        const result = ((truePositive) / (truePositive + falseNegative));
+        return result || 0;
     }
 
     matrixRecall(average = Average.Weighted): number {
@@ -422,13 +435,15 @@ export class ConfusionMatrix {
 
     microRecall(): number {
         const { truePositive, falseNegative } = this.getSumConfusionMatrixClasses();
-        return (truePositive) / (truePositive + falseNegative);
+        const result = (truePositive) / (truePositive + falseNegative);
+        return result || 0;
     }
 
     macroRecall(): number {
         let sum = 0;
         this.labels.forEach((label) => sum += this.labelRecall(label));
-        return sum / this.labels.length;
+        const result = sum / this.labels.length;
+        return result || 0;
     }
 
     weightedRecall(): number {
@@ -437,7 +452,8 @@ export class ConfusionMatrix {
 
         let sum = 0;
         this.labels.forEach((label, index) => sum += (this.labelRecall(label) * sumLabels[index]));
-        return sum / numberOfPredictions;
+        const result = sum / numberOfPredictions;
+        return result || 0;
     }
 
     /**
@@ -488,13 +504,15 @@ export class ConfusionMatrix {
 
     microSpecificity(): number {
         const { trueNegative, falsePositive } = this.getSumConfusionMatrixClasses();
-        return (trueNegative) / (trueNegative + falsePositive);
+        const result = (trueNegative) / (trueNegative + falsePositive);
+        return result || 0;
     }
 
     macroSpecificity(): number {
         let sum = 0;
         this.labels.forEach((label) => sum += this.labelSpecificity(label));
-        return sum / this.labels.length;
+        const result = sum / this.labels.length;
+        return result || 0;
     }
 
     weightedSpecificity(): number {
@@ -503,7 +521,8 @@ export class ConfusionMatrix {
 
         let sum = 0;
         this.labels.forEach((label, index) => sum += (this.labelSpecificity(label) * sumLabels[index]));
-        return sum / numberOfPredictions;
+        const result = sum / numberOfPredictions;
+        return result || 0;
     }
 
     /**
@@ -523,45 +542,61 @@ export class ConfusionMatrix {
     labelSpecificity(label: string): number {
         this.validateMatrix();
         const { trueNegative, falsePositive } = this.getConfusionMatrixClasses(label);
-        return (trueNegative) / (trueNegative + falsePositive);
+        const result = (trueNegative) / (trueNegative + falsePositive);
+        return result || 0;
     }
 
     f1Score(configuration?: {
         label?: string,
-        average?: 'Micro' | 'Macro' | 'Weighted'
+        average?: Average
     }): number {
         this.validateMatrix();
-        throw "not implemented yet";
+        if (configuration?.label && configuration?.label.length > 0) {
+            return this.labelF1Score(configuration.label);
+        }
+        return this.matrixF1Score(configuration?.average);
     }
+
+    matrixF1Score(average = Average.Weighted): number {
+        this.validateMatrix();
+        switch (average) {
+            case Average.Micro: return this.microF1Score();
+            case Average.Macro: return this.macroF1Score();
+            case Average.Weighted: return this.weightedF1Score();
+        }
+    }
+
 
     labelF1Score(label: string): number {
         this.validateMatrix();
-        const { truePositive, falseNegative } = this.getConfusionMatrixClasses(label);
-        return (truePositive) / (truePositive + falseNegative);
+        const precision = this.precision({ label });
+        const recall = this.recall({ label });
+        const result = 2 * ((precision * recall) / (precision + recall));
+        return result || 0;
     }
 
-    microF1() {
+    microF1Score() {
         const precision = this.microPrecision();
-        const recall = this.microRecall();
+        const recall = this.microRecall()
         return this.applyF1ScoreFormula(precision, recall);
     }
 
     macroF1Score(): number {
-        const precision = this.macroPrecision();
-        const recall = this.macroRecall();
-        return this.applyF1ScoreFormula(precision, recall);
+        let sum = 0;
+        this.labels.forEach((label) => sum += this.labelF1Score(label));
+        const result = sum / this.labels.length;
+        return result || 0;
     }
 
     weightedF1Score(): number {
-        const precision = this.weightedPrecision();
-        const recall = this.weightedRecall();
-        return this.applyF1ScoreFormula(precision, recall);
-    }
+        const sumLabels = this.getLabelsPredictionsSum();
+        const numberOfPredictions = this.getNumberOfPredictions();
 
-    applyF1ScoreFormula(precision: number, recall: number) {
-        return 2 * ((precision * recall) / (precision + recall));
+        let sum = 0;
+        this.labels.forEach((label, index) => sum += (this.labelF1Score(label) * sumLabels[index]));
+        const result = sum / numberOfPredictions;
+        return result || 0;
     }
-
 
     /**
      * Get all matrix classes, containing information about true positives, true negatives, 
@@ -750,6 +785,11 @@ export class ConfusionMatrix {
                 throw "The confusion matrix does not have the columns/rows length."
             }
         });
+    }
+
+
+    private applyF1ScoreFormula(precision: number, recall: number): number {
+        return 2 * ((precision * recall) / (precision + recall));
     }
 
 }
