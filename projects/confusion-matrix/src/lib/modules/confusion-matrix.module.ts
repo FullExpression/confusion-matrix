@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ConfusionMatrixComponent } from '../components/confusion-matrix.component';
 import { CommonModule, DecimalPipe } from '@angular/common';
-import { StatisticComponent } from '../components/statistic.component';
+import { StatisticComponent } from '../components/statistics/statistic.component';
 
 @NgModule({
     declarations: [ConfusionMatrixComponent, StatisticComponent],

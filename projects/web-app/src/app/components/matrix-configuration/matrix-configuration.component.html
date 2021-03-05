@@ -31,7 +31,13 @@
         </mat-form-field>
         <color-intensity-picker [(colors)]="colors"></color-intensity-picker>
     </div>
+
     <div class="statistics">
-        <statistic [title]="'accuracy'" [value]="confusionMatrix.accuracy()"></statistic>
+        <statistic [title]="'Accuracy:'" [value]="confusionMatrix.accuracy()"></statistic>
+        <statistic [title]="'Weighted Precision (Happiness):'" [value]="getPrecisionForHappiness()"
+            [style]="statisticStyleStrong"></statistic>
+        <statistic [title]="'F1Score (Macro):'" [value]="getMacroF1Score()" [style]="statisticStyleGray"></statistic>
+        <statistic [title]="'Number of predictions'" [value]="getMacroF1Score()" [style]="statisticStyleRound">
+        </statistic>
     </div>
 </div>

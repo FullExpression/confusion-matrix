@@ -2,6 +2,7 @@
 import { Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { ConfusionMatrix, ConfusionMatrixSizes } from './confusion-matrix.models';
 import { DecimalPipe } from '@angular/common';
+import { StatisticStyleConfiguration } from './statistics/statistic.model';
 
 @Component({
     selector: 'confusion-matrix',
@@ -73,7 +74,6 @@ export class ConfusionMatrixComponent {
     _confusionMatrix = new ConfusionMatrix();
 
     levelsStep = 0;
-
 
     constructor(private decimalPipe: DecimalPipe) { }
 

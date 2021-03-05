@@ -1,0 +1,5 @@
+<div class='statistical-wrapper' [style.background-color]="style.backgroundColor" [style.color]="style.fontColor"
+    [style.maxWidth]="style.maxWidth" [style.maxHeight]="style.maxWidth" [style.borderRadius]="getBorderRadiusStyle()">
+    <div class='title'>{{ title }}</div>
+    <div class='value'>{{ value | number: round }}</div>
+</div>

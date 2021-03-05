@@ -11,5 +11,13 @@
         flex-direction: column;
     }
 
-    .statistics {}
+    .statistics {
+        display: flex;
+        align-items: center;
+
+        &>statistic {
+            padding: 10px;
+        }
+
+    }
 }
