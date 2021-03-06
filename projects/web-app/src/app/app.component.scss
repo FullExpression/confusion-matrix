@@ -1,6 +1,19 @@
-.app-version {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    padding: 10px;
+.app-wrapper {
+    background: #fcb045;
+    background: linear-gradient(108deg, rgba(252, 176, 69, 0.02) 0%, rgba(255, 0, 0, 0.03) 49%, rgba(252, 176, 69, 0.03) 100%);
+    width: 100%;
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+
+    top-bar {
+        display: flex;
+        margin-bottom: 15px;
+    }
+
+    .app-version {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 10px;
+    }
 }

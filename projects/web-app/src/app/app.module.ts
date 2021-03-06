@@ -8,13 +8,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { ColorIntensityPicker, MatrixConfiguration, NormalizationComponent } from './components';
+import { TopBarComponent } from './components/top-bar/top-bar.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         ColorIntensityPicker,
         MatrixConfiguration,
-        NormalizationComponent
+        NormalizationComponent,
+        TopBarComponent
     ],
     imports: [
         BrowserModule,
