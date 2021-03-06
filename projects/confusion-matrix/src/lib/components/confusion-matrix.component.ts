@@ -2,7 +2,8 @@
 import { Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { ConfusionMatrix, ConfusionMatrixSizes } from './confusion-matrix.models';
 import { DecimalPipe } from '@angular/common';
-import { StatisticStyleConfiguration } from './statistics/statistic.model';
+import * as html2canvas from "html2canvas";
+
 
 @Component({
     selector: 'confusion-matrix',
@@ -53,6 +54,8 @@ export class ConfusionMatrixComponent {
 
     @ViewChild('lines') lines: ElementRef | undefined;
 
+    @ViewChild('confusionMatrix') confusionMatrixElement: ElementRef | undefined;
+
     getSquareSize(): number {
         const _lines = this.lines?.nativeElement;
         if (_lines) {
@@ -76,6 +79,8 @@ export class ConfusionMatrixComponent {
     levelsStep = 0;
 
     constructor(private decimalPipe: DecimalPipe) { }
+
+
 
     getColor(value: number): string {
         const levelsNumber = this._levelsColor.length;
@@ -106,6 +111,16 @@ export class ConfusionMatrixComponent {
 
         }
 
+    }
+
+    download() {
+        html2canvas(this.confusionMatrixElement?.nativeElement).then((canvas) => {
+            const link = document.createElement('a');
+            link.download = 'confusion-matrix.png';
+            link.href = canvas.toDataURL()
+            link.click();
+            link.remove();
+        });
     }
 
     private updateIntensityValues(confusionMatrix: ConfusionMatrix): void {
