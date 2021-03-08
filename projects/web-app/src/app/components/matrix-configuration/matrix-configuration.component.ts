@@ -1,7 +1,6 @@
-import { ApplicationRef, Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
-import { AverageMethod, ConfusionMatrix, ConfusionMatrixSizes } from 'projects/confusion-matrix/src/lib/components/confusion-matrix.models';
-import { StatisticStyleConfiguration } from 'projects/confusion-matrix/src/lib/components/statistics/statistic.model';
+import { ConfusionMatrix, ConfusionMatrixSizes } from 'projects/confusion-matrix/src/lib/components/confusion-matrix.models';
 
 
 @Component({
@@ -29,23 +28,6 @@ export class MatrixConfiguration {
     size = ConfusionMatrixSizes.Large;
 
     colors = ['transparent', '#FADBD8', '#F5B7B1', '#F1948A', '#EC7063', '#E74C3C'];
-
-    statisticStyleStrong = new StatisticStyleConfiguration({
-        fontColor: '#fff',
-        backgroundColor: 'rgb(231 76 60)'
-    });
-
-    statisticStyleGray = new StatisticStyleConfiguration({
-        fontColor: '#fff',
-        backgroundColor: 'rgb(156 156 156)',
-        border: 'SlightRound'
-    });
-
-    statisticStyleRound = new StatisticStyleConfiguration({
-        fontColor: '#677277',
-        backgroundColor: 'rgb(213 241 255)',
-        border: 'Round'
-    });
 
     get sizes(): Array<string> {
         return Object.keys(ConfusionMatrixSizes);
@@ -79,25 +61,6 @@ export class MatrixConfiguration {
     selectionChange(event: MatSelectChange) {
         this.size = (<any>ConfusionMatrixSizes)[event.value];
     }
-
-    getPrecisionForHappiness(): number {
-        return this.confusionMatrix.precision({
-            average: AverageMethod.Weighted,
-            label: 'Happiness'
-        });
-    }
-
-    getMacroF1Score(): number {
-        return this.confusionMatrix.f1Score({
-            average: AverageMethod.Macro,
-            label: 'Happiness'
-        });
-    }
-
-    getNumberOfPredictions(): number {
-        return this.confusionMatrix.getNumberOfPredictions();
-    }
-
 
     private refreshMatrixValues() {
         this.confusionMatrix = this.confusionMatrix.clone();

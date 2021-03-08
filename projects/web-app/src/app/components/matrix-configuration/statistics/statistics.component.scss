@@ -1,0 +1,10 @@
+.statistics {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    &>statistic {
+        padding: 10px;
+    }
+
+}

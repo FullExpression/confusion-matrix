@@ -9,6 +9,7 @@ import { MaterialModule } from './material.module';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { ColorIntensityPicker, MatrixConfiguration, NormalizationComponent } from './components';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
+import { StatisticsComponent } from './components/matrix-configuration/statistics/statistics.component';
 
 @NgModule({
     declarations: [
@@ -16,7 +17,8 @@ import { TopBarComponent } from './components/top-bar/top-bar.component';
         ColorIntensityPicker,
         MatrixConfiguration,
         NormalizationComponent,
-        TopBarComponent
+        TopBarComponent,
+        StatisticsComponent
     ],
     imports: [
         BrowserModule,
@@ -24,7 +26,8 @@ import { TopBarComponent } from './components/top-bar/top-bar.component';
         ConfusionMatrixModule,
         BrowserAnimationsModule,
         MaterialModule,
-        ColorPickerModule,
+        ColorPickerModule
+
     ],
     providers: [],
     bootstrap: [AppComponent]
