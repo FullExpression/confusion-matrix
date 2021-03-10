@@ -2,7 +2,7 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { ConfusionMatrix, ConfusionMatrixSizes } from './confusion-matrix.models';
 import { DecimalPipe } from '@angular/common';
-import * as html2canvas from "html2canvas";
+// import * as html2canvas from "html2canvas";
 
 /**
  * Component which helps to visualize a confusion matrix.
@@ -144,13 +144,13 @@ export class ConfusionMatrixComponent {
      * IT IS NOT YET FULLY IMPLEMENTED. BETA ONLY!
      */
     download() {
-        html2canvas(this.confusionMatrixElement?.nativeElement).then((canvas) => {
-            const link = document.createElement('a');
-            link.download = 'confusion-matrix.png';
-            link.href = canvas.toDataURL()
-            link.click();
-            link.remove();
-        });
+        // html2canvas(this.confusionMatrixElement?.nativeElement).then((canvas) => {
+        //     const link = document.createElement('a');
+        //     link.download = 'confusion-matrix.png';
+        //     link.href = canvas.toDataURL()
+        //     link.click();
+        //     link.remove();
+        // });
     }
 
     /**

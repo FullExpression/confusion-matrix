@@ -17,7 +17,6 @@
         "@angular/core": "^11.0.3"
     },
     "dependencies": {
-        "@types/html2canvas": "0.0.36",
         "tslib": "^2.0.0"
     },
     "publishConfig": {
