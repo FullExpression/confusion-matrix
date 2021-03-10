@@ -27,7 +27,7 @@ export class StatisticsComponent {
 
     statisticStyleRound = new StatisticStyleConfiguration({
         fontColor: '#677277',
-        backgroundColor: 'rgb(213 241 255)',
+        backgroundColor: 'rgb(255 222 85)',
         border: 'Round'
     });
 

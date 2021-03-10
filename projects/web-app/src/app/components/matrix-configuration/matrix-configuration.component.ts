@@ -55,7 +55,6 @@ export class MatrixConfiguration {
 
     changeConfusionMatrix(confusionMatrix: ConfusionMatrix) {
         this.confusionMatrix = confusionMatrix.clone();
-
     }
 
     selectionChange(event: MatSelectChange) {

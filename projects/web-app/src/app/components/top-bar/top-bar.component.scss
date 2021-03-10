@@ -35,6 +35,10 @@
         }
 
         label {
+            @media(max-width: 800px) {
+                display: none;
+            }
+
             cursor: pointer;
         }
     }
