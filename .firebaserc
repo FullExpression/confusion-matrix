@@ -1,6 +1,6 @@
 {
   "targets": {
-    "confusion-matrix-development": {
+    "confusion-matrix": {
       "hosting": {
         "rc-web-app": [
           "rc-confusion-matrix"
