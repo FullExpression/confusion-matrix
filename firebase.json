@@ -1,7 +1,8 @@
 {
     "hosting": [
         {
-            "target": "web-app",
+            "target": "rc-web-app",
+            "site": "rc-confusion-matrix",
             "public": "dist/web-app",
             "ignore": [
                 "firebase.json",
@@ -10,7 +11,8 @@
             ]
         },
         {
-            "target": "documentation",
+            "target": "rc-doc-app",
+            "site": "rc-doc-confusion-matrix",
             "public": "dist/documentation",
             "ignore": [
                 "firebase.json",

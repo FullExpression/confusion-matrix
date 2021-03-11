@@ -45,9 +45,15 @@ jobs:
       - name: Generate documentation
         working-directory: ./projects/confusion-matrix
         run: npm run generate-documentation
-      - name: Deploy to Firebase
+      - name: Deploy to Firebase Web-App
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting 
+          args: deploy --only hosting:rc-web-app
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      - name: Deploy to Firebase Web-App
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting:rc-web-app
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
