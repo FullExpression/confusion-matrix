@@ -1,8 +1,17 @@
 {
     "hosting": [
         {
-            "target": "web-app",
+            "target": "rc-confusion-matrix",
             "public": "dist/web-app",
+            "ignore": [
+                "firebase.json",
+                "**/.*",
+                "**/node_modules/**"
+            ]
+        },
+        {
+            "target": "rc-doc-confusion-matrix",
+            "public": "dist/documentation",
             "ignore": [
                 "firebase.json",
                 "**/.*",

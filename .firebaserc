@@ -1,12 +1,22 @@
 {
-  "projects": {
-    "default": "confusion-matrix-development"
-  },
   "targets": {
-    "confusion-matrix-development": {
+    "confusion-matrix": {
       "hosting": {
-        "web-app": [
-          "dev-confusion-matrix"
+        "rc-web-app": [
+          "rc-confusion-matrix"
+        ],
+        "rc-doc-app": [
+          "rc-doc-confusion-matrix"
+        ]
+      }
+    },
+    "rc-confusion-matrix": {
+      "hosting": {
+        "rc-confusion-matrix": [
+          "rc-confusion-matrix"
+        ],
+        "rc-doc-confusion-matrix": [
+          "rc-doc-confusion-matrix"
         ]
       }
     }

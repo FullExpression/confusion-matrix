@@ -18,7 +18,7 @@ jobs:
       - name: setup checkout
         uses: actions/checkout@v2
         with:
-          ref: master
+          ref: release-candidate
       - name: Setup npmrc
         run: | 
           echo -e "@fullexpression:registry=https://npm.pkg.github.com/fullexpression\n//npm.pkg.github.com/:_authToken=${{secrets.NPM_AUTH_TOKEN}}\nregistry=https://registry.npmjs.org" > .npmrc
@@ -45,9 +45,17 @@ jobs:
       - name: Generate documentation
         working-directory: ./projects/confusion-matrix
         run: npm run generate-documentation
-      - name: Deploy to Firebase
+      - name: Deploy to Firebase Web-App
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting 
+          args: deploy --only hosting:rc-confusion-matrix
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          PROJECT_ID: rc-confusion-matrix
+      - name: Deploy to Firebase Docs-App
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting:rc-doc-confusion-matrix
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          PROJECT_ID: rc-confusion-matrix
