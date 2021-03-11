@@ -9,6 +9,16 @@
           "rc-doc-confusion-matrix"
         ]
       }
+    },
+    "rc-confusion-matrix": {
+      "hosting": {
+        "rc-confusion-matrix": [
+          "rc-confusion-matrix"
+        ],
+        "rc-doc-confusion-matrix": [
+          "rc-doc-confusion-matrix"
+        ]
+      }
     }
   }
 }
