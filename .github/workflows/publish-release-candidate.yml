@@ -53,8 +53,7 @@ jobs:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       - name: Deploy to Firebase Web-App
         uses: w9jds/firebase-action@master
-        working-directory: ./
         with:
-          args: deploy --only hosting:rc-web-app
+          args: deploy --only hosting:[rc-web-app]
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
