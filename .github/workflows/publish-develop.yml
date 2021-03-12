@@ -43,11 +43,11 @@ jobs:
         run: |
           git add package.json
           git commit -m "Update version"
-          git push 
-      - name: Deploy to Firebase
+          git push
+      - name: Deploy to Firebase Web-App
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting
+          args: deploy --only hosting:fl-web-app-development
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-          PROJECT_ID: confusion-matrix-development
+          PROJECT_ID: fl-web-app-development
