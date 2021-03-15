@@ -1,13 +1,32 @@
-.base {
+.base-wrapper {
     display: flex;
-    align-items: center;
     justify-content: center;
+    padding: 30px;
 
-    padding: 10px;
+    .base {
+        display: grid;
+        align-items: center;
+        justify-content: center;
+        grid-template-columns: 1fr;
+        max-width: 1000px;
 
-    .settings {
-        margin-left: 50px;
-        display: flex;
-        flex-direction: column;
+
+        .matrix {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+
+            @media(max-width: 800px) {
+                grid-template-columns: 1fr;
+            }
+
+            align-items: center;
+        }
+
+        .settings {
+            display: flex;
+            flex-direction: column;
+        }
+
+
     }
 }

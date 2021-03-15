@@ -1,0 +1,19 @@
+{
+  "type": "chrome",
+  "request": "launch",
+  "name": "Debug karma tests",
+  "url": "http://localhost:9876/debug.html",
+  "webRoot": "${workspaceFolder}",
+  "runtimeArgs": [
+    "--headless"
+  ],
+  "sourceMaps": true,
+  "sourceMapPathOverrides": {
+    "webpack:/*": "${webRoot}/*",
+    "/./*": "${webRoot}/*",
+    "/src/*": "${webRoot}/*",
+    "/*": "*",
+    "/./~/*": "${webRoot}/node_modules/*"
+  },
+  "port": 9223
+}

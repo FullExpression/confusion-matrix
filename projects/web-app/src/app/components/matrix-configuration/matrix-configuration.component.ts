@@ -1,4 +1,4 @@
-import { ApplicationRef, Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { ConfusionMatrix, ConfusionMatrixSizes } from 'projects/confusion-matrix/src/lib/components/confusion-matrix.models';
 
@@ -55,7 +55,6 @@ export class MatrixConfiguration {
 
     changeConfusionMatrix(confusionMatrix: ConfusionMatrix) {
         this.confusionMatrix = confusionMatrix.clone();
-
     }
 
     selectionChange(event: MatSelectChange) {

@@ -1,6 +1,7 @@
 <div class="colors">
     <div class="color" *ngFor="let color of colors; let i = index">
-        <input [(colorPicker)]="colors[i]" [style.background]="color" readonly />
+        <input [colorPicker]="colors[i]" (colorPickerChange)="changeColor($event, i)" [style.background]="color"
+            readonly />
         <div class="delete-button" (click)="removeColor(i)">x</div>
     </div>
     <div class="color" (click)="addColor()">

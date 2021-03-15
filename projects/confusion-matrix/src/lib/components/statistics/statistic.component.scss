@@ -1,0 +1,20 @@
+.statistical-wrapper {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    display: inline-flex;
+
+    .title {
+        font-size: 12px;
+        margin-bottom: -5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+    }
+
+    .value {
+        font-weight: 500;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

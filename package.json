@@ -1,11 +1,13 @@
 {
     "name": "confusion-matrix",
-    "version": "0.0.0",
+    "version": "2.0.0-beta.0",
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
         "build": "ng build confusion-matrix --prod && ng build web-app",
         "test": "ng test",
+        "cm-build-test": "ng test --no-watch --project=confusion-matrix --browsers=ChromeHeadlessCI",
+        "cm-code-coverage": "ng test --no-watch --project=confusion-matrix --code-coverage",
         "lint": "ng lint",
         "publish": "npm run build && npm publish ./dist/confusion-matrix",
         "e2e": "ng e2e"
