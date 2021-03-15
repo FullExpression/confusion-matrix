@@ -1,7 +1,7 @@
 {
     "hosting": [
         {
-            "target": "rc-confusion-matrix",
+            "target": "dev-web-app",
             "public": "dist/web-app",
             "ignore": [
                 "firebase.json",
@@ -10,7 +10,43 @@
             ]
         },
         {
-            "target": "rc-doc-confusion-matrix",
+            "target": "rc-web-app",
+            "public": "dist/web-app",
+            "ignore": [
+                "firebase.json",
+                "**/.*",
+                "**/node_modules/**"
+            ]
+        },
+        {
+            "target": "prod-web-app",
+            "public": "dist/web-app",
+            "ignore": [
+                "firebase.json",
+                "**/.*",
+                "**/node_modules/**"
+            ]
+        },
+        {
+            "target": "dev-doc",
+            "public": "dist/documentation",
+            "ignore": [
+                "firebase.json",
+                "**/.*",
+                "**/node_modules/**"
+            ]
+        },
+        {
+            "target": "rc-doc",
+            "public": "dist/documentation",
+            "ignore": [
+                "firebase.json",
+                "**/.*",
+                "**/node_modules/**"
+            ]
+        },
+        {
+            "target": "prod-doc",
             "public": "dist/documentation",
             "ignore": [
                 "firebase.json",
