@@ -1,24 +1,26 @@
 {
   "targets": {
-    "confusion-matrix": {
+    "fe-confusion-matrix": {
       "hosting": {
+        "prod-web-app": [
+          "fe-confusion-matrix"
+        ],
+        "prod-doc": [
+          "doc-confusion-matrix"
+        ],
         "rc-web-app": [
           "rc-confusion-matrix"
         ],
-        "rc-doc-app": [
-          "rc-doc-confusion-matrix"
-        ]
-      }
-    },
-    "rc-confusion-matrix": {
-      "hosting": {
-        "rc-confusion-matrix": [
-          "rc-confusion-matrix"
+        "rc-doc": [
+          "doc-confusion-matrix"
         ],
-        "rc-doc-confusion-matrix": [
-          "rc-doc-confusion-matrix"
+        "dev-web-app": [
+          "dev-confusion-matrix"
         ]
       }
     }
+  },
+  "projects": {
+    "fe-confusion-matrix": "fe-confusion-matrix"
   }
 }

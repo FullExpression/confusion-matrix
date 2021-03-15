@@ -34,6 +34,8 @@ jobs:
         run: npm version prerelease
       - name: Build
         run: npm run build
+      - name: Test
+        run: npm run cm-build-test
       - name: Publish package
         run: npm publish ./dist/confusion-matrix
       - name: Commit new package version

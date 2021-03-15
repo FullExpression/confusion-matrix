@@ -8,6 +8,9 @@
         "test": "ng test",
         "cm-build-test": "ng test --no-watch --project=confusion-matrix --browsers=ChromeHeadlessCI",
         "cm-code-coverage": "ng test --no-watch --project=confusion-matrix --code-coverage",
+        "prod-deploy": "firebase deploy --only hosting:prod-web-app && firebase deploy --only hosting:prod-doc",
+        "rc-deploy": "firebase deploy --only hosting:rc-web-app && firebase deploy --only hosting:rc-doc",
+        "dev-deploy": "firebase deploy --only hosting:dev-web-app",
         "lint": "ng lint",
         "publish": "npm run build && npm publish ./dist/confusion-matrix",
         "e2e": "ng e2e"

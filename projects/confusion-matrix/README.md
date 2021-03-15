@@ -1,6 +1,6 @@
 # Confusion Matrix Library
 
-⚠️ *This library only works in angular application!* ⚠️
+⚠️ *This library only works in angular applications!* ⚠️
 
 *If you find out any bug, issue or you just want to give suggestions, please, submit it [here](https://github.com/FullExpression/confusion-matrix/issues)*
 
