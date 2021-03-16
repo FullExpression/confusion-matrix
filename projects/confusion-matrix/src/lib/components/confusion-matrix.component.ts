@@ -1,6 +1,7 @@
 
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { ConfusionMatrix, ConfusionMatrixSizes } from './confusion-matrix.models';
+import { ConfusionMatrix } from '@fullexpression/confusion-matrix-stats';
+import { ConfusionMatrixSizes } from './confusion-matrix.models';
 import { DecimalPipe } from '@angular/common';
 // import * as html2canvas from "html2canvas";
 

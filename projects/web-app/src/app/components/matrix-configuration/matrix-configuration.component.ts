@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
-import { ConfusionMatrix, ConfusionMatrixSizes } from 'projects/confusion-matrix/src/lib/components/confusion-matrix.models';
+import { ConfusionMatrix } from '@fullexpression/confusion-matrix-stats';
+import { ConfusionMatrixSizes } from 'projects/confusion-matrix/src/lib/components/confusion-matrix.models';
 
 
 @Component({
