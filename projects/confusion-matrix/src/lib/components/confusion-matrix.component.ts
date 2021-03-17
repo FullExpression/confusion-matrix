@@ -86,6 +86,10 @@ export class ConfusionMatrixComponent {
      */
     _confusionMatrix = new ConfusionMatrix();
 
+    showOption = false;
+
+    showConfigurationPanel = false;
+
     /**
      * Represents how many different color intensities exists.
      */

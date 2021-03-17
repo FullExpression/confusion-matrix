@@ -1,5 +1,14 @@
-<div class="confusion-matrix-wrapper" class="{{size}}" *ngIf="_confusionMatrix" #confusionMatrix>
-    <div class="title"> {{ title }} </div>
+<div class="confusion-matrix-wrapper" class="{{size}}" *ngIf="_confusionMatrix" #confusionMatrix
+    (mouseover)="showOption = true;" (mouseleave)="showOption = false">
+    <div class="title">
+        <div class="options" *ngIf="showOption" (click)="showConfigurationPanel = true;">
+            ⚙️ Change configurations
+        </div>
+        <div *ngIf="!showOption">
+            {{ title }}
+        </div>
+
+    </div>
     <div class="confusion-matrix">
         <div class="lines-label">
             <div class="line-label" *ngFor="let label of _confusionMatrix.labels; let i = index">
@@ -27,4 +36,7 @@
             </div>
         </div>
     </div>
+</div>
+<div class="configurations-panel" *ngIf="showConfigurationPanel">
+    <configurations></configurations>
 </div>
