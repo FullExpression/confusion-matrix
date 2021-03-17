@@ -1,5 +1,7 @@
 # Confusion Matrix Library
 
+[![publish-master](https://github.com/FullExpression/confusion-matrix/actions/workflows/publish-master.yml/badge.svg?branch=master)](https://github.com/FullExpression/confusion-matrix/actions/workflows/publish-master.yml)
+
 ⚠️ *This library only works in angular applications!* ⚠️
 
 *If you find out any bug, issue or you just want to give suggestions, please, submit it [here](https://github.com/FullExpression/confusion-matrix/issues)*
