@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { ConfusionMatrix } from 'projects/confusion-matrix/src/public-api';
+import { ConfusionMatrix } from '@fullexpression/confusion-matrix-stats';
 
 @Component({
     selector: 'normalization',

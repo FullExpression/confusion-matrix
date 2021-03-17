@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { AverageMethod, ConfusionMatrix, StatisticStyleConfiguration } from "projects/confusion-matrix/src/public-api";
+import { AverageMethod, ConfusionMatrix } from "@fullexpression/confusion-matrix-stats";
+import { StatisticStyleConfiguration } from "projects/confusion-matrix/src/public-api";
 
 @Component({
     selector: 'statistics',
