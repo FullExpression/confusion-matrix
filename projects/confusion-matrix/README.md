@@ -20,6 +20,10 @@ In the command line, run the following command `npm install @fullexpression/conf
 
 *You can find all npm package versions [here](https://github.com/FullExpression/confusion-matrix/packages/630932/versions)*.
 
+**Important Note**: This library has dependency to [@fullexpression/confusion-matrix-stats](https://github.com/FullExpression/confusion-matrix-stats).
+Make sure this package is install as well (you can check on `node_modules/@fullexpression/confusion-matrix-stats`).
+
+
 ## 👩‍💻 How to use it
 
 1. Import the `ConfusionMatrixModule` angular module in your application:
@@ -36,12 +40,18 @@ export class YourApplicationModule { }
 
 2. Create a new `ConfusionMatrix` object:
 
-```ts
-const confusionMatrix = new ConfusionMatrix({
-    labels: ["Happiness", "Sadness"], 
-    matrix: [[50, 2],
-             [8, 50]]
-});
+```typescript
+import { ConfusionMatrix } from '@fullexpression/confusion-matrix-stats';
+
+@Component(...)
+export class MyComponent {
+    confusionMatrix = new ConfusionMatrix({
+        labels: ["Happiness", "Sadness"], 
+        matrix: [[50, 2],
+                [8, 50]]
+    });
+}
+
 ```
 
 3. Import `ConfusionMatrix` component to your html and pass the confusion `confusionMatrix` object created in the step before:
