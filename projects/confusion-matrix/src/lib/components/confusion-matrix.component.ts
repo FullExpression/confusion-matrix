@@ -3,6 +3,7 @@ import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { ConfusionMatrix } from '@fullexpression/confusion-matrix-stats';
 import { ConfusionMatrixSizes } from './confusion-matrix.models';
 import { DecimalPipe } from '@angular/common';
+import { animate, style, transition, trigger } from '@angular/animations';
 // import * as html2canvas from "html2canvas";
 
 /**
@@ -12,7 +13,35 @@ import { DecimalPipe } from '@angular/common';
 @Component({
     selector: 'confusion-matrix',
     templateUrl: './confusion-matrix.component.html',
-    styleUrls: ['./confusion-matrix.component.scss']
+    styleUrls: ['./confusion-matrix.component.scss'],
+    animations: [
+        trigger(
+            'inAnimation',
+            [
+                transition(
+                    ':enter',
+                    [
+                        style({ opacity: 0 }),
+                        animate('0.3s ease',
+                            style({ opacity: 1 }))
+                    ]
+                )
+            ]
+        ),
+        trigger(
+            'outAnimation',
+            [
+                transition(
+                    ':leave',
+                    [
+                        style({ opacity: 1 }),
+                        animate('0.15s ease',
+                            style({ opacity: 0 }))
+                    ]
+                )
+            ]
+        )
+    ]
 })
 export class ConfusionMatrixComponent {
 
@@ -156,6 +185,10 @@ export class ConfusionMatrixComponent {
         //     link.click();
         //     link.remove();
         // });
+    }
+
+    test($event: any) {
+        console.log($event);
     }
 
     /**

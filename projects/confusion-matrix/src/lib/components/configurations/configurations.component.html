@@ -1,1 +1,13 @@
-<div class="panel"></div>
+<div class="panel" *ngIf="visible" [@inOutAnimation]>
+    <div class="options-wrapper">
+        <div class="close" (click)="changeVisibility(false)">x</div>
+        <div class="options">
+            <div class="icon"><img src="../../assets/edit.png" /></div>
+            <div class="text">Edit</div>
+        </div>
+        <div class="options">
+            <div class="icon"></div>
+            <div class="text">Download</div>
+        </div>
+    </div>
+</div>

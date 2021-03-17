@@ -1,10 +1,11 @@
 <div class="confusion-matrix-wrapper" class="{{size}}" *ngIf="_confusionMatrix" #confusionMatrix
     (mouseover)="showOption = true;" (mouseleave)="showOption = false">
     <div class="title">
-        <div class="options" *ngIf="showOption" (click)="showConfigurationPanel = true;">
+        <div class="options" [@inAnimation] *ngIf="showOption || showConfigurationPanel"
+            (click)="showConfigurationPanel = true;">
             ⚙️ Change configurations
         </div>
-        <div *ngIf="!showOption">
+        <div *ngIf="!showOption && !showConfigurationPanel" [@inAnimation]>
             {{ title }}
         </div>
 
@@ -37,6 +38,6 @@
         </div>
     </div>
 </div>
-<div class="configurations-panel" *ngIf="showConfigurationPanel">
-    <configurations></configurations>
+<div class="configurations-panel" *ngIf="showConfigurationPanel" [@outAnimation]>
+    <configurations [(visible)]="showConfigurationPanel" (visible)="test($event)"></configurations>
 </div>
