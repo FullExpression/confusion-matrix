@@ -1,9 +1,10 @@
 
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ConfusionMatrix } from '@fullexpression/confusion-matrix-stats';
 import { ConfusionMatrixSizes } from './confusion-matrix.models';
 import { DecimalPipe } from '@angular/common';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { ConfigurationsOption } from './configurations/configurations.component.model';
 // import * as html2canvas from "html2canvas";
 
 /**
@@ -58,6 +59,9 @@ export class ConfusionMatrixComponent {
     @Input()
     size = ConfusionMatrixSizes.Large;
 
+    @Output()
+    sizeChange = new EventEmitter<ConfusionMatrixSizes>();
+
     /**
      * Sets the confusion matrix color level (a.k.a color intensity).
      * Should be order asc from less intense (close to 0) to max intense (close to max value).
@@ -68,16 +72,23 @@ export class ConfusionMatrixComponent {
         this.updateIntensityValues(this._confusionMatrix);
     }
 
+    @Output()
+    levelsColorChange = new EventEmitter<Array<string>>()
+
     /**
      * Sets the confusion matrix labels and values.
      */
     @Input()
     set confusionMatrix(value: ConfusionMatrix) {
-        this._confusionMatrix = this.deepCopy(value);
+        this._confusionMatrix = value.clone();
+        this._confusionMatrixTransposed = this._confusionMatrix.clone();
+        this._confusionMatrixTransposed.transpose();
         this.updateIntensityValues(value);
-        this.reverseMatrix();
 
     }
+
+    @Output()
+    confusionMatrixChange = new EventEmitter<ConfusionMatrix>()
 
     /**
      * Allows to define the numbers display format.
@@ -88,9 +99,9 @@ export class ConfusionMatrixComponent {
     roundRules = '1.0-2';
 
     /**
-     * Confusion matrix line dom element reference.
+     * Confusion matrix row dom element reference.
      */
-    @ViewChild('lines') lines: ElementRef | undefined;
+    @ViewChild('rows') rows: ElementRef | undefined;
 
     /**
      * Confusion matrix wrapper dom element reference.
@@ -119,10 +130,14 @@ export class ConfusionMatrixComponent {
 
     showConfigurationPanel = false;
 
+    editMode = false;
+
     /**
      * Represents how many different color intensities exists.
      */
     private levelsStep = 0;
+
+    _confusionMatrixTransposed = new ConfusionMatrix();
 
     /**
      * Constructs the confusion matrix.
@@ -142,6 +157,12 @@ export class ConfusionMatrixComponent {
             }
         }
         return this._levelsColor[0];
+    }
+
+    getTranspose(): ConfusionMatrix {
+        const clone = this._confusionMatrix.clone();
+        clone.transpose();
+        return clone;
     }
 
     /**
@@ -187,8 +208,60 @@ export class ConfusionMatrixComponent {
         // });
     }
 
-    test($event: any) {
-        console.log($event);
+    optionChanged(option: ConfigurationsOption) {
+
+        switch (option) {
+            case ConfigurationsOption.Edit:
+                this.editMode = true;
+                break;
+            case ConfigurationsOption.ZoomIn:
+                this.zoomIn();
+                break;
+            case ConfigurationsOption.ZoomOut:
+                this.zoomOut();
+                break;
+            default:
+                this.editMode = false;
+        }
+    }
+    zoomIn() {
+        switch (this.size) {
+            case ConfusionMatrixSizes.Small:
+                this.size = ConfusionMatrixSizes.Medium;
+                return this.sizeChange.emit(this.size);
+            case ConfusionMatrixSizes.Medium:
+                this.size = ConfusionMatrixSizes.Large;
+                return this.sizeChange.emit(this.size);
+            case ConfusionMatrixSizes.Large:
+                this.size = ConfusionMatrixSizes.ExtraLarge;
+                return this.sizeChange.emit(this.size);
+        }
+    }
+
+    zoomOut() {
+        switch (this.size) {
+            case ConfusionMatrixSizes.ExtraLarge:
+                this.size = ConfusionMatrixSizes.Large;
+                return this.sizeChange.emit(this.size);
+            case ConfusionMatrixSizes.Large:
+                this.size = ConfusionMatrixSizes.Medium;
+                return this.sizeChange.emit(this.size);
+            case ConfusionMatrixSizes.Medium:
+                this.size = ConfusionMatrixSizes.Small;
+                return this.sizeChange.emit(this.size);
+        }
+    }
+
+    matrixValueChange(event: any, row: number, column: number) {
+        const value = parseInt(event.target.value);
+        if (!isNaN(value)) {
+            this._confusionMatrix.matrix[row][column] = value;
+            this.confusionMatrixChange.emit(this._confusionMatrix);
+        } else {
+            event.target.value = this._confusionMatrix.matrix[row][column];
+        }
+
+
     }
 
     /**
@@ -196,11 +269,11 @@ export class ConfusionMatrixComponent {
      * @returns The square size.
      */
     private getSquareSize(): number {
-        const _lines = this.lines?.nativeElement;
-        if (_lines) {
-            const line = _lines.getElementsByClassName('line')[0];
-            if (line) {
-                return line.clientWidth;
+        const _rows = this.rows?.nativeElement;
+        if (_rows) {
+            const row = _rows.getElementsByClassName('row')[0];
+            if (row) {
+                return row.clientWidth;
             }
         }
 
@@ -225,14 +298,6 @@ export class ConfusionMatrixComponent {
         if (this.levelsStep === Infinity) {
             this.levelsStep = 0;
         }
-    }
-
-    /**
-     * Changes the lines by the columns.
-     */
-    private reverseMatrix(): void {
-        let matrix = this._confusionMatrix.matrix;
-        this._confusionMatrix.matrix = matrix[0].map((col, i) => matrix.map(row => row[i]));
     }
 
     /**

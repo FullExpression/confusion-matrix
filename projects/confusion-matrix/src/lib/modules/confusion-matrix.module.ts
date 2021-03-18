@@ -3,10 +3,11 @@ import { ConfusionMatrixComponent } from '../components/confusion-matrix.compone
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { StatisticComponent } from '../components/statistics/statistic.component';
 import { ConfigurationsComponent } from '../components/configurations/configurations.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [ConfusionMatrixComponent, StatisticComponent, ConfigurationsComponent],
-    imports: [CommonModule],
+    imports: [CommonModule, FormsModule],
     exports: [ConfusionMatrixComponent, StatisticComponent],
     providers: [DecimalPipe]
 })

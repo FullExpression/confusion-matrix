@@ -4,6 +4,19 @@
     justify-content: center;
     flex-direction: column;
 
+    input {
+        background-color: transparent;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        border: none;
+        font-family: Arial, Helvetica, sans-serif;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
     .title {
         display: flex;
 
@@ -11,20 +24,26 @@
             margin-right: 3px;
             cursor: pointer;
         }
+
+        .title-edit {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
     }
 
     &.small {
         font-size: 10px;
 
-        .lines-label {
-            .line-label {
+        .rows-label {
+            .row-label {
                 height: 20px !important;
             }
         }
 
-        .lines {
-            .line {
-                .columns-wrapper {
+        .rows {
+            .row {
+                .columns {
                     .column {
                         width: 20px !important;
                         height: 20px !important;
@@ -37,15 +56,15 @@
     &.medium {
         font-size: 12px;
 
-        .lines-label {
-            .line-label {
+        .rows-label {
+            .row-label {
                 height: 30px !important;
             }
         }
 
-        .lines {
-            .line {
-                .columns-wrapper {
+        .rows {
+            .row {
+                .columns {
                     .column {
                         width: 30px !important;
                         height: 30px !important;
@@ -58,36 +77,15 @@
     &.large {
         font-size: 14px;
 
-        .lines-label {
-            .line-label {
+        .rows-label {
+            .row-label {
                 height: 40px !important;
             }
         }
 
-        .lines {
-            .line {
-                .columns-wrapper {
-                    .column {
-                        width: 40px !important;
-                        height: 40px !important;
-                    }
-                }
-            }
-        }
-    }
-
-    &.large {
-        font-size: 14px;
-
-        .lines-label {
-            .line-label {
-                height: 40px !important;
-            }
-        }
-
-        .lines {
-            .line {
-                .columns-wrapper {
+        .rows {
+            .row {
+                .columns {
                     .column {
                         width: 40px !important;
                         height: 40px !important;
@@ -100,15 +98,15 @@
     &.extra-large {
         font-size: 16px;
 
-        .lines-label {
-            .line-label {
+        .rows-label {
+            .row-label {
                 height: 50px !important;
             }
         }
 
-        .lines {
-            .line {
-                .columns-wrapper {
+        .rows {
+            .row {
+                .columns {
                     .column {
                         width: 50px !important;
                         height: 50px !important;
@@ -124,35 +122,47 @@
         justify-content: center;
         position: relative;
 
-        .lines-label {
+        .rows-label {
             display: flex;
             flex-direction: column;
             margin-right: 10px;
 
-            .line-label {
+            .row-label {
                 height: 40px;
                 display: flex;
                 align-items: center;
                 justify-content: flex-end;
+
+                .label-edit {
+                    display: flex;
+                    width: 100%;
+                    height: 100%;
+
+                    input {
+                        text-align: right;
+                    }
+
+                }
             }
         }
 
-        .lines {
+        .rows {
             display: flex;
 
-            .line {
-                .columns-wrapper {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    flex-direction: column;
-
+            .row {
+                .columns {
                     .column {
                         width: 40px;
                         height: 40px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
+
+                        .column-edit {
+                            display: flex;
+                            width: 100%;
+                            height: 100%;
+                        }
 
                         &.level-1 {
                             background-color: #FADBD8;
@@ -174,7 +184,7 @@
                             background-color: #E74C3C;
                         }
 
-                        .column {
+                        .row {
                             display: flex;
                             align-items: center;
                             justify-content: center;
@@ -182,7 +192,7 @@
 
                     }
 
-                    .column-label {
+                    .row-label {
                         writing-mode: vertical-rl;
                         margin-top: 10px;
                     }

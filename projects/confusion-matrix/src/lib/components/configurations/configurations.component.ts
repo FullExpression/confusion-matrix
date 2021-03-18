@@ -1,5 +1,6 @@
 import { animate, style, transition, trigger } from "@angular/animations";
 import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { ConfigurationsOption } from "./configurations.component.model";
 
 @Component({
     selector: 'configurations',
@@ -37,8 +38,42 @@ export class ConfigurationsComponent {
     @Output()
     visibleChange = new EventEmitter<boolean>();
 
+    @Input()
+    editMode = false;
+
+    @Input()
+    editModeChange = new EventEmitter<boolean>();
+
+
+    @Input()
+    option = ConfigurationsOption.None;
+
+    @Output()
+    optionChange = new EventEmitter<ConfigurationsOption>();
+
+    get configurationsOptions(): typeof ConfigurationsOption {
+        return ConfigurationsOption;
+    }
+
     changeVisibility(value: boolean) {
         this.visible = value;
         this.visibleChange.emit(this.visible);
     }
+
+    changeOptions(value: ConfigurationsOption) {
+        this.option = value;
+
+        switch (this.option) {
+            case ConfigurationsOption.Edit:
+                this.editMode = true;
+                break;
+            case ConfigurationsOption.View:
+                this.editMode = false;
+                break;
+        }
+
+        this.optionChange.emit(this.option);
+    }
+
+
 }

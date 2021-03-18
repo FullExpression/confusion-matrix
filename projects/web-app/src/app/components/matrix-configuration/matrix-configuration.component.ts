@@ -62,6 +62,10 @@ export class MatrixConfiguration {
         this.size = (<any>ConfusionMatrixSizes)[event.value];
     }
 
+    matrixChanged($event: any) {
+        console.log($event);
+    }
+
     private refreshMatrixValues() {
         this.confusionMatrix = this.confusionMatrix.clone();
     }
