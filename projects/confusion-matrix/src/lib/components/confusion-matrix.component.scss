@@ -4,13 +4,15 @@
     justify-content: center;
     flex-direction: column;
 
-    input {
+    span {
         background-color: transparent;
         width: 100%;
         height: 100%;
-        text-align: center;
         border: none;
         font-family: Arial, Helvetica, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         &:focus {
             outline: none;
@@ -19,9 +21,10 @@
 
     .title {
         display: flex;
+        flex-direction: column;
 
         .options {
-            margin-right: 3px;
+            margin-left: 3px;
             cursor: pointer;
         }
 
@@ -135,11 +138,9 @@
 
                 .label-edit {
                     display: flex;
-                    width: 100%;
-                    height: 100%;
 
-                    input {
-                        text-align: right;
+                    span {
+                        justify-content: right;
                     }
 
                 }
@@ -195,6 +196,11 @@
                     .row-label {
                         writing-mode: vertical-rl;
                         margin-top: 10px;
+                        width: 100%;
+                        text-align: center;
+                        justify-content: center;
+                        align-items: center;
+                        display: flex;
                     }
                 }
 

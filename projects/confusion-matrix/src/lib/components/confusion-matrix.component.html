@@ -1,25 +1,19 @@
 <div class="confusion-matrix-wrapper" class="{{size}}" *ngIf="_confusionMatrix" #confusionMatrix
     (mouseover)="showOption = true;" (mouseleave)="showOption = false">
     <div class="title">
-        <div class="options" [@inAnimation] *ngIf="showOption || showConfigurationPanel"
+
+        <div>
+            <span type='text' (focusout)="changeLabel($event, i);" contenteditable>{{title}}</span>
+        </div>
+        <div class="options" [@inOutAnimation] *ngIf="showOption || showConfigurationPanel"
             (click)="showConfigurationPanel = true;">
             ⚙️ Change configurations
         </div>
-        <div *ngIf="!showOption && !showConfigurationPanel" [@inAnimation]>
-            <div class="title-value" *ngIf="!editMode">{{ title }}</div>
-            <div class="title-edit" *ngIf="editMode">
-                <input type='text' [(ngModel)]="title" />
-            </div>
-        </div>
-
     </div>
     <div class="confusion-matrix">
         <div class="rows-label">
             <div class="row-label" *ngFor="let label of _confusionMatrix.labels; let i = index">
-                <div class="label-value" *ngIf="!editMode">{{ label }}</div>
-                <div class="label-edit" *ngIf="editMode">
-                    <input type='text' [(ngModel)]="_confusionMatrix.labels[i]" />
-                </div>
+                <span type='text' (focusout)="changeLabel($event, i);" contenteditable>{{label}}</span>
             </div>
         </div>
         <div class="rows" #rows>
@@ -27,13 +21,13 @@
                 <div class="columns">
                     <div class="column" [style.background-color]="getColor(column)"
                         *ngFor="let column of _confusionMatrixTransposed.matrix[rowIndex]; let columnIndex = index">
-                        <div class="column-value" *ngIf="!editMode">{{column | number: roundRules}}</div>
-                        <div class="column-edit" *ngIf="editMode">
-                            <input type='text' [value]="column"
-                                (change)="matrixValueChange($event, columnIndex , rowIndex)" />
-                        </div>
+                        <span type='text' (focusout)="matrixValueChange($event, columnIndex , rowIndex);"
+                            contenteditable>{{column | number:
+                            roundRules}}</span>
                     </div>
-                    <div class="row-label">{{label}}</div>
+                    <div class="row-label">
+                        <span type='text' (focusout)="changeLabel($event, i);" contenteditable>{{label}}</span>
+                    </div>
                 </div>
             </div>
         </div>

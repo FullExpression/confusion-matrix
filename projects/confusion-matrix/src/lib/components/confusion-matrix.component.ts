@@ -17,14 +17,24 @@ import { ConfigurationsOption } from './configurations/configurations.component.
     styleUrls: ['./confusion-matrix.component.scss'],
     animations: [
         trigger(
-            'inAnimation',
+            'inOutAnimation',
             [
                 transition(
                     ':enter',
                     [
-                        style({ opacity: 0 }),
+                        style({
+                            opacity: 0, marginTop: '-20px'
+                        }),
                         animate('0.3s ease',
-                            style({ opacity: 1 }))
+                            style({ opacity: 1, marginTop: 0 }))
+                    ]
+                ),
+                transition(
+                    ':leave',
+                    [
+                        style({ opacity: 1, marginTop: 0 }),
+                        animate('0.3s ease',
+                            style({ opacity: 0, marginTop: '-20px' }))
                     ]
                 )
             ]
@@ -253,7 +263,7 @@ export class ConfusionMatrixComponent {
     }
 
     matrixValueChange(event: any, row: number, column: number) {
-        const value = parseInt(event.target.value);
+        const value = parseInt(event.target.innerText);
         if (!isNaN(value)) {
             this._confusionMatrix.matrix[row][column] = value;
             this.confusionMatrixChange.emit(this._confusionMatrix);
@@ -262,6 +272,16 @@ export class ConfusionMatrixComponent {
         }
 
 
+    }
+
+    calculateInputSize(event: any) {
+        const size = event.target.value.length * 2;
+        event.target.style.width = `${size}px`;
+    }
+
+    changeLabel(event: any, index: number) {
+        this._confusionMatrix.labels[index] = event.target.innerText ?? this._confusionMatrix.labels[index];
+        this.confusionMatrixChange.emit(this._confusionMatrix);
     }
 
     /**
