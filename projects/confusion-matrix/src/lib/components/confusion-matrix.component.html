@@ -1,9 +1,8 @@
 <div class="confusion-matrix-wrapper" class="{{size}}" *ngIf="_confusionMatrix" #confusionMatrix
     (mouseover)="showOption = true;" (mouseleave)="showOption = false">
     <div class="title">
-
         <div>
-            <span type='text' (focusout)="changeLabel($event, i);" contenteditable>{{title}}</span>
+            <span type='text' (focusout)="changeTitle($event);" contenteditable>{{title}}</span>
         </div>
         <div class="options" [@inOutAnimation] *ngIf="showOption || showConfigurationPanel"
             (click)="showConfigurationPanel = true;">
@@ -26,7 +25,7 @@
                             roundRules}}</span>
                     </div>
                     <div class="row-label">
-                        <span type='text' (focusout)="changeLabel($event, i);" contenteditable>{{label}}</span>
+                        <span type='text' (focusout)="changeLabel($event, rowIndex);" contenteditable>{{label}}</span>
                     </div>
                 </div>
             </div>

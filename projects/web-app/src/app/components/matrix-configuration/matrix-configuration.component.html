@@ -1,7 +1,7 @@
 <div class="base-wrapper">
     <div class="base">
         <div class="matrix">
-            <confusion-matrix [(confusionMatrix)]="confusionMatrix" [(levelsColor)]="colors" [title]="matrixTitle"
+            <confusion-matrix [(confusionMatrix)]="confusionMatrix" [(levelsColor)]="colors" [(title)]="matrixTitle"
                 [(size)]="size"></confusion-matrix>
             <statistics [confusionMatrix]="confusionMatrix" (confusionMatrixChange)="changeConfusionMatrix($event)">
             </statistics>

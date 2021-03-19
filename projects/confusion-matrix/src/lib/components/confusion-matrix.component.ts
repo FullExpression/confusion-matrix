@@ -61,7 +61,10 @@ export class ConfusionMatrixComponent {
      * If undefined, the title reserved space will be hidden.
      */
     @Input()
-    title: string | undefined;
+    title = "";
+
+    @Output()
+    titleChange = new EventEmitter<string>();
 
     /**
      * Represents the confusion matrix size.
@@ -282,6 +285,12 @@ export class ConfusionMatrixComponent {
     changeLabel(event: any, index: number) {
         this._confusionMatrix.labels[index] = event.target.innerText ?? this._confusionMatrix.labels[index];
         this.confusionMatrixChange.emit(this._confusionMatrix);
+    }
+
+    changeTitle(event: any) {
+        this.title = event.target.innerText ?? this.title;
+        this.titleChange.emit(this.title);
+
     }
 
     /**
