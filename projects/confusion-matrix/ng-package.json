@@ -5,6 +5,7 @@
         "entryFile": "src/public-api.ts"
     },
     "allowedNonPeerDependencies": [
-        "@fullexpression/confusion-matrix-stats"
+        "@fullexpression/confusion-matrix-stats",
+        "html2canvas"
     ]
 }
