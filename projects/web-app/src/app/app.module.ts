@@ -10,7 +10,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { ColorIntensityPicker, MatrixConfiguration, NormalizationComponent } from './components';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { StatisticsComponent } from './components/matrix-configuration/statistics/statistics.component';
-
+import { MatSliderModule } from '@angular/material/slider';
+import { FormsModule } from '@angular/forms';
 @NgModule({
     declarations: [
         AppComponent,
@@ -26,8 +27,9 @@ import { StatisticsComponent } from './components/matrix-configuration/statistic
         ConfusionMatrixModule,
         BrowserAnimationsModule,
         MaterialModule,
-        ColorPickerModule
-
+        ColorPickerModule,
+        MatSliderModule,
+        FormsModule
     ],
     providers: [],
     bootstrap: [AppComponent]

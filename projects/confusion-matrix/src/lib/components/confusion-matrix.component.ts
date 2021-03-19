@@ -1,11 +1,10 @@
 
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ConfusionMatrix } from '@fullexpression/confusion-matrix-stats';
-import { ConfusionMatrixSizes } from './confusion-matrix.models';
 import { DecimalPipe } from '@angular/common';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ConfigurationsOption } from './configurations/configurations.component.model';
-// import * as html2canvas from "html2canvas";
+import * as html2canvas from "html2canvas";
 
 /**
  * Component which helps to visualize a confusion matrix.
@@ -51,10 +50,10 @@ import { ConfigurationsOption } from './configurations/configurations.component.
                     ]
                 )
             ]
-        )
+        ),
     ]
 })
-export class ConfusionMatrixComponent {
+export class ConfusionMatrixComponent implements AfterViewInit {
 
     /**
      * Sets the confusion matrix title.
@@ -70,10 +69,12 @@ export class ConfusionMatrixComponent {
      * Represents the confusion matrix size.
      */
     @Input()
-    size = ConfusionMatrixSizes.Large;
+    set zoom(zoom: number) {
+        this.updateZoomValue(zoom, false);
+    }
 
     @Output()
-    sizeChange = new EventEmitter<ConfusionMatrixSizes>();
+    zoomChange = new EventEmitter<number>();
 
     /**
      * Sets the confusion matrix color level (a.k.a color intensity).
@@ -129,6 +130,10 @@ export class ConfusionMatrixComponent {
         return this.getSquareSize() * this._confusionMatrix.matrix.length;
     }
 
+    get scale(): string {
+        return `scale(${this._zoom})`
+    }
+
     /**
      * Confusion matrix color level (a.k.a color intensity).
      */
@@ -152,11 +157,23 @@ export class ConfusionMatrixComponent {
 
     _confusionMatrixTransposed = new ConfusionMatrix();
 
+    private originalWidth = 0;
+    private originalHeight = 0;
+    private _zoom = 1;
+    private fullyInitialized = false;
     /**
      * Constructs the confusion matrix.
      * @decimalPipe Decimal angular service injected using dependency injection.
      */
-    constructor(private decimalPipe: DecimalPipe) { }
+    constructor(private decimalPipe: DecimalPipe,
+        private host: ElementRef) { }
+
+    ngAfterViewInit(): void {
+        this.fullyInitialized = true;
+        this.originalWidth = this.host.nativeElement.clientWidth;
+        this.originalHeight = this.host.nativeElement.clientHeight;
+        this.updateZoomValue(this._zoom);
+    }
 
     /**
      * Given a value, returns the color intensity associated with.
@@ -212,23 +229,23 @@ export class ConfusionMatrixComponent {
      * IT IS NOT YET FULLY IMPLEMENTED. BETA ONLY!
      */
     download() {
-        // html2canvas(this.confusionMatrixElement?.nativeElement).then((canvas) => {
-        //     const link = document.createElement('a');
-        //     link.download = 'confusion-matrix.png';
-        //     link.href = canvas.toDataURL()
-        //     link.click();
-        //     link.remove();
-        // });
+        (html2canvas as any)(this.confusionMatrixElement?.nativeElement).then((canvas: any) => {
+            const link = document.createElement('a');
+            link.download = 'confusion-matrix.png';
+            link.href = canvas.toDataURL()
+            link.click();
+            link.remove();
+        });
     }
 
     optionChanged(option: ConfigurationsOption) {
 
         switch (option) {
-            case ConfigurationsOption.Edit:
-                this.editMode = true;
-                break;
             case ConfigurationsOption.ZoomIn:
                 this.zoomIn();
+                break;
+            case ConfigurationsOption.Download:
+                this.download();
                 break;
             case ConfigurationsOption.ZoomOut:
                 this.zoomOut();
@@ -238,31 +255,13 @@ export class ConfusionMatrixComponent {
         }
     }
     zoomIn() {
-        switch (this.size) {
-            case ConfusionMatrixSizes.Small:
-                this.size = ConfusionMatrixSizes.Medium;
-                return this.sizeChange.emit(this.size);
-            case ConfusionMatrixSizes.Medium:
-                this.size = ConfusionMatrixSizes.Large;
-                return this.sizeChange.emit(this.size);
-            case ConfusionMatrixSizes.Large:
-                this.size = ConfusionMatrixSizes.ExtraLarge;
-                return this.sizeChange.emit(this.size);
-        }
+        this._zoom += 0.1;
+        this.zoomChange.emit(this._zoom);
     }
 
     zoomOut() {
-        switch (this.size) {
-            case ConfusionMatrixSizes.ExtraLarge:
-                this.size = ConfusionMatrixSizes.Large;
-                return this.sizeChange.emit(this.size);
-            case ConfusionMatrixSizes.Large:
-                this.size = ConfusionMatrixSizes.Medium;
-                return this.sizeChange.emit(this.size);
-            case ConfusionMatrixSizes.Medium:
-                this.size = ConfusionMatrixSizes.Small;
-                return this.sizeChange.emit(this.size);
-        }
+        this.zoom -= 0.1;
+        this.zoomChange.emit(this._zoom);
     }
 
     matrixValueChange(event: any, row: number, column: number) {
@@ -291,6 +290,18 @@ export class ConfusionMatrixComponent {
         this.title = event.target.innerText ?? this.title;
         this.titleChange.emit(this.title);
 
+    }
+
+    private updateZoomValue(zoom: number, throwExceptions = true) {
+        if (zoom < 0.2) {
+            if (!throwExceptions) return;
+            throw "Zoom can not be less then 0.2";
+        }
+        this._zoom = zoom;
+        if (this.fullyInitialized) {
+            this.host.nativeElement.style.width = `${this.originalWidth * this._zoom}px`;
+            this.host.nativeElement.style.height = `${this.originalHeight * this._zoom}px`;
+        }
     }
 
     /**

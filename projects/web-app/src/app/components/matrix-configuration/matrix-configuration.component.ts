@@ -1,7 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { ConfusionMatrix } from '@fullexpression/confusion-matrix-stats';
-import { ConfusionMatrixSizes } from 'projects/confusion-matrix/src/lib/components/confusion-matrix.models';
 
 
 @Component({
@@ -26,13 +25,9 @@ export class MatrixConfiguration {
 
     matrixTitle = 'Awesome title';
 
-    size = ConfusionMatrixSizes.Large;
+    zoom = 0.2;
 
     colors = ['transparent', '#FADBD8', '#F5B7B1', '#F1948A', '#EC7063', '#E74C3C'];
-
-    get sizes(): Array<string> {
-        return Object.keys(ConfusionMatrixSizes);
-    }
 
     @ViewChild("labelElement") labelElement: ElementRef | undefined;
 
@@ -56,10 +51,6 @@ export class MatrixConfiguration {
 
     changeConfusionMatrix(confusionMatrix: ConfusionMatrix) {
         this.confusionMatrix = confusionMatrix.clone();
-    }
-
-    selectionChange(event: MatSelectChange) {
-        this.size = (<any>ConfusionMatrixSizes)[event.value];
     }
 
     matrixChanged($event: any) {

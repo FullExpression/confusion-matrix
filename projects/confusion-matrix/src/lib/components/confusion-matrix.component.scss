@@ -1,242 +1,234 @@
-.confusion-matrix-wrapper {
+:host {
     display: flex;
-    align-items: center;
+    transition: all 0.2s ease;
     justify-content: center;
-    flex-direction: column;
+    align-items: center;
+    margin: 20px;
 
-    span {
-        background-color: transparent;
-        width: 100%;
-        height: 100%;
-        border: none;
-        font-family: Arial, Helvetica, sans-serif;
+    .confusion-matrix-wrapper {
         display: flex;
-        justify-content: center;
         align-items: center;
-
-        &:focus {
-            outline: none;
-        }
-    }
-
-    .title {
-        display: flex;
+        justify-content: center;
         flex-direction: column;
+        transition: transform 0.2s ease;
 
-        .options {
-            margin-left: 3px;
-            cursor: pointer;
-        }
-
-        .title-edit {
-            display: flex;
+        span {
+            background-color: transparent;
             width: 100%;
             height: 100%;
-        }
-    }
+            border: none;
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-    &.small {
-        font-size: 10px;
-
-        .rows-label {
-            .row-label {
-                height: 20px !important;
+            &:focus {
+                outline: none;
             }
         }
 
-        .rows {
-            .row {
-                .columns {
-                    .column {
-                        width: 20px !important;
-                        height: 20px !important;
-                    }
-                }
-            }
-        }
-    }
-
-    &.medium {
-        font-size: 12px;
-
-        .rows-label {
-            .row-label {
-                height: 30px !important;
-            }
-        }
-
-        .rows {
-            .row {
-                .columns {
-                    .column {
-                        width: 30px !important;
-                        height: 30px !important;
-                    }
-                }
-            }
-        }
-    }
-
-    &.large {
-        font-size: 14px;
-
-        .rows-label {
-            .row-label {
-                height: 40px !important;
-            }
-        }
-
-        .rows {
-            .row {
-                .columns {
-                    .column {
-                        width: 40px !important;
-                        height: 40px !important;
-                    }
-                }
-            }
-        }
-    }
-
-    &.extra-large {
-        font-size: 16px;
-
-        .rows-label {
-            .row-label {
-                height: 50px !important;
-            }
-        }
-
-        .rows {
-            .row {
-                .columns {
-                    .column {
-                        width: 50px !important;
-                        height: 50px !important;
-                    }
-                }
-            }
-        }
-    }
-
-
-    .confusion-matrix {
-        display: flex;
-        justify-content: center;
-        position: relative;
-
-        .rows-label {
+        .title {
             display: flex;
             flex-direction: column;
-            margin-right: 10px;
 
-            .row-label {
-                height: 40px;
+            .options {
+                margin-left: 3px;
+                cursor: pointer;
+            }
+
+            .title-edit {
                 display: flex;
-                align-items: center;
-                justify-content: flex-end;
+                width: 100%;
+                height: 100%;
+            }
+        }
 
-                .label-edit {
-                    display: flex;
+        &.small {
+            font-size: 10px;
 
-                    span {
-                        justify-content: right;
+            .rows-label {
+                .row-label {
+                    height: 20px !important;
+                }
+            }
+
+            .rows {
+                .row {
+                    .columns {
+                        .column {
+
+                            width: 20px !important;
+                            height: 20px !important;
+                        }
                     }
-
                 }
             }
         }
 
-        .rows {
+        &.medium {
+            font-size: 12px;
+
+            .rows-label {
+                .row-label {
+                    height: 30px !important;
+                }
+            }
+
+            .rows {
+                .row {
+                    .columns {
+                        .column {
+                            width: 30px !important;
+                            height: 30px !important;
+                        }
+                    }
+                }
+            }
+        }
+
+        &.large {
+            font-size: 14px;
+
+            .rows-label {
+                .row-label {
+                    height: 40px !important;
+                }
+            }
+
+            .rows {
+                .row {
+                    .columns {
+                        .column {
+                            width: 40px !important;
+                            height: 40px !important;
+                        }
+                    }
+                }
+            }
+        }
+
+        &.extra-large {
+            font-size: 16px;
+
+            .rows-label {
+                .row-label {
+                    height: 50px !important;
+                }
+            }
+
+            .rows {
+                .row {
+                    .columns {
+                        .column {
+                            width: 50px !important;
+                            height: 50px !important;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        .confusion-matrix {
             display: flex;
+            justify-content: center;
+            position: relative;
 
-            .row {
-                .columns {
-                    .column {
-                        width: 40px;
-                        height: 40px;
+            .rows-label {
+                display: flex;
+                flex-direction: column;
+                margin-right: 10px;
+
+                .row-label {
+                    height: 40px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+
+                    .label-edit {
                         display: flex;
-                        align-items: center;
-                        justify-content: center;
 
-                        .column-edit {
-                            display: flex;
-                            width: 100%;
-                            height: 100%;
+                        span {
+                            justify-content: right;
                         }
 
-                        &.level-1 {
-                            background-color: #FADBD8;
-                        }
+                    }
+                }
+            }
 
-                        &.level-2 {
-                            background-color: #F5B7B1;
-                        }
+            .rows {
+                display: flex;
 
-                        &.level-3 {
-                            background-color: #F1948A;
-                        }
-
-                        &.level-4 {
-                            background-color: #EC7063;
-                        }
-
-                        &.level-5 {
-                            background-color: #E74C3C;
-                        }
-
-                        .row {
+                .row {
+                    .columns {
+                        .column {
+                            width: 40px;
+                            height: 40px;
                             display: flex;
                             align-items: center;
                             justify-content: center;
+
+                            .column-edit {
+                                display: flex;
+                                width: 100%;
+                                height: 100%;
+                            }
+
+                            .row {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            }
+
+                            transition: background-color 0.2 ease;
+
                         }
 
+                        .row-label {
+                            writing-mode: vertical-rl;
+                            margin-top: 10px;
+                            width: 100%;
+                            text-align: center;
+                            justify-content: center;
+                            align-items: center;
+                            display: flex;
+                        }
                     }
 
-                    .row-label {
-                        writing-mode: vertical-rl;
-                        margin-top: 10px;
-                        width: 100%;
-                        text-align: center;
-                        justify-content: center;
-                        align-items: center;
-                        display: flex;
-                    }
                 }
-
-            }
-        }
-
-        .intensity-bar {
-            margin-left: 20px;
-            display: flex;
-
-            .bar {
-                width: 10px;
-                height: 100%;
             }
 
-            .measure-wrapper {
+            .intensity-bar {
+                margin-left: 20px;
                 display: flex;
-                justify-content: space-between;
-                flex-direction: column;
-                height: calc(100% + 19px);
-                margin-top: -9px;
 
-
-                .measure {
-                    display: flex;
-                    align-items: center;
-
-                    .dash {
-                        width: 13px;
-                        height: 1px;
-                        background: black;
-                        margin-right: 4px;
-                        z-index: -1;
-                    }
+                .bar {
+                    width: 10px;
+                    height: 100%;
                 }
 
+                .measure-wrapper {
+                    display: flex;
+                    justify-content: space-between;
+                    flex-direction: column;
+                    height: calc(100% + 19px);
+                    margin-top: -9px;
+
+
+                    .measure {
+                        display: flex;
+                        align-items: center;
+
+                        .dash {
+                            width: 13px;
+                            height: 1px;
+                            background: black;
+                            margin-right: 4px;
+                            z-index: -1;
+                        }
+                    }
+
+                }
             }
         }
     }

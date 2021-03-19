@@ -2,18 +2,10 @@
     <div class="options-wrapper">
         <div class="close" (click)="changeVisibility(false)">x</div>
         <div class="options">
-            <div class="option" (click)="changeOptions(configurationsOptions.Edit)" *ngIf="!this.editMode">
-                <div class="icon"></div>
-                <div class="text">Edit Mode</div>
-            </div>
-            <div class="option" (click)="changeOptions(configurationsOptions.View)" *ngIf="this.editMode">
-                <div class="icon"></div>
-                <div class="text">View Mode</div>
-            </div>
-            <!-- <div class="option" (click)="changeOptions(configurationsOptions.Download)">
+            <div class="option" (click)="changeOptions(configurationsOptions.Download)">
                 <div class="icon"></div>
                 <div class="text">Download</div>
-            </div> -->
+            </div>
             <div class="option" (click)="changeOptions(configurationsOptions.ZoomIn)">
                 <div class="icon"></div>
                 <div class="text">Zoom In</div>

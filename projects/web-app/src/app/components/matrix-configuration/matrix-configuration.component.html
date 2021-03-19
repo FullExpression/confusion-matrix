@@ -2,7 +2,7 @@
     <div class="base">
         <div class="matrix">
             <confusion-matrix [(confusionMatrix)]="confusionMatrix" [(levelsColor)]="colors" [(title)]="matrixTitle"
-                [(size)]="size"></confusion-matrix>
+                [(zoom)]="zoom"></confusion-matrix>
             <statistics [confusionMatrix]="confusionMatrix" (confusionMatrixChange)="changeConfusionMatrix($event)">
             </statistics>
         </div>
@@ -25,14 +25,7 @@
             </mat-form-field>
             <normalization [confusionMatrix]="confusionMatrix" (confusionMatrixChange)="changeConfusionMatrix($event)">
             </normalization>
-            <mat-form-field appearance="fill">
-                <mat-label>Matrix Size</mat-label>
-                <mat-select (selectionChange)="selectionChange($event)" ([value])="size">
-                    <mat-option *ngFor="let s of sizes" [value]="s">
-                        {{s}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+            <mat-slider min="0.2" max="2" step="0.1" [(ngModel)]="zoom"></mat-slider>
             <color-intensity-picker [(colors)]="colors"></color-intensity-picker>
         </div>
     </div>

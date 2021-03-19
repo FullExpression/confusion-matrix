@@ -1,5 +1,5 @@
-<div class="confusion-matrix-wrapper" class="{{size}}" *ngIf="_confusionMatrix" #confusionMatrix
-    (mouseover)="showOption = true;" (mouseleave)="showOption = false">
+<div class="confusion-matrix-wrapper" *ngIf="_confusionMatrix" #confusionMatrix (mouseover)="showOption = true;"
+    (mouseleave)="showOption = false" [style.transform]="scale" [@inOutAnimation]>
     <div class="title">
         <div>
             <span type='text' (focusout)="changeTitle($event);" contenteditable>{{title}}</span>
@@ -42,6 +42,6 @@
     </div>
 </div>
 <div class="configurations-panel" *ngIf="showConfigurationPanel" [@outAnimation]>
-    <configurations [(visible)]="showConfigurationPanel" [editMode]="editMode" (optionChange)="optionChanged($event)">
+    <configurations [(visible)]="showConfigurationPanel" (optionChange)="optionChanged($event)">
     </configurations>
 </div>

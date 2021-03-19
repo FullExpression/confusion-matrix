@@ -39,13 +39,6 @@ export class ConfigurationsComponent {
     visibleChange = new EventEmitter<boolean>();
 
     @Input()
-    editMode = false;
-
-    @Input()
-    editModeChange = new EventEmitter<boolean>();
-
-
-    @Input()
     option = ConfigurationsOption.None;
 
     @Output()
@@ -62,16 +55,6 @@ export class ConfigurationsComponent {
 
     changeOptions(value: ConfigurationsOption) {
         this.option = value;
-
-        switch (this.option) {
-            case ConfigurationsOption.Edit:
-                this.editMode = true;
-                break;
-            case ConfigurationsOption.View:
-                this.editMode = false;
-                break;
-        }
-
         this.optionChange.emit(this.option);
     }
 
