@@ -1,12 +1,8 @@
-<div class="confusion-matrix-wrapper" *ngIf="_confusionMatrix" #confusionMatrix (mouseover)="showOption = true;"
-    (mouseleave)="showOption = false" [style.transform]="scale" [@inOutAnimation]>
+<div class="confusion-matrix-wrapper" *ngIf="_confusionMatrix" #confusionMatrix [style.transform]="scale"
+    [@inOutAnimation]>
     <div class="title">
         <div>
             <span type='text' (focusout)="changeTitle($event);" contenteditable>{{title}}</span>
-        </div>
-        <div class="options" [@inOutAnimation] *ngIf="showOption || showConfigurationPanel"
-            (click)="showConfigurationPanel = true;">
-            ⚙️ Tools
         </div>
     </div>
     <div class="confusion-matrix">
@@ -38,6 +34,9 @@
                     <div class="value">{{ getIntensityNumber(i) | number: roundRules }}</div>
                 </div>
             </div>
+        </div>
+        <div class="tools" (click)="showConfigurationPanel = true;">
+            ⚙️ Tools
         </div>
     </div>
 </div>

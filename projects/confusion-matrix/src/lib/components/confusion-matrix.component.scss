@@ -31,103 +31,12 @@
             display: flex;
             flex-direction: column;
 
-            .options {
-                margin-left: 3px;
-                cursor: pointer;
-            }
-
             .title-edit {
                 display: flex;
                 width: 100%;
                 height: 100%;
             }
         }
-
-        &.small {
-            font-size: 10px;
-
-            .rows-label {
-                .row-label {
-                    height: 20px !important;
-                }
-            }
-
-            .rows {
-                .row {
-                    .columns {
-                        .column {
-
-                            width: 20px !important;
-                            height: 20px !important;
-                        }
-                    }
-                }
-            }
-        }
-
-        &.medium {
-            font-size: 12px;
-
-            .rows-label {
-                .row-label {
-                    height: 30px !important;
-                }
-            }
-
-            .rows {
-                .row {
-                    .columns {
-                        .column {
-                            width: 30px !important;
-                            height: 30px !important;
-                        }
-                    }
-                }
-            }
-        }
-
-        &.large {
-            font-size: 14px;
-
-            .rows-label {
-                .row-label {
-                    height: 40px !important;
-                }
-            }
-
-            .rows {
-                .row {
-                    .columns {
-                        .column {
-                            width: 40px !important;
-                            height: 40px !important;
-                        }
-                    }
-                }
-            }
-        }
-
-        &.extra-large {
-            font-size: 16px;
-
-            .rows-label {
-                .row-label {
-                    height: 50px !important;
-                }
-            }
-
-            .rows {
-                .row {
-                    .columns {
-                        .column {
-                            width: 50px !important;
-                            height: 50px !important;
-                        }
-                    }
-                }
-            }
-        }
-
 
         .confusion-matrix {
             display: flex;
@@ -228,6 +137,19 @@
                         }
                     }
 
+                }
+            }
+
+            .tools {
+                margin-left: 3px;
+                cursor: pointer;
+                position: absolute;
+                bottom: 40px;
+                right: 0;
+                transition: 0.1s ease;
+
+                &:hover {
+                    transform: scale(1.2);
                 }
             }
         }
