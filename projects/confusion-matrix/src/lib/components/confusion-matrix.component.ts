@@ -260,7 +260,7 @@ export class ConfusionMatrixComponent implements AfterViewInit {
     }
 
     zoomOut() {
-        this.zoom -= 0.1;
+        this._zoom -= 0.1;
         this.zoomChange.emit(this._zoom);
     }
 

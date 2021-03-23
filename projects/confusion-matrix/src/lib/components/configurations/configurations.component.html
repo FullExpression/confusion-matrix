@@ -2,17 +2,17 @@
     <div class="options-wrapper">
         <div class="close" (click)="changeVisibility(false)">x</div>
         <div class="options">
-            <div class="option" (click)="changeOptions(configurationsOptions.Download)">
-                <div class="icon"></div>
-                <div class="text">Download</div>
-            </div>
             <div class="option" (click)="changeOptions(configurationsOptions.ZoomIn)">
-                <div class="icon"></div>
+                <div class="icon">🔎</div>
                 <div class="text">Zoom In</div>
             </div>
             <div class="option" (click)="changeOptions(configurationsOptions.ZoomOut)">
-                <div class="icon"></div>
+                <div class="icon">🔍</div>
                 <div class="text">Zoom Out</div>
+            </div>
+            <div class="option" (click)="changeOptions(configurationsOptions.Download)">
+                <div class="icon">📥</div>
+                <div class="text">Download <sup>beta</sup> </div>
             </div>
         </div>
 

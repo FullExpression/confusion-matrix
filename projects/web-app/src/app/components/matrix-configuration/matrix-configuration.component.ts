@@ -25,7 +25,7 @@ export class MatrixConfiguration {
 
     matrixTitle = 'Awesome title';
 
-    zoom = 0.2;
+    zoom = 1;
 
     colors = ['transparent', '#FADBD8', '#F5B7B1', '#F1948A', '#EC7063', '#E74C3C'];
 
