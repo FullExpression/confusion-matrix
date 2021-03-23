@@ -35,14 +35,14 @@ export class StatisticsComponent {
     getPrecisionForHappiness(): number {
         return this.confusionMatrix.precision({
             average: AverageMethod.Weighted,
-            label: 'Happiness'
+            label: this.confusionMatrix.labels[0]
         });
     }
 
     getMacroF1Score(): number {
         return this.confusionMatrix.f1Score({
             average: AverageMethod.Macro,
-            label: 'Happiness'
+            label: this.confusionMatrix.labels[1]
         });
     }
 
