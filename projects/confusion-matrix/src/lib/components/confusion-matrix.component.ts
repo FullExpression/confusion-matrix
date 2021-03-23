@@ -250,6 +250,9 @@ export class ConfusionMatrixComponent implements AfterViewInit {
             case ConfigurationsOption.ZoomOut:
                 this.zoomOut();
                 break;
+            case ConfigurationsOption.Transpose:
+                this.transpose();
+                break;
             default:
                 this.editMode = false;
         }
@@ -272,8 +275,6 @@ export class ConfusionMatrixComponent implements AfterViewInit {
         } else {
             event.target.value = this._confusionMatrix.matrix[row][column];
         }
-
-
     }
 
     calculateInputSize(event: any) {
@@ -290,6 +291,11 @@ export class ConfusionMatrixComponent implements AfterViewInit {
         this.title = event.target.innerText ?? this.title;
         this.titleChange.emit(this.title);
 
+    }
+
+    transpose() {
+        this._confusionMatrix.transpose();
+        this.confusionMatrixChange.emit(this._confusionMatrix);
     }
 
     private updateZoomValue(zoom: number, throwExceptions = true) {

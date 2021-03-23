@@ -4,5 +4,6 @@ export enum ConfigurationsOption {
     View,
     Download,
     ZoomIn,
-    ZoomOut
+    ZoomOut,
+    Transpose
 }
