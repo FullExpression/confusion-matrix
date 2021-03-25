@@ -271,6 +271,7 @@ export class ConfusionMatrixComponent implements AfterViewInit {
         const value = parseInt(event.target.innerText);
         if (!isNaN(value)) {
             this._confusionMatrix.matrix[row][column] = value;
+            this._confusionMatrix.matrix = this._confusionMatrix.matrix;
             this.confusionMatrixChange.emit(this._confusionMatrix);
         } else {
             event.target.value = this._confusionMatrix.matrix[row][column];
@@ -295,6 +296,16 @@ export class ConfusionMatrixComponent implements AfterViewInit {
 
     transpose() {
         this._confusionMatrix.transpose();
+        this.confusionMatrixChange.emit(this._confusionMatrix);
+    }
+
+    undo() {
+        this._confusionMatrix.undo();
+        this.confusionMatrixChange.emit(this._confusionMatrix);
+    }
+
+    redo() {
+        this._confusionMatrix.redo();
         this.confusionMatrixChange.emit(this._confusionMatrix);
     }
 

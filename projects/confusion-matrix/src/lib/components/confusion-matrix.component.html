@@ -38,6 +38,10 @@
         <div class="tools" (click)="showConfigurationPanel = true;">
             ⚙️ Tools
         </div>
+        <div class="undo-redo">
+            <span class="redo" [class.available]="_confusionMatrix.isUndoAvailable()" (click)="undo()">↪️</span>
+            <span class="undo" [class.available]="_confusionMatrix.isRedoAvailable()" (click)="redo()">↩️</span>
+        </div>
     </div>
 </div>
 <div class="configurations-panel" *ngIf="showConfigurationPanel" [@outAnimation]>

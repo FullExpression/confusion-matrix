@@ -52,15 +52,9 @@
                     height: 40px;
                     display: flex;
                     align-items: center;
-                    justify-content: flex-end;
 
-                    .label-edit {
-                        display: flex;
-
-                        span {
-                            justify-content: right;
-                        }
-
+                    span {
+                        justify-content: flex-end;
                     }
                 }
             }
@@ -89,7 +83,7 @@
                                 justify-content: center;
                             }
 
-                            transition: background-color 0.2 ease;
+                            transition: background-color 0.2s ease;
 
                         }
 
@@ -151,6 +145,39 @@
                 &:hover {
                     transform: scale(1.2);
                 }
+            }
+
+            .undo-redo {
+                margin-left: 22px;
+                position: absolute;
+                bottom: 44px;
+                left: 0;
+                transition: 0.1s ease;
+                flex-direction: column;
+                flex-direction: row;
+                display: flex;
+                font-size: 20px;
+                cursor: default;
+
+                span {
+                    transform: rotate(180deg);
+                    transition: 0.1s ease;
+                    filter: grayscale(100%);
+                    opacity: 0.3;
+
+                    &.available {
+                        opacity: 1;
+                        filter: none;
+                        cursor: pointer;
+
+                        &:hover {
+                            transform: rotate(180deg) scale(1.2);
+                        }
+                    }
+
+
+                }
+
             }
         }
     }
