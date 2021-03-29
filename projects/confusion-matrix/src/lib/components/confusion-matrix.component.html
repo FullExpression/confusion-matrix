@@ -9,7 +9,9 @@
         <div class="rows-label">
             <div class="row-label" *ngFor="let label of _confusionMatrix.labels; let i = index">
                 <span class="text" type='text' (focusout)="changeLabel($event, i);" contenteditable>{{label}}</span>
+                <span class='add' (click)="add(i)">➕</span>
                 <span class="remove" (click)="removeLabel(_confusionMatrix.labels[i])">❌</span>
+
             </div>
         </div>
         <div class="rows" #rows>
@@ -18,11 +20,16 @@
                     <div class="column" [style.background-color]="getColor(column)"
                         *ngFor="let column of _confusionMatrixTransposed.matrix[rowIndex]; let columnIndex = index"
                         [@removeAddLine]>
-                        <span type='text' (focusout)="matrixValueChange($event, columnIndex , rowIndex);"
-                            contenteditable>{{column | number:
-                            roundRules}}</span>
+
+                        <div class='column-value'>
+                            <span type='text' (focusout)="matrixValueChange($event, columnIndex , rowIndex);"
+                                contenteditable>{{column | number:
+                                roundRules}}</span>
+                        </div>
                     </div>
+
                     <div class="row-label">
+                        <span class='add' (click)="add(rowIndex)">➕</span>
                         <span class="remove" (click)="removeLabel(_confusionMatrix.labels[rowIndex])">❌</span>
                         <span class="text" type='text' (focusout)="changeLabel($event, rowIndex);"
                             contenteditable>{{label}}</span>

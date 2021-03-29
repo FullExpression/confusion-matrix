@@ -203,6 +203,7 @@ export class ConfusionMatrixComponent implements AfterViewInit {
     private originalHeight = 0;
     private _zoom = 1;
     private fullyInitialized = false;
+    private numberOfItemsAdded = 0;
     /**
      * Constructs the confusion matrix.
      * @decimalPipe Decimal angular service injected using dependency injection.
@@ -355,6 +356,19 @@ export class ConfusionMatrixComponent implements AfterViewInit {
     removeLabel(name: string) {
         this._confusionMatrix.removeLabel(name);
         this.confusionMatrixChange.emit(this._confusionMatrix);
+    }
+
+    add(index: number) {
+        const emptyArray = new Array<number>(this._confusionMatrix.matrix.length + 1);
+        emptyArray.fill(0, 0, this._confusionMatrix.matrix.length + 1);
+        let name = 'Untitled';
+        if (this.numberOfItemsAdded > 0) {
+            name = `${name}-${this.numberOfItemsAdded}`;
+        }
+        this._confusionMatrix.addLabel(name, emptyArray, emptyArray, index);
+        ++this.numberOfItemsAdded;
+        this.confusionMatrixChange.emit(this._confusionMatrix);
+
     }
 
     private updateZoomValue(zoom: number, throwExceptions = true) {
