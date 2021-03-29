@@ -5,6 +5,7 @@ import { DecimalPipe } from '@angular/common';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ConfigurationsOption } from './configurations/configurations.component.model';
 import * as html2canvas from "html2canvas";
+import { confusionMatrixAnimations } from './confusion-matrix.animations';
 
 /**
  * Component which helps to visualize a confusion matrix.
@@ -14,86 +15,7 @@ import * as html2canvas from "html2canvas";
     selector: 'confusion-matrix',
     templateUrl: './confusion-matrix.component.html',
     styleUrls: ['./confusion-matrix.component.scss'],
-    animations: [
-        trigger(
-            'inOutAnimation',
-            [
-                transition(
-                    ':enter',
-                    [
-                        style({
-                            opacity: 0, marginTop: '-20px'
-                        }),
-                        animate('0.3s ease',
-                            style({ opacity: 1, marginTop: 0 }))
-                    ]
-                ),
-                transition(
-                    ':leave',
-                    [
-                        style({ opacity: 1, marginTop: 0 }),
-                        animate('0.3s ease',
-                            style({ opacity: 0, marginTop: '-20px' }))
-                    ]
-                )
-            ]
-        ),
-        trigger(
-            'outAnimation',
-            [
-                transition(
-                    ':leave',
-                    [
-                        style({ opacity: 1 }),
-                        animate('0.15s ease',
-                            style({ opacity: 0 }))
-                    ]
-                )
-            ]
-        ),
-        trigger(
-            'removeAddLine',
-            [
-                transition(
-                    ':leave',
-                    [
-                        style({ opacity: 1, marginTop: 0 }),
-                        animate('0.4s ease',
-                            style({ opacity: 0, marginTop: '-40px' }))
-                    ]
-                ),
-                transition(
-                    ':enter',
-                    [
-                        style({ opacity: 0, marginTop: '-40px' }),
-                        animate('0.4s ease',
-                            style({ opacity: 1, marginTop: 0 }))
-                    ]
-                )
-            ]
-        ),
-        trigger(
-            'removeAddColumns',
-            [
-                transition(
-                    ':leave',
-                    [
-                        style({ opacity: 1 }),
-                        animate('0.4s ease',
-                            style({ opacity: 0, marginLeft: '-40px', height: 0 }))
-                    ]
-                ),
-                transition(
-                    ':enter',
-                    [
-                        style({ opacity: 0, marginLeft: '-40px' }),
-                        animate('0.4s ease',
-                            style({ opacity: 1, marginLeft: '0px' }))
-                    ]
-                )
-            ]
-        ),
-    ]
+    animations: confusionMatrixAnimations
 })
 export class ConfusionMatrixComponent implements AfterViewInit {
 
@@ -190,7 +112,7 @@ export class ConfusionMatrixComponent implements AfterViewInit {
 
     showConfigurationPanel = false;
 
-    editMode = false;
+    editionMode = false;
 
     /**
      * Represents how many different color intensities exists.
@@ -296,8 +218,12 @@ export class ConfusionMatrixComponent implements AfterViewInit {
             case ConfigurationsOption.Transpose:
                 this.transpose();
                 break;
-            default:
-                this.editMode = false;
+            case ConfigurationsOption.View:
+                this.editionMode = false;
+                break;
+            case ConfigurationsOption.Edit:
+                this.editionMode = true;
+                break;
         }
     }
     zoomIn() {

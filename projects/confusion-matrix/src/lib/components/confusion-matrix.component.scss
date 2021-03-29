@@ -21,9 +21,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            cursor: default;
 
             &:focus {
                 outline: none;
+            }
+
+            &[contenteditable='true'] {
+                cursor: text;
             }
         }
 
@@ -157,6 +162,11 @@
                 right: 0;
                 transition: 0.1s ease;
 
+                &.edition-mode {
+                    bottom: 85px;
+                    transition: 0.3s ease;
+                }
+
                 &:hover {
                     transform: scale(1.2);
                 }
@@ -173,6 +183,12 @@
                 display: flex;
                 font-size: 20px;
                 cursor: default;
+
+                &.edition-mode {
+                    margin-left: 70px;
+                    bottom: 83px;
+                    transition: 0.3s ease;
+                }
 
                 span {
                     transform: rotate(180deg);

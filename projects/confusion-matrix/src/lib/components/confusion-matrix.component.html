@@ -2,15 +2,17 @@
     [@inOutAnimation]>
     <div class="title">
         <div>
-            <span type='text' (focusout)="changeTitle($event);" contenteditable>{{title}}</span>
+            <span type='text' (focusout)="changeTitle($event);" [attr.contenteditable]="editionMode">{{title}}</span>
         </div>
     </div>
     <div class="confusion-matrix">
         <div class="rows-label">
             <div class="row-label" *ngFor="let label of _confusionMatrix.labels; let i = index">
-                <span class="text" type='text' (focusout)="changeLabel($event, i);" contenteditable>{{label}}</span>
-                <span class='add' (click)="add(i)">➕</span>
-                <span class="remove" (click)="removeLabel(_confusionMatrix.labels[i])">❌</span>
+                <span class="text" type='text' (focusout)="changeLabel($event, i);"
+                    [attr.contenteditable]="editionMode">{{label}}</span>
+                <span *ngIf="editionMode" class='add' (click)="add(i)" [@rowsAddDeleteAnimation]>➕</span>
+                <span *ngIf="editionMode" class="remove" (click)="removeLabel(_confusionMatrix.labels[i])"
+                    [@rowsAddDeleteAnimation]>❌</span>
 
             </div>
         </div>
@@ -23,16 +25,19 @@
 
                         <div class='column-value'>
                             <span type='text' (focusout)="matrixValueChange($event, columnIndex , rowIndex);"
-                                contenteditable>{{column | number:
+                                [attr.contenteditable]="editionMode">{{column | number:
                                 roundRules}}</span>
                         </div>
                     </div>
 
                     <div class="row-label">
-                        <span class='add' (click)="add(rowIndex)">➕</span>
-                        <span class="remove" (click)="removeLabel(_confusionMatrix.labels[rowIndex])">❌</span>
+                        <span *ngIf="editionMode" class='add' (click)="add(rowIndex)"
+                            [@columnsAddDeleteAnimation]>➕</span>
+                        <span *ngIf="editionMode" class="remove"
+                            (click)="removeLabel(_confusionMatrix.labels[rowIndex])"
+                            [@columnsAddDeleteAnimation]>❌</span>
                         <span class="text" type='text' (focusout)="changeLabel($event, rowIndex);"
-                            contenteditable>{{label}}</span>
+                            [attr.contenteditable]="editionMode">{{label}}</span>
                     </div>
                 </div>
             </div>
@@ -46,16 +51,17 @@
                 </div>
             </div>
         </div>
-        <div class="tools" (click)="showConfigurationPanel = true;">
+        <div class="tools" (click)="showConfigurationPanel = true;" [class.edition-mode]="editionMode">
             ⚙️ Tools
         </div>
-        <div class="undo-redo">
+        <div class="undo-redo" [class.edition-mode]="editionMode">
             <span class="redo" [class.available]="_confusionMatrix.isUndoAvailable()" (click)="undo()">↪️</span>
             <span class="undo" [class.available]="_confusionMatrix.isRedoAvailable()" (click)="redo()">↩️</span>
         </div>
     </div>
 </div>
 <div class="configurations-panel" *ngIf="showConfigurationPanel" [@outAnimation]>
-    <configurations [(visible)]="showConfigurationPanel" (optionChange)="optionChanged($event)">
+    <configurations [(visible)]="showConfigurationPanel" (optionChange)="optionChanged($event)"
+        [editionToggle]="editionMode">
     </configurations>
 </div>

@@ -44,6 +44,9 @@ export class ConfigurationsComponent {
     @Output()
     optionChange = new EventEmitter<ConfigurationsOption>();
 
+    @Input()
+    editionToggle = false;
+
     get configurationsOptions(): typeof ConfigurationsOption {
         return ConfigurationsOption;
     }
@@ -51,6 +54,17 @@ export class ConfigurationsComponent {
     changeVisibility(value: boolean) {
         this.visible = value;
         this.visibleChange.emit(this.visible);
+    }
+
+    changeEdition() {
+        if (this.editionToggle) {
+            this.option = ConfigurationsOption.View;
+            this.editionToggle = false;
+        } else {
+            this.option = ConfigurationsOption.Edit;
+            this.editionToggle = true;
+        }
+        this.optionChange.emit(this.option);
     }
 
     changeOptions(value: ConfigurationsOption) {
