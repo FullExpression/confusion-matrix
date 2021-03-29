@@ -51,6 +51,48 @@ import * as html2canvas from "html2canvas";
                 )
             ]
         ),
+        trigger(
+            'removeAddLine',
+            [
+                transition(
+                    ':leave',
+                    [
+                        style({ opacity: 1, marginTop: 0 }),
+                        animate('0.4s ease',
+                            style({ opacity: 0, marginTop: '-40px' }))
+                    ]
+                ),
+                transition(
+                    ':enter',
+                    [
+                        style({ opacity: 0, marginTop: '-40px' }),
+                        animate('0.4s ease',
+                            style({ opacity: 1, marginTop: 0 }))
+                    ]
+                )
+            ]
+        ),
+        trigger(
+            'removeAddColumns',
+            [
+                transition(
+                    ':leave',
+                    [
+                        style({ opacity: 1 }),
+                        animate('0.4s ease',
+                            style({ opacity: 0, marginLeft: '-40px', height: 0 }))
+                    ]
+                ),
+                transition(
+                    ':enter',
+                    [
+                        style({ opacity: 0, marginLeft: '-40px' }),
+                        animate('0.4s ease',
+                            style({ opacity: 1, marginLeft: '0px' }))
+                    ]
+                )
+            ]
+        ),
     ]
 })
 export class ConfusionMatrixComponent implements AfterViewInit {
@@ -306,6 +348,12 @@ export class ConfusionMatrixComponent implements AfterViewInit {
 
     redo() {
         this._confusionMatrix.redo();
+        this.confusionMatrixChange.emit(this._confusionMatrix);
+    }
+
+    // This function will delete a given label
+    removeLabel(name: string) {
+        this._confusionMatrix.removeLabel(name);
         this.confusionMatrixChange.emit(this._confusionMatrix);
     }
 

@@ -53,8 +53,20 @@
                     display: flex;
                     align-items: center;
 
-                    span {
+                    .text {
                         justify-content: flex-end;
+                    }
+
+                    .remove {
+                        cursor: pointer;
+                        transition: 0.1s ease;
+                        width: auto;
+                        height: auto;
+                        margin-left: 4px;
+
+                        &:hover {
+                            transform: scale(1.2);
+                        }
                     }
                 }
             }
