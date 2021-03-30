@@ -48,6 +48,19 @@
             justify-content: center;
             position: relative;
 
+            &.dragging {
+                .column {
+                    opacity: 0.3;
+                    filter: grayscale(100%);
+                }
+            }
+
+            &.drag-enable {
+                .column span {
+                    cursor: move;
+                }
+            }
+
             .rows-label {
                 display: flex;
                 flex-direction: column;
@@ -57,6 +70,13 @@
                     height: 40px;
                     display: flex;
                     align-items: center;
+
+                    &.dragging {
+
+                        .row-label {
+                            transform: scale(1.1);
+                        }
+                    }
 
                     .text {
                         justify-content: flex-end;
@@ -81,8 +101,29 @@
                 display: flex;
 
                 .row {
+
+
+                    &.dragging {
+                        .column {
+                            opacity: 1;
+                            filter: grayscale(0%);
+                        }
+
+                        .row-label {
+                            opacity: 1;
+                            filter: grayscale(0%);
+                        }
+                    }
+
                     .columns {
                         .column {
+                            &.dragging {
+                                opacity: 1;
+                                filter: grayscale(0%);
+                            }
+
+                            transition: all ease 0.2s;
+
                             .column-value {
                                 width: 40px;
                                 height: 40px;

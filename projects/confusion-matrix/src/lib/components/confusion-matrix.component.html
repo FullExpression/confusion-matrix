@@ -5,9 +5,10 @@
             <span type='text' (focusout)="changeTitle($event);" [attr.contenteditable]="editionMode">{{title}}</span>
         </div>
     </div>
-    <div class="confusion-matrix">
+    <div class="confusion-matrix" [class.dragging]="dragging" [class.drag-enable]="allowDrag()">
         <div class="rows-label">
-            <div class="row-label" *ngFor="let label of _confusionMatrix.labels; let i = index">
+            <div class="row-label" *ngFor="let label of _confusionMatrix.labels; let i = index"
+                [class.dragging]='dragHighlight[i]'>
                 <span class="text" type='text' (focusout)="changeLabel($event, i);"
                     [attr.contenteditable]="editionMode">{{label}}</span>
                 <span *ngIf="editionMode" class='add' (click)="add(i)" [@rowsAddDeleteAnimation]>➕</span>
@@ -17,11 +18,15 @@
             </div>
         </div>
         <div class="rows" #rows>
-            <div class="row" *ngFor="let label of _confusionMatrix.labels; let rowIndex = index" [@removeAddColumns]>
+            <div class="row" [attr.draggable]="allowDrag()"
+                *ngFor="let label of _confusionMatrix.labels; let rowIndex = index" [@removeAddColumns]
+                (dragstart)="dragstart(rowIndex)" (drop)="onDrop(rowIndex)" (dragover)="allowDrop($event)"
+                (dragenter)="dragEnter(rowIndex)" (dragleave)="dragExist(rowIndex)"
+                [class.dragging]='dragHighlight[rowIndex]' (dragend)='dragging = false'>
                 <div class="columns">
                     <div class="column" [style.background-color]="getColor(column)"
                         *ngFor="let column of _confusionMatrixTransposed.matrix[rowIndex]; let columnIndex = index"
-                        [@removeAddLine]>
+                        [@removeAddLine] [class.dragging]='dragHighlight[columnIndex]'>
 
                         <div class='column-value'>
                             <span type='text' (focusout)="matrixValueChange($event, columnIndex , rowIndex);"

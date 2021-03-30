@@ -61,6 +61,7 @@ export class ConfusionMatrixComponent implements AfterViewInit {
         this._confusionMatrix = value.clone();
         this._confusionMatrixTransposed = this._confusionMatrix.clone();
         this._confusionMatrixTransposed.transpose();
+        this.dragHighlight = new Array();
         this.updateIntensityValues(value);
 
     }
@@ -114,6 +115,8 @@ export class ConfusionMatrixComponent implements AfterViewInit {
 
     editionMode = false;
 
+    dragging = false;
+
     /**
      * Represents how many different color intensities exists.
      */
@@ -126,12 +129,21 @@ export class ConfusionMatrixComponent implements AfterViewInit {
     private _zoom = 1;
     private fullyInitialized = false;
     private numberOfItemsAdded = 0;
+    private dragIndex = -1;
+
+    dragHighlight = new Array<boolean>();
+
     /**
      * Constructs the confusion matrix.
      * @decimalPipe Decimal angular service injected using dependency injection.
      */
     constructor(private decimalPipe: DecimalPipe,
-        private host: ElementRef) { }
+        private host: ElementRef) {
+
+        this.confusionMatrixChange.subscribe(() => {
+            new Array(this._confusionMatrix.labels.length);
+        });
+    }
 
     ngAfterViewInit(): void {
         this.fullyInitialized = true;
@@ -295,6 +307,37 @@ export class ConfusionMatrixComponent implements AfterViewInit {
         ++this.numberOfItemsAdded;
         this.confusionMatrixChange.emit(this._confusionMatrix);
 
+    }
+
+    dragstart(from: number) {
+        this.dragIndex = from;
+        this.dragging = true;
+    }
+
+    onDrop(target: number) {
+        this._confusionMatrix.changeLabelOrder(this.dragIndex, target);
+        this.confusionMatrixChange.emit(this._confusionMatrix);
+    }
+
+    allowDrop(event: any) {
+        event.preventDefault();
+        return false;
+    }
+
+    allowDrag() {
+        return !this.editionMode;
+    }
+
+    dragEnter(index: number) {
+        this.dragHighlight[index] = true;
+    }
+
+    dragExist(index: number) {
+        this.dragHighlight[index] = false;
+    }
+
+    private onConfusionMatrixChange() {
+        this.dragHighlight = new Array(this._confusionMatrix.labels.length);
     }
 
     private updateZoomValue(zoom: number, throwExceptions = true) {
