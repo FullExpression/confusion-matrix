@@ -11,9 +11,17 @@
                 </div>
                 <div class="text"> Edition mode</div>
             </div>
+            <div class="option" (click)="changeOptions(configurationsOptions.Save)">
+                <div class="icon">💾</div>
+                <div class="text">Save</div>
+            </div>
+            <div class="option" (click)="changeOptions(configurationsOptions.Import)">
+                <div class="icon">📨</div>
+                <div class="text">Import</div>
+            </div>
             <div class="option" (click)="changeOptions(configurationsOptions.Download)">
-                <div class="icon">📥</div>
-                <div class="text">Download <sup>beta</sup> </div>
+                <div class="icon">📤</div>
+                <div class="text">Download Image<sup>beta</sup> </div>
             </div>
 
             <div class="option" (click)="changeOptions(configurationsOptions.ZoomIn)">

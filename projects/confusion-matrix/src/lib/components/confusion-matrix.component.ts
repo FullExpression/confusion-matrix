@@ -6,6 +6,8 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { ConfigurationsOption } from './configurations/configurations.component.model';
 import * as html2canvas from "html2canvas";
 import { confusionMatrixAnimations } from './confusion-matrix.animations';
+import { DownloadService } from '../services/download.service';
+import { ImportService } from '../services/import.service';
 
 /**
  * Component which helps to visualize a confusion matrix.
@@ -138,7 +140,9 @@ export class ConfusionMatrixComponent implements AfterViewInit {
      * @decimalPipe Decimal angular service injected using dependency injection.
      */
     constructor(private decimalPipe: DecimalPipe,
-        private host: ElementRef) {
+        private host: ElementRef,
+        private downloadService: DownloadService,
+        private importService: ImportService) {
 
         this.confusionMatrixChange.subscribe(() => {
             new Array(this._confusionMatrix.labels.length);
@@ -235,6 +239,12 @@ export class ConfusionMatrixComponent implements AfterViewInit {
                 break;
             case ConfigurationsOption.Edit:
                 this.editionMode = true;
+                break;
+            case ConfigurationsOption.Save:
+                this.save();
+                break;
+            case ConfigurationsOption.Import:
+                this.import();
                 break;
         }
     }
@@ -334,6 +344,19 @@ export class ConfusionMatrixComponent implements AfterViewInit {
 
     dragExist(index: number) {
         this.dragHighlight[index] = false;
+    }
+
+    save() {
+        this.downloadService.download(this._confusionMatrix.convertToJson(),
+            'confusion-matrix.json');
+    }
+
+    async import() {
+        const json = await this.importService.import();
+        if (json) {
+            this._confusionMatrix.importAsJson(json);
+            this.confusionMatrixChange.emit(this._confusionMatrix);
+        }
     }
 
     private onConfusionMatrixChange() {
