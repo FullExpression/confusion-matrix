@@ -1,5 +1,7 @@
 import { DecimalPipe } from "@angular/common";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { DownloadService } from "../services/download.service";
+import { ImportService } from "../services/import.service";
 import { ConfusionMatrixComponent } from "./confusion-matrix.component";
 
 describe("Statistic models test suite", () => {
@@ -10,7 +12,7 @@ describe("Statistic models test suite", () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [ConfusionMatrixComponent],
-            providers: [DecimalPipe]
+            providers: [DecimalPipe, DownloadService, ImportService]
         });
         fixture = TestBed.createComponent(ConfusionMatrixComponent);
         component = fixture.componentInstance;
