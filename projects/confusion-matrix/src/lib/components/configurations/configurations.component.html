@@ -1,43 +1,45 @@
-<div class="panel" *ngIf="visible" [@inOutAnimation]>
-    <div class="options-wrapper">
-        <div class="close" (click)="changeVisibility(false)">x</div>
-        <div class="options">
-            <div class="option" (click)="changeEdition()">
-                <div class="icon">
-                    <span>✏️</span>
-                    <div class="toggle" [class.edit]='editionToggle'>
-                        <span class="ball"></span>
-                    </div>
+<cm-dialog [visible]="visible" (visibleChange)="visibleChange.emit($event)">
+    <div class="options">
+        <div class="option" (click)="changeEdition()">
+            <div class="icon">
+                <span>✏️</span>
+                <div class="toggle" [class.edit]='editionToggle'>
+                    <span class="ball"></span>
                 </div>
-                <div class="text"> Edition mode</div>
             </div>
-            <div class="option" (click)="changeOptions(configurationsOptions.Save)">
-                <div class="icon">💾</div>
-                <div class="text">Save</div>
-            </div>
-            <div class="option" (click)="changeOptions(configurationsOptions.Import)">
-                <div class="icon">📨</div>
-                <div class="text">Import</div>
-            </div>
-            <div class="option" (click)="changeOptions(configurationsOptions.Download)">
-                <div class="icon">📤</div>
-                <div class="text">Download Image<sup>beta</sup> </div>
-            </div>
+            <div class="text"> Edition mode</div>
+        </div>
+        <div class="option" (click)="changeOptions(configurationsOptions.Save)">
+            <div class="icon">💾</div>
+            <div class="text">Save</div>
+        </div>
+        <div class="option" (click)="changeOptions(configurationsOptions.Import)">
+            <div class="icon">📨</div>
+            <div class="text">Import</div>
+        </div>
+        <div class="option" (click)="changeOptions(configurationsOptions.Download)">
+            <div class="icon">📤</div>
+            <div class="text">Download Image<sup>beta</sup> </div>
+        </div>
 
-            <div class="option" (click)="changeOptions(configurationsOptions.ZoomIn)">
-                <div class="icon">🔎</div>
-                <div class="text">Zoom In</div>
-            </div>
-            <div class="option" (click)="changeOptions(configurationsOptions.ZoomOut)">
-                <div class="icon">🔍</div>
-                <div class="text">Zoom Out</div>
-            </div>
-            <div class="option" (click)="changeOptions(configurationsOptions.Transpose)">
-                <div class="icon">🌌</div>
-                <div class="text">Transpose</div>
-            </div>
-
+        <div class="option" (click)="changeOptions(configurationsOptions.ZoomIn)">
+            <div class="icon">🔎</div>
+            <div class="text">Zoom In</div>
+        </div>
+        <div class="option" (click)="changeOptions(configurationsOptions.ZoomOut)">
+            <div class="icon">🔍</div>
+            <div class="text">Zoom Out</div>
+        </div>
+        <div class="option" (click)="changeOptions(configurationsOptions.Transpose)">
+            <div class="icon">🌌</div>
+            <div class="text">Transpose</div>
+        </div>
+        <div class="option" (click)="changeOptions(configurationsOptions.Metrics)">
+            <div class="icon">🧭</div>
+            <div class="text">Metrics</div>
         </div>
 
     </div>
-</div>
+</cm-dialog>
+
+<metrics-configurations [(visible)]="metricsIsVisible"></metrics-configurations>

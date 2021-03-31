@@ -65,8 +65,7 @@
         </div>
     </div>
 </div>
-<div class="configurations-panel" *ngIf="showConfigurationPanel" [@outAnimation]>
-    <configurations [(visible)]="showConfigurationPanel" (optionChange)="optionChanged($event)"
-        [editionToggle]="editionMode">
-    </configurations>
-</div>
+
+<configurations [(visible)]="showConfigurationPanel" (optionChange)="optionChanged($event)"
+    [editionToggle]="editionMode">
+</configurations>

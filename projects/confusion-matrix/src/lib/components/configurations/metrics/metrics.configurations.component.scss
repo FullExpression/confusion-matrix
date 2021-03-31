@@ -1,0 +1,71 @@
+.metrics-configuration-wrapper {
+    .metrics-list {
+        display: flex;
+        flex-wrap: wrap;
+
+        div {
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+        button {
+            margin-right: 5px;
+        }
+    }
+
+    .selected-metric-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+
+        .selected-metric {
+            padding: 10px;
+            margin: 10px;
+            background-color: #ffeb3b;
+            border-radius: 15px;
+            position: relative;
+
+            .delete-button {
+                position: absolute;
+                top: 0;
+                right: 0;
+                border-bottom-left-radius: 10px;
+                border-top-right-radius: 10px;
+                width: 20px;
+                height: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                background-color: #f44336;
+                color: white;
+                transition: box-shadow 0.1s ease;
+                transition: transform 0.1s ease;
+                font-size: 13px;
+
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+        }
+    }
+
+    select {
+        font-size: 14px;
+        font-size: 14px;
+        padding: 5px;
+        cursor: pointer;
+        border: 1px solid #525252;
+        border-radius: 100px;
+    }
+
+    button {
+        border-radius: 100px;
+        border: none;
+        background-color: #7eab6e;
+        color: white;
+        cursor: pointer;
+        padding: 7px;
+        padding-left: 11px;
+        padding-right: 11px;
+    }
+}

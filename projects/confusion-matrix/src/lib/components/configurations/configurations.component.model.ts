@@ -7,5 +7,6 @@ export enum ConfigurationsOption {
     ZoomOut,
     Transpose,
     Save,
-    Import
+    Import,
+    Metrics
 }

@@ -5,31 +5,7 @@ import { ConfigurationsOption } from "./configurations.component.model";
 @Component({
     selector: 'configurations',
     templateUrl: './configurations.component.html',
-    styleUrls: ['./configurations.component.scss'],
-    animations: [
-        trigger(
-            'inOutAnimation',
-            [
-                transition(
-                    ':enter',
-                    [
-                        style({ opacity: 0 }),
-                        animate('0.3s ease',
-                            style({ opacity: 1 }))
-                    ]
-                ),
-                transition(
-                    ':leave',
-                    [
-                        style({ opacity: 1 }),
-                        animate('0.3s ease',
-                            style({ opacity: 0 }))
-                    ]
-                )
-            ]
-        )
-    ]
-
+    styleUrls: ['./configurations.component.scss']
 })
 export class ConfigurationsComponent {
     @Input()
@@ -47,13 +23,10 @@ export class ConfigurationsComponent {
     @Input()
     editionToggle = false;
 
+    metricsIsVisible = true;
+
     get configurationsOptions(): typeof ConfigurationsOption {
         return ConfigurationsOption;
-    }
-
-    changeVisibility(value: boolean) {
-        this.visible = value;
-        this.visibleChange.emit(this.visible);
     }
 
     changeEdition() {
@@ -68,6 +41,13 @@ export class ConfigurationsComponent {
     }
 
     changeOptions(value: ConfigurationsOption) {
+        switch (value) {
+            case ConfigurationsOption.Metrics:
+                this.metricsIsVisible = true;
+                break;
+            default:
+                this.metricsIsVisible = false;
+        }
         this.option = value;
         this.optionChange.emit(this.option);
     }
