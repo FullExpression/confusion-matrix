@@ -1,0 +1,33 @@
+.metric-wrapper {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    display: inline-flex;
+    cursor: pointer;
+
+    .metrics-tags {
+        span {
+            margin: 3px;
+            background-color: antiquewhite;
+            padding: 4px;
+            border-radius: 50px;
+            font-size: 9px;
+            font-weight: bolder;
+        }
+
+    }
+
+    .title {
+        font-size: 12px;
+        margin-bottom: -5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+    }
+
+    .value {
+        font-weight: 500;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

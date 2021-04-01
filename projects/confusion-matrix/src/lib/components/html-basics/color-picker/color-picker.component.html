@@ -1,0 +1,4 @@
+<div class="color-picker">
+    <div class="color" (click)="openColorPicker()" [style.backgroundColor]="color"></div>
+    <input type="color" #input [value]="color" (change)="colorChanged($event)" />
+</div>

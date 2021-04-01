@@ -1,0 +1,71 @@
+.metrics-configuration-wrapper {
+    font-size: 17px;
+
+    h2 {
+        width: 100%;
+        flex: 0 0 100%;
+        margin-bottom: 0;
+    }
+
+    .main-configurations {
+
+        max-width: 490px;
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 15px;
+
+
+            div {
+                display: flex;
+                align-items: center;
+                height: 40px;
+                justify-content: space-between;
+            }
+        }
+
+
+        .round,
+        .metric,
+        .average-method {
+            span {
+                margin-right: 10px;
+
+            }
+
+        }
+    }
+
+    .tags {
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 15px;
+            margin-top: 10px;
+            font-size: 15px;
+            row-gap: 15px;
+
+            .tag {
+                .text {
+                    font-size: 12px;
+                    font-style: italic;
+                    margin-bottom: -12px;
+                }
+
+                .tag-options {
+                    display: grid;
+                    grid-template-columns: 1fr;
+
+                    div {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        height: 41px;
+                    }
+                }
+            }
+        }
+    }
+
+}

@@ -1,0 +1,14 @@
+<div class='metric-wrapper' [style.background-color]="style.backgroundColor" [style.color]="style.fontColor"
+    [style.maxWidth]="style.maxWidth" [style.maxHeight]="style.maxWidth" [style.borderRadius]="getBorderRadiusStyle()"
+    (click)="configurationsVisible = true;">
+    <div class='metrics-tags'>
+        <span *ngFor="let tag of metricsTags" [style.background-color]="tag.backgroundColor"
+            [style.color]="tag.fontColor">{{tag.text}}</span>
+    </div>
+    <div class='value'>{{ getValue() }}</div>
+</div>
+
+<metric-configurations [(visible)]="configurationsVisible" [metricsTags]="metricsTags" [(style)]="style"
+    [(round)]="round" [metric]="metric" (metricChange)="metricChanged($event)" [average]="averageMethod"
+    (averageChange)="averageChanged($event)" [labels]="this.confusionMatrix.labels" [(label)]="label">
+</metric-configurations>

@@ -1,0 +1,20 @@
+.color-picker {
+    position: relative;
+
+    .color {
+        width: 30px;
+        height: 30px;
+        border-radius: 100%;
+        cursor: pointer;
+        border: 1px solid #e6e6e6;
+    }
+
+    input {
+        visibility: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 30px;
+        height: 30px;
+    }
+}

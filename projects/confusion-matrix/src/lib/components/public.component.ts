@@ -1,2 +1,2 @@
 export * from './confusion-matrix.component';
-export * from './statistics';
+export * from './metrics/statistics';

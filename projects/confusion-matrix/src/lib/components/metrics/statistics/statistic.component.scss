@@ -4,6 +4,21 @@
     flex-direction: column;
     display: inline-flex;
 
+    .labels {
+
+
+        span {
+            margin: 3px;
+            border: 1px solid black;
+            background-color: antiquewhite;
+            padding: 4px;
+            border-radius: 50px;
+            font-size: 9px;
+            font-weight: bolder;
+        }
+
+    }
+
     .title {
         font-size: 12px;
         margin-bottom: -5px;

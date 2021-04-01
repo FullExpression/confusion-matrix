@@ -66,6 +66,8 @@
     </div>
 </div>
 
+<metric [confusionMatrix]="_confusionMatrix"></metric>
+
 <configurations [(visible)]="showConfigurationPanel" (optionChange)="optionChanged($event)"
     [editionToggle]="editionMode">
 </configurations>

@@ -1,0 +1,6 @@
+<div class="custom-select">
+    <select (change)="selectChanged($event)">
+        <option [value]="value.id" [selected]="selected?.id === value?.id" *ngFor="let value of values">{{value.text}}
+        </option>
+    </select>
+</div>

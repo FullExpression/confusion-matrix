@@ -13,6 +13,8 @@ export class StatisticComponent {
 
     @Input() round?: string;
 
+    @Input() labels = new Array<string>();
+
     @Input()
     style = new StatisticStyleConfiguration()
 

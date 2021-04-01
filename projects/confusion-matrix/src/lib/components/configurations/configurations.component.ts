@@ -23,7 +23,7 @@ export class ConfigurationsComponent {
     @Input()
     editionToggle = false;
 
-    metricsIsVisible = true;
+    metricsIsVisible = false;
 
     get configurationsOptions(): typeof ConfigurationsOption {
         return ConfigurationsOption;

@@ -1,0 +1,58 @@
+<cm-dialog [visible]="visible" (visibleChange)="visibleChange.emit($event)">
+    <div class='metrics-configuration-wrapper'>
+        <div class='main-configurations'>
+            <h2>Title</h2>
+            <div class="content">
+                <div class='metric'>
+                    <span>Metric:</span>
+                    <custom-select [values]="metrics" [selected]="_metric"
+                        (selectedChange)="metricSelectedChanged($event)">
+                    </custom-select>
+                </div>
+                <div class='round'>
+                    <span>Decimal places:</span>
+                    <input-number [value]="round" (valueChange)="roundChanged($event)" [min]="0" [max]="20">
+                    </input-number>
+                </div>
+                <div class='average-method'>
+                    <span>Average Method:</span>
+                    <custom-select [values]="methods" [selected]="_average"
+                        (selectedChange)="averageSelectedChanged($event)">
+                    </custom-select>
+                </div>
+                <div class='background-color'>
+                    <span>Background color:</span>
+                    <color-picker [(color)]='style.backgroundColor'></color-picker>
+                </div>
+                <div class='label'>
+                    <span>Label:</span>
+                    <custom-select [values]="_labels" [selected]="_label" (selectedChange)="labelChanged($event)">
+                    </custom-select>
+                </div>
+                <div class='font-color'>
+                    <span>Font color:</span>
+                    <color-picker [(color)]='style.fontColor'></color-picker>
+                </div>
+            </div>
+
+        </div>
+        <div class="tags">
+            <h2>Tags</h2>
+            <div class="content">
+                <div class='tag' *ngFor="let tag of metricsTags">
+                    <div class='text'>{{tag.text}}</div>
+                    <div class="tag-options">
+                        <div class='background-color'>
+                            <span>Background color:</span>
+                            <color-picker></color-picker>
+                        </div>
+                        <div class='font-color'>
+                            <span>Font color:</span>
+                            <color-picker></color-picker>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</cm-dialog>
