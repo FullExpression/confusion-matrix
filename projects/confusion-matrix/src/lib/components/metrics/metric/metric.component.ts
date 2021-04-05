@@ -1,7 +1,7 @@
 import { DecimalPipe } from "@angular/common";
 import { Component, Input } from "@angular/core";
 import { AverageMethod, ConfusionMatrix } from "@fullexpression/confusion-matrix-stats";
-import { MetricsEnum } from "../../configurations/metrics/metrics.configurations.model";
+import { MetricsEnum } from "../metrics.configurations.model";
 import { MetricStyleConfiguration, MetricTag } from "./metric.models";
 import { MetricService } from "./metric.service";
 
@@ -24,6 +24,11 @@ export class MetricComponent {
     @Input()
     label?: string = undefined;
 
+    @Input() round?: number;
+
+    @Input()
+    style = new MetricStyleConfiguration();
+
     configurationsVisible = false;
 
     get value(): number {
@@ -35,10 +40,6 @@ export class MetricComponent {
         )
     };
 
-    @Input() round?: number;
-
-    @Input()
-    style = new MetricStyleConfiguration();
 
     get metricsTags(): Array<MetricTag> {
         const labels = [this.metricLabel, this.averageLabel]

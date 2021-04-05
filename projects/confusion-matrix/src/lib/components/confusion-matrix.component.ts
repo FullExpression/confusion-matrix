@@ -119,6 +119,8 @@ export class ConfusionMatrixComponent implements AfterViewInit {
 
     dragging = false;
 
+    showMetricsPanel = true;
+
     /**
      * Represents how many different color intensities exists.
      */

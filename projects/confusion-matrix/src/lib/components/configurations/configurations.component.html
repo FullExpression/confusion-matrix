@@ -3,9 +3,7 @@
         <div class="option" (click)="changeEdition()">
             <div class="icon">
                 <span>✏️</span>
-                <div class="toggle" [class.edit]='editionToggle'>
-                    <span class="ball"></span>
-                </div>
+                <toggle [on]="editionToggle"></toggle>
             </div>
             <div class="text"> Edition mode</div>
         </div>
@@ -35,11 +33,13 @@
             <div class="text">Transpose</div>
         </div>
         <div class="option" (click)="changeOptions(configurationsOptions.Metrics)">
-            <div class="icon">🧭</div>
+            <div class="icon">
+                <span>🧭</span>
+                <toggle [on]="metricsToggle"></toggle>
+            </div>
+
             <div class="text">Metrics</div>
         </div>
 
     </div>
 </cm-dialog>
-
-<metrics-configurations [(visible)]="metricsIsVisible"></metrics-configurations>

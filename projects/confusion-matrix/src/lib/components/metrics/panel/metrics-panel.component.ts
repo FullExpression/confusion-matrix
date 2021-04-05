@@ -1,6 +1,5 @@
-import { Component, ComponentFactoryResolver, Input } from "@angular/core";
+import { Component, ComponentFactoryResolver, EventEmitter, Input, Output, ViewChildren, ViewContainerRef } from "@angular/core";
 import { ConfusionMatrix } from "@fullexpression/confusion-matrix-stats";
-import { MetricComponent } from "../metric/metric.component";
 
 @Component({
     selector: 'metrics-panel',
@@ -10,13 +9,27 @@ import { MetricComponent } from "../metric/metric.component";
 export class MetricsPanelComponent {
 
     @Input()
+    visible = true;
+
+    @Output()
+    visibleChange = new EventEmitter<boolean>();
+
+    @Input()
     confusionMatrix = new ConfusionMatrix();
 
-    metrics = new Array<MetricComponent>();
+    @ViewChildren('dynamic', { read: ViewContainerRef })
+    container: ViewContainerRef | undefined;
+
+    metrics = new Array<number>();
 
     constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
 
     add() {
-        const component = this.componentFactoryResolver.resolveComponentFactory(MetricComponent);
+        this.metrics.push(this.metrics.length);
+    }
+
+    close() {
+        this.visible = false;
+        this.visibleChange.emit(false);
     }
 }

@@ -39,16 +39,16 @@
         <div class="tags">
             <h2>Tags</h2>
             <div class="content">
-                <div class='tag' *ngFor="let tag of metricsTags">
+                <div class='tag' *ngFor="let tag of metricsTags; let i = index;">
                     <div class='text'>{{tag.text}}</div>
                     <div class="tag-options">
                         <div class='background-color'>
                             <span>Background color:</span>
-                            <color-picker></color-picker>
+                            <color-picker [(color)]="tag.backgroundColor"></color-picker>
                         </div>
                         <div class='font-color'>
                             <span>Font color:</span>
-                            <color-picker></color-picker>
+                            <color-picker [(color)]="tag.fontColor"></color-picker>
                         </div>
                     </div>
                 </div>

@@ -23,7 +23,11 @@ export class ConfigurationsComponent {
     @Input()
     editionToggle = false;
 
-    metricsIsVisible = false;
+    @Input()
+    metricsToggle = false;
+
+    @Output()
+    metricsToggleChange = new EventEmitter<boolean>();
 
     get configurationsOptions(): typeof ConfigurationsOption {
         return ConfigurationsOption;
@@ -40,13 +44,13 @@ export class ConfigurationsComponent {
         this.optionChange.emit(this.option);
     }
 
+
     changeOptions(value: ConfigurationsOption) {
         switch (value) {
             case ConfigurationsOption.Metrics:
-                this.metricsIsVisible = true;
+                this.metricsToggle = !this.metricsToggle;
+                this.metricsToggleChange.emit(this.metricsToggle);
                 break;
-            default:
-                this.metricsIsVisible = false;
         }
         this.option = value;
         this.optionChange.emit(this.option);

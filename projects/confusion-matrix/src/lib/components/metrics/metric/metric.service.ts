@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { AverageMethod, ConfusionMatrix } from "@fullexpression/confusion-matrix-stats";
-import { MetricsEnum } from "../../configurations/metrics/metrics.configurations.model";
+import { MetricsEnum } from "../metrics.configurations.model";
 
 @Injectable()
 export class MetricService {

@@ -6,7 +6,6 @@ import { ConfigurationsComponent } from '../components/configurations/configurat
 import { FormsModule } from '@angular/forms';
 import { DownloadService } from '../services/download.service';
 import { ImportService } from '../services/import.service';
-import { MetricsConfigurationComponent } from '../components/configurations/metrics/metrics.configurations.component';
 import { DialogComponent } from '../components/dialogs/dialog.component';
 import { MetricComponent } from '../components/metrics/metric/metric.component';
 import { MetricConfigurationsComponent } from '../components/metrics/metric/metric-configurations/metric-configurations.component';
@@ -16,13 +15,17 @@ import { InputTextComponent } from '../components/html-basics/inputs/input-text/
 import { InputNumberComponent } from '../components/html-basics/inputs/input-number/input-number.component';
 import { CustomInputComponent } from '../components/html-basics/inputs/custom-input/custom-input.component';
 import { MetricService } from '../components/metrics/metric/metric.service';
+import { MetricsPanelComponent } from '../components/metrics/panel/metrics-panel.component';
+import { ToggleComponent } from '../components/html-basics/toggle/toggle.component';
+import { MetricsPanelItem } from '../components/metrics/panel/item/metrics-panel-item.component';
 
 @NgModule({
     declarations: [ConfusionMatrixComponent, StatisticComponent,
-        ConfigurationsComponent, MetricsConfigurationComponent,
+        ConfigurationsComponent,
         DialogComponent, MetricComponent, MetricConfigurationsComponent,
         CustomSelectComponent, ColorPickerComponent, InputTextComponent,
-        InputNumberComponent, CustomInputComponent],
+        InputNumberComponent, CustomInputComponent, MetricsPanelComponent,
+        ToggleComponent, MetricsPanelItem],
     imports: [CommonModule, FormsModule],
     exports: [ConfusionMatrixComponent, StatisticComponent],
     providers: [DecimalPipe, DownloadService, ImportService, MetricService]

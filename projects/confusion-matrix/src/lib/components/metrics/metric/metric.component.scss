@@ -26,8 +26,11 @@
     }
 
     .value {
-        font-weight: 500;
         overflow: hidden;
         text-overflow: ellipsis;
+        justify-content: center;
+        display: flex;
+        margin-top: 5px;
+        font-size: 18px;
     }
 }

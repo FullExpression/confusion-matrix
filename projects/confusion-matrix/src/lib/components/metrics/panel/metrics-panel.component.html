@@ -1,0 +1,9 @@
+<div class="metrics-panel" *ngIf="visible">
+    <panel-item *ngFor="let metric of metrics; let i = index" [confusionMatrix]="confusionMatrix"></panel-item>
+    <div class="add" (click)="add()">
+        +
+    </div>
+    <div class="close" (click)="close()">
+        x
+    </div>
+</div>

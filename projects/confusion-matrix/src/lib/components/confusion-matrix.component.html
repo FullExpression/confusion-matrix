@@ -65,9 +65,10 @@
         </div>
     </div>
 </div>
+<metrics-panel [confusionMatrix]="_confusionMatrix" [(visible)]="showMetricsPanel"></metrics-panel>
 
-<metric [confusionMatrix]="_confusionMatrix"></metric>
+
 
 <configurations [(visible)]="showConfigurationPanel" (optionChange)="optionChanged($event)"
-    [editionToggle]="editionMode">
+    [editionToggle]="editionMode" [(metricsToggle)]="showMetricsPanel">
 </configurations>

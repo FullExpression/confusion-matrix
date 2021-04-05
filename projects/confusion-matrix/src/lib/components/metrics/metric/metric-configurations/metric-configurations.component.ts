@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, Input, Output } from "@angular/core";
 import { AverageMethod } from "@fullexpression/confusion-matrix-stats";
-import { MetricsEnum } from "../../../configurations/metrics/metrics.configurations.model";
+import { MetricsEnum } from "../../metrics.configurations.model";
 import { CustomSelectValue } from "../../../html-basics/select/custom-select.models";
 import { MetricStyleConfiguration, MetricTag } from "../metric.models";
 import { MetricService } from "../metric.service";
@@ -10,7 +10,7 @@ import { MetricService } from "../metric.service";
     templateUrl: './metric-configurations.component.html',
     styleUrls: ['./metric-configurations.component.scss']
 })
-export class MetricConfigurationsComponent implements AfterViewInit {
+export class MetricConfigurationsComponent {
 
     @Input()
     visible = false;
@@ -122,9 +122,6 @@ export class MetricConfigurationsComponent implements AfterViewInit {
             }
         }
 
-    }
-    ngAfterViewInit(): void {
-        console.log('done');
     }
 
     metricSelectedChanged(value: CustomSelectValue | undefined) {
