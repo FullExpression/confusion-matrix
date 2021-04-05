@@ -8,6 +8,7 @@ import * as html2canvas from "html2canvas";
 import { confusionMatrixAnimations } from './confusion-matrix.animations';
 import { DownloadService } from '../services/download.service';
 import { ImportService } from '../services/import.service';
+import { IntensityBarService } from './intensity-bar/intensity-bar.service';
 
 /**
  * Component which helps to visualize a confusion matrix.
@@ -47,13 +48,10 @@ export class ConfusionMatrixComponent implements AfterViewInit {
      * Should be order asc from less intense (close to 0) to max intense (close to max value).
      */
     @Input()
-    set levelsColor(levelsColor: Array<string>) {
-        this._levelsColor = this.deepCopy(levelsColor);
-        this.updateIntensityValues(this._confusionMatrix);
-    }
+    levelsColors = new Array<string>();
 
     @Output()
-    levelsColorChange = new EventEmitter<Array<string>>()
+    levelsColorsChange = new EventEmitter<Array<string>>()
 
     /**
      * Sets the confusion matrix labels and values.
@@ -64,8 +62,6 @@ export class ConfusionMatrixComponent implements AfterViewInit {
         this._confusionMatrixTransposed = this._confusionMatrix.clone();
         this._confusionMatrixTransposed.transpose();
         this.dragHighlight = new Array();
-        this.updateIntensityValues(value);
-
     }
 
     @Output()
@@ -121,10 +117,7 @@ export class ConfusionMatrixComponent implements AfterViewInit {
 
     showMetricsPanel = true;
 
-    /**
-     * Represents how many different color intensities exists.
-     */
-    private levelsStep = 0;
+
 
     _confusionMatrixTransposed = new ConfusionMatrix();
 
@@ -144,7 +137,8 @@ export class ConfusionMatrixComponent implements AfterViewInit {
     constructor(private decimalPipe: DecimalPipe,
         private host: ElementRef,
         private downloadService: DownloadService,
-        private importService: ImportService) {
+        private importService: ImportService,
+        private intensityBarService: IntensityBarService) {
 
         this.confusionMatrixChange.subscribe(() => {
             new Array(this._confusionMatrix.labels.length);
@@ -163,48 +157,13 @@ export class ConfusionMatrixComponent implements AfterViewInit {
      * @return Color intensity in hexadecimal.
      */
     getColor(value: number): string {
-        const levelsNumber = this._levelsColor.length;
-        for (let i = 1; i <= levelsNumber; i++) {
-            if (this.levelsStep * i >= (value - (this.levelsStep / 2))) {
-                return this._levelsColor[i - 1];
-            }
-        }
-        return this._levelsColor[0];
+        return this.intensityBarService.getColor(value);
     }
 
     getTranspose(): ConfusionMatrix {
         const clone = this._confusionMatrix.clone();
         clone.transpose();
         return clone;
-    }
-
-    /**
-     * Gets the background color for the intensity bar.
-     * @returns The background color style.
-     */
-    getGradientBackground(): { [key: string]: string } {
-        const style = {
-            'background': `linear-gradient(${this._levelsColor})`
-        };
-        return style;
-    }
-
-    /**
-     * Gets the insensitive number for a given position of the intensity bar. 
-     * @param index 
-     * @returns 
-     */
-    getIntensityNumber(index: number): string {
-        if (index === 0) {
-            return '0';
-        } else {
-            if (this._levelsColor.length > this.levelsStep * this._levelsColor.length) {
-                return this.decimalPipe.transform((index + 1) * this.levelsStep, this.roundRules) ?? '0';
-            } else {
-                return String(Math.round((index + 1) * this.levelsStep));
-            }
-
-        }
     }
 
     /**
@@ -391,26 +350,6 @@ export class ConfusionMatrixComponent implements AfterViewInit {
         }
 
         return 0;
-    }
-
-    /**
-     * Updates the confusion matrix intensity bar.
-     * @param confusionMatrix The new confusion matrix.
-     */
-    private updateIntensityValues(confusionMatrix: ConfusionMatrix): void {
-        let matrix = confusionMatrix.matrix;
-        let max = matrix[0][0];
-        for (let i = 0; i < matrix.length; i++) {
-            for (let j = 0; j < matrix[0].length; j++) {
-                if (max < matrix[i][j]) {
-                    max = matrix[i][j];
-                }
-            }
-        }
-        this.levelsStep = max / this._levelsColor.length;
-        if (this.levelsStep === Infinity) {
-            this.levelsStep = 0;
-        }
     }
 
     /**

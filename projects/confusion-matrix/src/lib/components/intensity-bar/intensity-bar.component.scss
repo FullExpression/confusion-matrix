@@ -1,0 +1,33 @@
+.intensity-bar {
+    margin-left: 20px;
+    display: flex;
+    transition: all 0.3s ease;
+
+    .bar {
+        width: 10px;
+        height: 100%;
+    }
+
+    .measure-wrapper {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        height: calc(100% + 19px);
+        margin-top: -9px;
+
+
+        .measure {
+            display: flex;
+            align-items: center;
+
+            .dash {
+                width: 13px;
+                height: 1px;
+                background: black;
+                margin-right: 4px;
+                z-index: -1;
+            }
+        }
+
+    }
+}

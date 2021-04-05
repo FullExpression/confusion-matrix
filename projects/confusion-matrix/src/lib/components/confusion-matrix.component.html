@@ -47,15 +47,8 @@
                 </div>
             </div>
         </div>
-        <div class="intensity-bar" [style.height.px]="intensityHeight">
-            <div class="bar" [ngStyle]="getGradientBackground()"></div>
-            <div class="measure-wrapper">
-                <div class="measure" *ngFor="let item of _levelsColor; let i = index">
-                    <div class="dash"></div>
-                    <div class="value">{{ getIntensityNumber(i) | number: roundRules }}</div>
-                </div>
-            </div>
-        </div>
+        <intensity-bar [confusionMatrix]="_confusionMatrix" [levelsColors]="levelsColors"
+            [intensityHeight]="intensityHeight"></intensity-bar>
         <div class="tools" (click)="showConfigurationPanel = true;" [class.edition-mode]="editionMode">
             ⚙️ Tools
         </div>

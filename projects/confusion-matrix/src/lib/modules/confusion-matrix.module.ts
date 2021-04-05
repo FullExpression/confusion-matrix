@@ -18,6 +18,9 @@ import { MetricService } from '../components/metrics/metric/metric.service';
 import { MetricsPanelComponent } from '../components/metrics/panel/metrics-panel.component';
 import { ToggleComponent } from '../components/html-basics/toggle/toggle.component';
 import { MetricsPanelItem } from '../components/metrics/panel/item/metrics-panel-item.component';
+import { UtilService } from '../services/util.service';
+import { IntensityBarService } from '../components/intensity-bar/intensity-bar.service';
+import { IntensityBarComponent } from '../components/intensity-bar/intensity-bar.component';
 
 @NgModule({
     declarations: [ConfusionMatrixComponent, StatisticComponent,
@@ -25,9 +28,9 @@ import { MetricsPanelItem } from '../components/metrics/panel/item/metrics-panel
         DialogComponent, MetricComponent, MetricConfigurationsComponent,
         CustomSelectComponent, ColorPickerComponent, InputTextComponent,
         InputNumberComponent, CustomInputComponent, MetricsPanelComponent,
-        ToggleComponent, MetricsPanelItem],
+        ToggleComponent, MetricsPanelItem, IntensityBarComponent],
     imports: [CommonModule, FormsModule],
     exports: [ConfusionMatrixComponent, StatisticComponent],
-    providers: [DecimalPipe, DownloadService, ImportService, MetricService]
+    providers: [DecimalPipe, DownloadService, ImportService, MetricService, UtilService, IntensityBarService]
 })
 export class ConfusionMatrixModule { }

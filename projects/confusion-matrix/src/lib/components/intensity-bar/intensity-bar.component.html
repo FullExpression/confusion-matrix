@@ -1,0 +1,9 @@
+<div class="intensity-bar" [style.height.px]="intensityHeight">
+    <div class="bar" [ngStyle]="getGradientBackground()"></div>
+    <div class="measure-wrapper">
+        <div class="measure" *ngFor="let item of levelsColors; let i = index">
+            <div class="dash"></div>
+            <div class="value">{{ getIntensityNumber(i) | number: roundRules }}</div>
+        </div>
+    </div>
+</div>

@@ -1,12 +1,9 @@
 <div class="base-wrapper">
     <div class="base">
         <div class="matrix">
-            <confusion-matrix [(confusionMatrix)]="confusionMatrix" [(levelsColor)]="colors" [(title)]="matrixTitle"
+            <confusion-matrix [(confusionMatrix)]="confusionMatrix" [(levelsColors)]="colors" [(title)]="matrixTitle"
                 [(zoom)]="zoom"></confusion-matrix>
-            <statistics [confusionMatrix]="confusionMatrix" (confusionMatrixChange)="changeConfusionMatrix($event)">
-            </statistics>
         </div>
-
         <div class="settings">
             <mat-form-field>
                 <mat-label>Title</mat-label>
