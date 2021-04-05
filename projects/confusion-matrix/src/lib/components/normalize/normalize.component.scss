@@ -1,0 +1,16 @@
+.normalize {
+    display: grid;
+    grid-template-columns: 1fr;
+
+    row-gap: 7px;
+
+    .min,
+    .max {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    custom-button {
+        margin-top: 10px;
+    }
+}

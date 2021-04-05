@@ -64,6 +64,10 @@ export class ConfusionMatrixComponent implements AfterViewInit {
         this.dragHighlight = new Array();
     }
 
+    get confusionMatrix(): ConfusionMatrix {
+        return this._confusionMatrix;
+    }
+
     @Output()
     confusionMatrixChange = new EventEmitter<ConfusionMatrix>()
 

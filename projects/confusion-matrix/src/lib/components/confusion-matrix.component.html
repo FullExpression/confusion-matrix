@@ -62,8 +62,8 @@
 
 <metrics-panel [confusionMatrix]="_confusionMatrix" [(visible)]="showMetricsPanel"></metrics-panel>
 
-
-
 <configurations [(visible)]="showConfigurationPanel" (optionChange)="optionChanged($event)"
     [editionToggle]="editionMode" [(metricsToggle)]="showMetricsPanel">
 </configurations>
+
+<normalize [(confusionMatrix)]="confusionMatrix"></normalize>

@@ -25,6 +25,8 @@ import { IntensityBarConfigurationComponent } from '../components/intensity-bar/
 import { DialogService } from '../components/dialogs/dialog.service';
 import { AddButtonComponent } from '../components/html-basics/buttons/add-button/add-button.component';
 import { RemoveButtonComponent } from '../components/html-basics/buttons/remove-button/remove-button.component';
+import { NormalizeComponent } from '../components/normalize/normalize.component';
+import { ButtonComponent } from '../components/html-basics/buttons/button/button.component';
 
 @NgModule({
     declarations: [ConfusionMatrixComponent, StatisticComponent,
@@ -33,7 +35,7 @@ import { RemoveButtonComponent } from '../components/html-basics/buttons/remove-
         CustomSelectComponent, ColorPickerComponent, InputTextComponent,
         InputNumberComponent, CustomInputComponent, MetricsPanelComponent,
         ToggleComponent, MetricsPanelItem, IntensityBarComponent, IntensityBarConfigurationComponent,
-        AddButtonComponent, RemoveButtonComponent],
+        AddButtonComponent, RemoveButtonComponent, NormalizeComponent, ButtonComponent],
     imports: [CommonModule, FormsModule],
     exports: [ConfusionMatrixComponent, StatisticComponent],
     providers: [DecimalPipe, DownloadService, ImportService, MetricService, UtilService, IntensityBarService, DialogService]

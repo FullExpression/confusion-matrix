@@ -1,0 +1,13 @@
+<cm-dialog>
+    <div class="normalize">
+        <div class="min">
+            <span>Minimum value:</span>
+            <input-number [value]="min" (valueChange)="minValueChanged($event)"></input-number>
+        </div>
+        <div class="max">
+            <span>Maximum value:</span>
+            <input-number [(value)]="max" (valueChange)="maxValueChanged($event)"></input-number>
+        </div>
+        <custom-button [text]="'Reset'" (click)="reset()"></custom-button>
+    </div>
+</cm-dialog>

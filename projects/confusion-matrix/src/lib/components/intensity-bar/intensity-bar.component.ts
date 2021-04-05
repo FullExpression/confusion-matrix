@@ -14,7 +14,15 @@ import { IntensityBarService } from "./intensity-bar.service";
 export class IntensityBarComponent {
 
     @Input()
-    confusionMatrix = new ConfusionMatrix();
+    set confusionMatrix(cm: ConfusionMatrix) {
+        this._confusionMatrix = cm;
+        this.intensityBarService.updateIntensityValues(cm);
+    }
+
+    get confusionMatrix(): ConfusionMatrix {
+        return this._confusionMatrix;
+    }
+
 
     @Input()
     intensityHeight = 0;
@@ -45,6 +53,8 @@ export class IntensityBarComponent {
     levelsColorChange = new EventEmitter<Array<string>>();
 
     showConfigurations = false;
+
+    _confusionMatrix = new ConfusionMatrix();
 
     constructor(private intensityBarService: IntensityBarService,
         private decimalPipe: DecimalPipe,
