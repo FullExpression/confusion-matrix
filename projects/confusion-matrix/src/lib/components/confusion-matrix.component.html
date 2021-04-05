@@ -11,9 +11,9 @@
                 [class.dragging]='dragHighlight[i]'>
                 <span class="text" type='text' (focusout)="changeLabel($event, i);"
                     [attr.contenteditable]="editionMode">{{label}}</span>
-                <span *ngIf="editionMode" class='add' (click)="add(i)" [@rowsAddDeleteAnimation]>➕</span>
-                <span *ngIf="editionMode" class="remove" (click)="removeLabel(_confusionMatrix.labels[i])"
-                    [@rowsAddDeleteAnimation]>❌</span>
+                <add-button *ngIf="editionMode" class='add' (click)="add(i)" [@rowsAddDeleteAnimation]>➕</add-button>
+                <remove-button *ngIf="editionMode" class="remove" (click)="removeLabel(_confusionMatrix.labels[i])"
+                    [@rowsAddDeleteAnimation]>❌</remove-button>
 
             </div>
         </div>
@@ -36,11 +36,11 @@
                     </div>
 
                     <div class="row-label">
-                        <span *ngIf="editionMode" class='add' (click)="add(rowIndex)"
-                            [@columnsAddDeleteAnimation]>➕</span>
-                        <span *ngIf="editionMode" class="remove"
-                            (click)="removeLabel(_confusionMatrix.labels[rowIndex])"
-                            [@columnsAddDeleteAnimation]>❌</span>
+                        <add-button class='add' *ngIf="editionMode" class='add' (click)="add(rowIndex)"
+                            [@columnsAddDeleteAnimation]></add-button>
+                        <remove-button *ngIf="editionMode" class="remove"
+                            (click)="removeLabel(_confusionMatrix.labels[rowIndex])" [@columnsAddDeleteAnimation]>❌
+                        </remove-button>
                         <span class="text" type='text' (focusout)="changeLabel($event, rowIndex);"
                             [attr.contenteditable]="editionMode">{{label}}</span>
                     </div>
@@ -48,7 +48,8 @@
             </div>
         </div>
         <intensity-bar [confusionMatrix]="_confusionMatrix" [levelsColors]="levelsColors"
-            [intensityHeight]="intensityHeight"></intensity-bar>
+            [intensityHeight]="intensityHeight">
+        </intensity-bar>
         <div class="tools" (click)="showConfigurationPanel = true;" [class.edition-mode]="editionMode">
             ⚙️ Tools
         </div>
@@ -58,6 +59,7 @@
         </div>
     </div>
 </div>
+
 <metrics-panel [confusionMatrix]="_confusionMatrix" [(visible)]="showMetricsPanel"></metrics-panel>
 
 

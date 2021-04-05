@@ -2,6 +2,8 @@ import { DecimalPipe } from "@angular/common";
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { ConfusionMatrix } from "@fullexpression/confusion-matrix-stats";
 import { UtilService } from "../../services/util.service";
+import { DialogService } from "../dialogs/dialog.service";
+import { IntensityBarConfigurationComponent } from "./intensity-bar-configuration/intensity-bar-configuration.component";
 import { IntensityBarService } from "./intensity-bar.service";
 
 @Component({
@@ -42,8 +44,12 @@ export class IntensityBarComponent {
     @Output()
     levelsColorChange = new EventEmitter<Array<string>>();
 
+    showConfigurations = false;
+
     constructor(private intensityBarService: IntensityBarService,
-        private decimalPipe: DecimalPipe) {
+        private decimalPipe: DecimalPipe,
+        private dialogService: DialogService,
+        private utilService: UtilService) {
     }
 
     /**
@@ -75,6 +81,16 @@ export class IntensityBarComponent {
             }
 
         }
+    }
+
+    click() {
+        const configuration = this.utilService.getComponentReference<IntensityBarConfigurationComponent>(IntensityBarConfigurationComponent);
+        configuration.instance.colors = this.levelsColors;
+        configuration.instance.colorsChange.subscribe((colors: Array<string>) => {
+            this.levelsColors = colors;
+            this.levelsColorChange.emit(colors);
+        });
+        this.dialogService.show(configuration);
     }
 
 }

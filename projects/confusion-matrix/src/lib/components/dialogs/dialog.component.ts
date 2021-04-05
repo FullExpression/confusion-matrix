@@ -1,5 +1,5 @@
 import { animate, style, transition, trigger } from "@angular/animations";
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, ElementRef, EventEmitter, Input, Output, TemplateRef, ViewChild } from "@angular/core";
 import { DialogConfiguration } from "./dialog.component.model";
 
 @Component({
@@ -32,6 +32,7 @@ import { DialogConfiguration } from "./dialog.component.model";
 })
 export class DialogComponent {
 
+
     @Input()
     configuration = new DialogConfiguration();
 
@@ -40,6 +41,9 @@ export class DialogComponent {
 
     @Output()
     visibleChange = new EventEmitter<boolean>();
+
+    @ViewChild('content')
+    content: ElementRef<any> | undefined;
 
     changeVisibility(value: boolean) {
         if (this.configuration.closeButton.closeOnClick) {

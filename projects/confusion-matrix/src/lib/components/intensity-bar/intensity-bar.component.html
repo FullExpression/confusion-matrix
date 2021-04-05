@@ -1,4 +1,4 @@
-<div class="intensity-bar" [style.height.px]="intensityHeight">
+<div class="intensity-bar" [style.height.px]="intensityHeight" (click)="click()">
     <div class="bar" [ngStyle]="getGradientBackground()"></div>
     <div class="measure-wrapper">
         <div class="measure" *ngFor="let item of levelsColors; let i = index">

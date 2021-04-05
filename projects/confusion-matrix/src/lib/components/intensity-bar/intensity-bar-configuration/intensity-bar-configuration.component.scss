@@ -1,0 +1,39 @@
+.colors {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    .color {
+        margin: 10px;
+        display: flex;
+        align-items: center;
+        background-color: white;
+        z-index: 1;
+
+        .line {
+            width: 9px;
+            height: 1px;
+            background-color: black;
+        }
+
+        span {
+            margin-left: 5px;
+        }
+
+        .buttons {
+            display: flex;
+            margin-right: 10px;
+
+            .button {
+                margin: 3px;
+            }
+        }
+    }
+
+    .bar {
+        position: absolute;
+        width: 10px;
+        height: 100%;
+        left: 81px;
+    }
+}

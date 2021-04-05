@@ -1,0 +1,13 @@
+<div class="colors">
+    <div class="bar" [ngStyle]="getGradientBackground()"></div>
+    <div class="color" *ngFor="let color of colors; index as i">
+        <div class='buttons'>
+            <add-button class='button' (click)="add(i)"></add-button>
+            <remove-button class='button' (click)="remove(i)"></remove-button>
+        </div>
+        <color-picker [(color)]="colors[i]"></color-picker>
+        <div class='line'></div>
+        <span>{{getIntensityNumber(i)}}</span>
+    </div>
+
+</div>

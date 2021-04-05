@@ -1,0 +1,13 @@
+.add-button {
+    cursor: pointer;
+    transition: 0.1s ease;
+    width: auto;
+    height: auto;
+    filter: hue-rotate(90deg);
+    transform: rotate(46deg);
+    display: block;
+
+    &:hover {
+        transform: rotate(45deg) scale(1.2);
+    }
+}

@@ -84,16 +84,8 @@
                     }
 
                     .remove,
-                    .add {
-                        cursor: pointer;
-                        transition: 0.1s ease;
-                        width: auto;
-                        height: auto;
+                    add-button {
                         margin-left: 4px;
-
-                        &:hover {
-                            transform: scale(1.2);
-                        }
                     }
                 }
             }

@@ -1,0 +1,10 @@
+.remove-button {
+    cursor: pointer;
+    transition: 0.1s ease;
+    width: auto;
+    height: auto;
+
+    &:hover {
+        transform: scale(1.2);
+    }
+}

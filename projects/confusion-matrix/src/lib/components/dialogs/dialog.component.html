@@ -1,7 +1,7 @@
 <div class="dialog-wrapper" *ngIf="visible" [@inOutAnimation]>
     <div class="dialog">
         <div class="close" *ngIf="configuration.closeButton.show" (click)="changeVisibility(false)">x</div>
-        <div class="content">
+        <div class="content" #content>
             <ng-content></ng-content>
         </div>
     </div>
