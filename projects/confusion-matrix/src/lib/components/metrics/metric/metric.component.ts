@@ -1,5 +1,5 @@
 import { DecimalPipe } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { AverageMethod, ConfusionMatrix } from "@fullexpression/confusion-matrix-stats";
 import { UtilService } from "../../../services/util.service";
 import { DialogService } from "../../dialogs/dialog.service";
@@ -32,6 +32,9 @@ export class MetricComponent {
     @Input()
     style = new MetricStyleConfiguration();
 
+    @Output()
+    remove = new EventEmitter<void>();
+
     configurationsVisible = false;
 
     get value(): number {
@@ -48,7 +51,7 @@ export class MetricComponent {
         const labels = [this.metricLabel, this.averageLabel]
         if (this.label) {
             labels.push(new MetricTag({
-                backgroundColor: 'black',
+                backgroundColor: '#3f51b5',
                 fontColor: 'white',
                 text: this.label
             }));
@@ -135,16 +138,29 @@ export class MetricComponent {
         instance.roundChange.subscribe((value: number) => this.round = value);
 
         instance.metric = this.metric;
-        instance.metricChange.subscribe((value: MetricsEnum) => this.metric = value);
+
+        instance.metricChange.subscribe((value: MetricsEnum) => {
+            this.metric = value;
+            this.metricsTags[0].text = this.metric;
+        });
 
         instance.average = this.averageMethod;
-        instance.averageChange.subscribe((value: AverageMethod) => this.averageMethod = value);
+        instance.averageChange.subscribe((value: AverageMethod) => {
+            this.averageMethod = value;
+            this.metricsTags[1].text = this.getAverageText(this.averageMethod);
+        });
 
         instance.labels = this.confusionMatrix.labels;
 
         instance.label = this.label;
         instance.labelChange.subscribe((value: string) => this.label = value);
 
+        configuration.changeDetectorRef.detectChanges();
         this.dialogService.show(configuration);
+    }
+
+    removeMetric() {
+        console.log('asdasdasd');
+        this.remove.emit();
     }
 }

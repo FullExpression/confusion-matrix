@@ -1,0 +1,17 @@
+custom-button {
+    ::ng-deep {
+        input {
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background-color: rgb(244, 67, 54) !important;
+            color: white;
+            transition: box-shadow 0.1s ease;
+            transition: transform 0.1s ease;
+            font-size: 10px;
+        }
+    }
+}

@@ -1,9 +1,9 @@
 <div class="metrics-panel" *ngIf="visible" ngDraggable ngResizable>
-    <panel-item *ngFor="let metric of metrics; let i = index" [confusionMatrix]="confusionMatrix"></panel-item>
+    <panel-item [@inOutAnimation] *ngFor="let metric of metrics; let i = index" [confusionMatrix]="confusionMatrix"
+        (remove)="remove(i);">
+    </panel-item>
     <div class="add" (click)="add()">
         +
     </div>
-    <div class="close" (click)="close()">
-        x
-    </div>
+    <close-button (click)="close()"></close-button>
 </div>

@@ -36,6 +36,14 @@
         .title {
             display: flex;
             flex-direction: column;
+            margin-bottom: 20px;
+            padding: 4px;
+            padding-left: 20px;
+            padding-right: 20px;
+            border: 1px solid #f7f7f7;
+            border-radius: 100px;
+            background-color: #ffffffc2;
+            box-shadow: rgb(0 0 0 / 41%) 1px 1px 4px -2px;
 
             .title-edit {
                 display: flex;
@@ -83,8 +91,11 @@
                         justify-content: flex-end;
                     }
 
-                    .remove,
                     add-button {
+                        margin-left: 8px;
+                    }
+
+                    remove-button {
                         margin-left: 4px;
                     }
                 }
@@ -148,6 +159,14 @@
                             justify-content: center;
                             align-items: center;
                             display: flex;
+
+                            add-button {
+                                margin-bottom: 4px;
+                            }
+
+                            remove-button {
+                                margin-bottom: 8px;
+                            }
                         }
                     }
 

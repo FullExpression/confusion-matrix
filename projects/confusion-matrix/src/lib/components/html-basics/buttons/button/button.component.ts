@@ -9,5 +9,11 @@ export class ButtonComponent {
     @Input()
     text = '';
 
+    @Input()
+    backgroundColor = "#9e9e9e";
+
+    @Input()
+    fontColor = 'white';
+
     @Output() click = new EventEmitter<void>();
 }

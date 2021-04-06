@@ -28,6 +28,8 @@ import { RemoveButtonComponent } from '../components/html-basics/buttons/remove-
 import { NormalizeComponent } from '../components/normalize/normalize.component';
 import { ButtonComponent } from '../components/html-basics/buttons/button/button.component';
 import { AngularDraggableModule } from 'angular2-draggable';
+import { ResetButtonComponent } from '../components/html-basics/buttons/reset-button/reset-button.component';
+import { CloseButtonComponent } from '../components/html-basics/buttons/close-button/close-button.component';
 @NgModule({
     declarations: [ConfusionMatrixComponent, StatisticComponent,
         ConfigurationsComponent,
@@ -35,7 +37,8 @@ import { AngularDraggableModule } from 'angular2-draggable';
         CustomSelectComponent, ColorPickerComponent, InputTextComponent,
         InputNumberComponent, CustomInputComponent, MetricsPanelComponent,
         ToggleComponent, MetricsPanelItem, IntensityBarComponent, IntensityBarConfigurationComponent,
-        AddButtonComponent, RemoveButtonComponent, NormalizeComponent, ButtonComponent],
+        AddButtonComponent, RemoveButtonComponent, NormalizeComponent, ButtonComponent,
+        ResetButtonComponent, CloseButtonComponent],
     imports: [CommonModule, FormsModule, AngularDraggableModule],
     exports: [ConfusionMatrixComponent, StatisticComponent],
     providers: [DecimalPipe, DownloadService, ImportService, MetricService, UtilService, IntensityBarService, DialogService]

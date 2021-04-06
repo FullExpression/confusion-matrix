@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ComponentFactoryResolver, Input, OnInit, ViewChild, ViewContainerRef } from "@angular/core";
+import { AfterViewInit, Component, ComponentFactoryResolver, EventEmitter, Input, OnInit, Output, ViewChild, ViewContainerRef } from "@angular/core";
 import { AverageMethod, ConfusionMatrix } from "@fullexpression/confusion-matrix-stats";
 import { MetricComponent } from "../../metric/metric.component";
 import { MetricStyleConfiguration } from "../../metric/metric.models";
@@ -28,10 +28,14 @@ export class MetricsPanelItem implements AfterViewInit {
     @Input()
     style = new MetricStyleConfiguration();
 
+    @Output()
+    remove = new EventEmitter<void>();
+
     @ViewChild('container', { read: ViewContainerRef })
     container: ViewContainerRef | undefined;
 
     constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
+
     ngAfterViewInit(): void {
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(MetricComponent);
         const viewContainerRef = this.container;
@@ -39,12 +43,14 @@ export class MetricsPanelItem implements AfterViewInit {
         const instance = componentRef?.instance;
 
         if (instance) {
+
             instance.confusionMatrix = this.confusionMatrix;
             instance.metric = this.metric;
             instance.averageMethod = this.averageMethod;
             instance.label = this.label;
             instance.round = this.round;
             instance.style = this.style;
+            instance.remove.subscribe(() => this.remove.emit());
             componentRef?.changeDetectorRef.detectChanges();
         }
     }

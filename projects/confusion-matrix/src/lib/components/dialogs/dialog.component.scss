@@ -20,22 +20,10 @@
         display: flex;
         transition: all 0.2s ease;
 
-        .close {
+        close-button {
             position: absolute;
-            top: 0;
-            right: 0;
-            border-bottom-left-radius: 10px;
-            border-top-right-radius: 10px;
-            width: 25px;
-            height: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            background-color: #f44336;
-            color: white;
-            transition: box-shadow 0.1s ease;
-            transition: transform 0.1s ease;
+            top: -5px;
+            right: -6px;
         }
 
         .content {

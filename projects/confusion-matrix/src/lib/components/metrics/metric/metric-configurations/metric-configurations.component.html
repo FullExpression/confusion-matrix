@@ -31,6 +31,12 @@
                 <span>Font color:</span>
                 <color-picker [(color)]='style.fontColor'></color-picker>
             </div>
+            <div class='border-style'>
+                <span>Border style:</span>
+                <custom-select [values]="borderStyles" [selected]="_borderStyle"
+                    (selectedChange)="borderStyleChanged($event)">
+                </custom-select>
+            </div>
         </div>
 
     </div>

@@ -95,8 +95,21 @@ export class MetricConfigurationsComponent {
     @Output()
     averageChange = new EventEmitter<AverageMethod>();
 
+
     metrics = new Array<CustomSelectValue>();
     methods = new Array<CustomSelectValue>();
+
+    get _borderStyle(): CustomSelectValue {
+        return { id: this.style.border, text: this.getBorderStyleText(this.style.border) };
+
+    }
+
+    borderStyles: Array<CustomSelectValue>
+        = [
+            { id: 'SlightRound', text: 'SlightRound' },
+            { id: 'Round', text: 'Round' },
+            { id: 'Square', text: 'Square' }
+        ];
     _label: CustomSelectValue = { id: 'All', text: 'All' };
     _labels = new Array<CustomSelectValue>();
 
@@ -159,9 +172,26 @@ export class MetricConfigurationsComponent {
         }
     }
 
+    getBorderStyleText(border: 'SlightRound' | 'Round' | 'Square'): string {
+        switch (border) {
+            case 'SlightRound':
+                return 'Slight Round';
+        }
+        return border;
+    }
+
+
     roundChanged(round: number) {
         this.round = round;
         this.roundChange.emit(round);
+    }
+
+    borderStyleChanged(value: CustomSelectValue | undefined) {
+        if (value) {
+            this.style.border = value.id as 'SlightRound' | 'Round' | 'Square';
+            this.styleChange.emit(this.style);
+        }
+
     }
 
 

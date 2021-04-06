@@ -4,6 +4,11 @@
     flex-direction: column;
     display: inline-flex;
     cursor: pointer;
+    position: relative;
+    padding-right: 18px;
+    box-shadow: rgb(0 0 0 / 56%) 1px 1px 6px -2px;
+    margin: 8px;
+
 
     .metrics-tags {
         span {
@@ -32,5 +37,23 @@
         display: flex;
         margin-top: 5px;
         font-size: 18px;
+    }
+
+    remove-button {
+        top: -5px;
+        position: absolute;
+        right: -6px;
+        font-size: 10px;
+        margin: 2px;
+        border-radius: 100px;
+        background-color: #ffffff66;
+        width: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #fffffff0;
+        width: 20px;
+        height: 20px;
+        box-shadow: 2px 3px 6px -3px #0000008f;
     }
 }

@@ -3,7 +3,7 @@ export class MetricStyleConfiguration {
     backgroundColor?= 'transparent';
     minWidth?= 'auto';
     maxWidth?= 'auto';
-    border?: 'SlightRound' | 'Round' | 'Square' = 'Square';
+    border: 'SlightRound' | 'Round' | 'Square' = 'Round';
     constructor(style?: MetricStyleConfiguration) {
         if (style) {
             this.fontColor = style.fontColor;

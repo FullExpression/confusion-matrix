@@ -8,6 +8,6 @@
             <span>Maximum value:</span>
             <input-number [(value)]="max" (valueChange)="maxValueChanged($event)"></input-number>
         </div>
-        <custom-button [text]="'Reset'" (click)="reset()"></custom-button>
+        <reset-button (click)="reset()"></reset-button>
     </div>
 </cm-dialog>
