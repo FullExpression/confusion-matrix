@@ -9,6 +9,12 @@ import { ConfusionMatrix } from "@fullexpression/confusion-matrix-stats";
 export class NormalizeComponent implements OnInit {
 
     @Input()
+    visible = true;
+
+    @Output()
+    visibleChange = new EventEmitter<boolean>();
+
+    @Input()
     confusionMatrix = new ConfusionMatrix();
 
     @Output()

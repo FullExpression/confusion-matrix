@@ -23,7 +23,7 @@ export class MatrixConfiguration {
             [43, 44, 45, 46, 47, 48, 50]]
     });
 
-    matrixTitle = 'Awesome title';
+    matrixTitle = 'Full Expression';
 
     zoom = 1;
 

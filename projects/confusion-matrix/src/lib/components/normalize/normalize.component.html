@@ -1,4 +1,4 @@
-<cm-dialog>
+<cm-dialog [visible]="visible" (visibleChange)="visibleChange.emit($event)">
     <div class="normalize">
         <div class="min">
             <span>Minimum value:</span>

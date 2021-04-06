@@ -121,7 +121,7 @@ export class ConfusionMatrixComponent implements AfterViewInit {
 
     showMetricsPanel = true;
 
-
+    showNormalizationConfiguration = false;
 
     _confusionMatrixTransposed = new ConfusionMatrix();
 
@@ -211,6 +211,10 @@ export class ConfusionMatrixComponent implements AfterViewInit {
             case ConfigurationsOption.Import:
                 this.import();
                 break;
+            case ConfigurationsOption.Normalization:
+                this.showNormalizationConfiguration = true;
+                break;
+
         }
     }
     zoomIn() {

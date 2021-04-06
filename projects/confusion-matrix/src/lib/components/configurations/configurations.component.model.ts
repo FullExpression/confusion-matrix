@@ -8,5 +8,6 @@ export enum ConfigurationsOption {
     Transpose,
     Save,
     Import,
-    Metrics
+    Metrics,
+    Normalization
 }

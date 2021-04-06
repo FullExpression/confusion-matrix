@@ -4,25 +4,5 @@
             <confusion-matrix [(confusionMatrix)]="confusionMatrix" [(levelsColors)]="colors" [(title)]="matrixTitle"
                 [(zoom)]="zoom"></confusion-matrix>
         </div>
-        <div class="settings">
-            <mat-form-field>
-                <mat-label>Title</mat-label>
-                <input matInput #titleElement (keyup)="changeTitle($event)" placeholder="Ex: An awesome title!"
-                    value="{{matrixTitle}}">
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Labels</mat-label>
-                <input matInput #labelElement (keyup)="changeLabels()" placeholder="Ex: An awesome title!"
-                    value="{{confusionMatrix.labels | json}}">
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Values</mat-label>
-                <input matInput #valuesElement (keyup)="changeValues()" placeholder="Ex: An awesome title!"
-                    value="{{confusionMatrix.matrix | json}}">
-            </mat-form-field>
-            <normalization [confusionMatrix]="confusionMatrix" (confusionMatrixChange)="changeConfusionMatrix($event)">
-            </normalization>
-            <color-intensity-picker [(colors)]="colors"></color-intensity-picker>
-        </div>
     </div>
 </div>

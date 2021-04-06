@@ -37,9 +37,11 @@
                 <span>🧭</span>
                 <toggle [on]="metricsToggle"></toggle>
             </div>
-
             <div class="text">Metrics</div>
         </div>
-
+        <div class="option" (click)="changeOptions(configurationsOptions.Normalization)">
+            <div class="icon">⚖️</div>
+            <div class="text">Normalization</div>
+        </div>
     </div>
 </cm-dialog>

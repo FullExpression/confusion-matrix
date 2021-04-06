@@ -7,19 +7,15 @@ import { ConfusionMatrixModule } from 'projects/confusion-matrix/src/public-api'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { ColorPickerModule } from 'ngx-color-picker';
-import { ColorIntensityPicker, MatrixConfiguration, NormalizationComponent } from './components';
+import { MatrixConfiguration } from './components';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
-import { StatisticsComponent } from './components/matrix-configuration/statistics/statistics.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
 @NgModule({
     declarations: [
         AppComponent,
-        ColorIntensityPicker,
         MatrixConfiguration,
-        NormalizationComponent,
-        TopBarComponent,
-        StatisticsComponent
+        TopBarComponent
     ],
     imports: [
         BrowserModule,
