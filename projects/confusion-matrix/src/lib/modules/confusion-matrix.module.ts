@@ -27,7 +27,7 @@ import { AddButtonComponent } from '../components/html-basics/buttons/add-button
 import { RemoveButtonComponent } from '../components/html-basics/buttons/remove-button/remove-button.component';
 import { NormalizeComponent } from '../components/normalize/normalize.component';
 import { ButtonComponent } from '../components/html-basics/buttons/button/button.component';
-
+import { AngularDraggableModule } from 'angular2-draggable';
 @NgModule({
     declarations: [ConfusionMatrixComponent, StatisticComponent,
         ConfigurationsComponent,
@@ -36,7 +36,7 @@ import { ButtonComponent } from '../components/html-basics/buttons/button/button
         InputNumberComponent, CustomInputComponent, MetricsPanelComponent,
         ToggleComponent, MetricsPanelItem, IntensityBarComponent, IntensityBarConfigurationComponent,
         AddButtonComponent, RemoveButtonComponent, NormalizeComponent, ButtonComponent],
-    imports: [CommonModule, FormsModule],
+    imports: [CommonModule, FormsModule, AngularDraggableModule],
     exports: [ConfusionMatrixComponent, StatisticComponent],
     providers: [DecimalPipe, DownloadService, ImportService, MetricService, UtilService, IntensityBarService, DialogService]
 })

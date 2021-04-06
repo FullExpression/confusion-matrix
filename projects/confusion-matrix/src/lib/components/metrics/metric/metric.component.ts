@@ -1,7 +1,10 @@
 import { DecimalPipe } from "@angular/common";
 import { Component, Input } from "@angular/core";
 import { AverageMethod, ConfusionMatrix } from "@fullexpression/confusion-matrix-stats";
+import { UtilService } from "../../../services/util.service";
+import { DialogService } from "../../dialogs/dialog.service";
 import { MetricsEnum } from "../metrics.configurations.model";
+import { MetricConfigurationsComponent } from "./metric-configurations/metric-configurations.component";
 import { MetricStyleConfiguration, MetricTag } from "./metric.models";
 import { MetricService } from "./metric.service";
 
@@ -65,7 +68,10 @@ export class MetricComponent {
         text: this.getAverageText(this.averageMethod)
     });
 
-    constructor(private metricService: MetricService, private decimalPipe: DecimalPipe) { }
+    constructor(private metricService: MetricService,
+        private decimalPipe: DecimalPipe,
+        private utilService: UtilService,
+        private dialogService: DialogService) { }
 
 
     getBorderRadiusStyle(): string {
@@ -113,5 +119,32 @@ export class MetricComponent {
         }
     }
 
+    openConfiguration() {
+        const configuration = this.utilService.getComponentReference<MetricConfigurationsComponent>(MetricConfigurationsComponent);
+        const instance = configuration.instance;
 
+        instance.visible = this.configurationsVisible;
+        instance.visibleChange.subscribe((value: boolean) => this.configurationsVisible = value);
+
+        instance.metricsTags = this.metricsTags;
+
+        instance.style = this.style;
+        instance.styleChange.subscribe((value: MetricStyleConfiguration) => this.style = value);
+
+        instance.round = this.round;
+        instance.roundChange.subscribe((value: number) => this.round = value);
+
+        instance.metric = this.metric;
+        instance.metricChange.subscribe((value: MetricsEnum) => this.metric = value);
+
+        instance.average = this.averageMethod;
+        instance.averageChange.subscribe((value: AverageMethod) => this.averageMethod = value);
+
+        instance.labels = this.confusionMatrix.labels;
+
+        instance.label = this.label;
+        instance.labelChange.subscribe((value: string) => this.label = value);
+
+        this.dialogService.show(configuration);
+    }
 }

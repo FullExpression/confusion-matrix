@@ -1,4 +1,4 @@
-<div class="metrics-panel" *ngIf="visible">
+<div class="metrics-panel" *ngIf="visible" ngDraggable ngResizable>
     <panel-item *ngFor="let metric of metrics; let i = index" [confusionMatrix]="confusionMatrix"></panel-item>
     <div class="add" (click)="add()">
         +

@@ -6,6 +6,7 @@
     },
     "allowedNonPeerDependencies": [
         "@fullexpression/confusion-matrix-stats",
-        "html2canvas"
+        "html2canvas",
+        "angular2-draggable"
     ]
 }

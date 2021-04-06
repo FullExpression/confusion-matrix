@@ -18,6 +18,7 @@
     },
     "dependencies": {
         "@fullexpression/confusion-matrix-stats": "^1.5.2",
+        "angular2-draggable": "^2.3.2",
         "html2canvas": "^1.0.0-rc.7",
         "tslib": "^2.0.0"
     },
