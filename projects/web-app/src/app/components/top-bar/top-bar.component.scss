@@ -9,8 +9,32 @@
     justify-content: space-between;
     padding: 7px 14px;
 
+    &.home {
+        border: 0px;
+        box-shadow: none;
+        background: transparent;
+
+        .editor {
+            color: black !important;
+        }
+
+        .icon {
+            color: white;
+
+            img {
+                filter: brightness(0) invert(1);
+            }
+        }
+
+        .right-side {
+            a {
+                color: white;
+            }
+
+        }
+    }
+
     a {
-        color: black;
         text-decoration: none;
         padding-left: 12px;
 
@@ -49,6 +73,21 @@
 
         a {
             color: #c56b51;
+        }
+
+        .editor {
+            border-radius: 100px;
+            background-color: white;
+            padding: 5px;
+            padding-left: 10px;
+            padding-right: 10px;
+            margin-left: 11px;
+            box-shadow: rgb(0 0 0 / 56%) 1px 1px 6px -2px;
+            transition: 0.1s all;
+
+            &:hover {
+                transform: scale(1.1);
+            }
         }
     }
 }

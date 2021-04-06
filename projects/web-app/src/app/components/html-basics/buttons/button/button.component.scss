@@ -1,0 +1,15 @@
+input {
+    border-radius: 100px;
+    border: none;
+    padding: 6px;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+    box-shadow: 2px 3px 6px -3px #0000008f;
+
+    transition: 0.1s ease;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+}

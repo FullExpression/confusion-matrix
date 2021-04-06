@@ -11,11 +11,19 @@ import { MatrixConfiguration } from './components';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { routes } from './routes';
+import { EditorComponent } from './components/editor/editor.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
+import { ButtonComponent } from './components/html-basics/buttons/button/button.component';
 @NgModule({
     declarations: [
         AppComponent,
         MatrixConfiguration,
-        TopBarComponent
+        TopBarComponent,
+        EditorComponent,
+        HomePageComponent,
+        ButtonComponent
     ],
     imports: [
         BrowserModule,
@@ -25,7 +33,8 @@ import { FormsModule } from '@angular/forms';
         MaterialModule,
         ColorPickerModule,
         MatSliderModule,
-        FormsModule
+        FormsModule,
+        RouterModule.forRoot(routes)
     ],
     providers: [],
     bootstrap: [AppComponent]
