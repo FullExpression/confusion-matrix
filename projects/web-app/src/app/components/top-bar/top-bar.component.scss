@@ -9,11 +9,13 @@
     justify-content: space-between;
     padding: 7px 14px;
     position: relative;
+    transition: all 0.3s;
 
     &.home {
         border: 0px;
         box-shadow: none;
-        background: transparent;
+        background: linear-gradient(108deg, rgb(252 176 69 / 2%) 0%, rgb(255 0 0 / 3%) 49%, rgb(252 176 69 / 2%) 100%);
+
 
         .editor {
             color: black !important;
