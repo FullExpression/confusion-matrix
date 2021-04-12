@@ -1,5 +1,5 @@
 
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ConfusionMatrix } from '@fullexpression/confusion-matrix-stats';
 import { DecimalPipe } from '@angular/common';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -142,7 +142,8 @@ export class ConfusionMatrixComponent implements AfterViewInit {
         private host: ElementRef,
         private downloadService: DownloadService,
         private importService: ImportService,
-        private intensityBarService: IntensityBarService) {
+        private intensityBarService: IntensityBarService,
+        private detectChanges: ChangeDetectorRef) {
 
         this.confusionMatrixChange.subscribe(() => {
             new Array(this._confusionMatrix.labels.length);
@@ -154,6 +155,7 @@ export class ConfusionMatrixComponent implements AfterViewInit {
         this.originalWidth = this.host.nativeElement.clientWidth;
         this.originalHeight = this.host.nativeElement.clientHeight;
         this.updateZoomValue(this._zoom);
+        this.detectChanges.detectChanges();
     }
 
     /**
