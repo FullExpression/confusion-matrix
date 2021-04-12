@@ -119,7 +119,7 @@ export class ConfusionMatrixComponent implements AfterViewInit {
 
     dragging = false;
 
-    showMetricsPanel = true;
+    showMetricsPanel = false;
 
     showNormalizationConfiguration = false;
 
