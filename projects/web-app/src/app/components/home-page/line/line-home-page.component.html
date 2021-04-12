@@ -1,14 +1,16 @@
-<div class="line-wrapper" [class.right-to-left]="rightToLeft">
+<div class="line-wrapper">
     <div class="background" [style.backgroundColor]='backgroundColor'></div>
-    <div class="background-2" [style.backgroundColor]='backgroundColor'></div>
-    <div class="description">
-        <div class='icon' *ngIf="icon">{{icon}}</div>
-        <h1 class="first-line" *ngIf="topDescription">{{topDescription}}</h1>
-        <h1 class="second-line" *ngIf="title">{{title}}</h1>
-        <h1 class="third-line" *ngIf="downDescription">{{downDescription}}</h1>
+    <div class='description-wrapper' [class.right-to-left]="rightToLeft">
+        <div class="description">
+            <div class='icon' *ngIf="icon">{{icon}}</div>
+            <h1 class="first-line" *ngIf="topDescription">{{topDescription}}</h1>
+            <h1 class="second-line" *ngIf="title">{{title}}</h1>
+            <h1 class="third-line" *ngIf="downDescription">{{downDescription}}</h1>
+        </div>
+
+        <div class='gif' *ngIf="gifLocation">
+            <img src='../../../assets/gifs/edit.gif' [src]="gifLocation">
+        </div>
     </div>
 
-    <div class='gif' *ngIf="gifLocation">
-        <img src='../../../assets/gifs/edit.gif' [src]="gifLocation">
-    </div>
 </div>

@@ -5,18 +5,25 @@
 
     .line-wrapper {
         color: white;
-        height: 100%;
+        height: 150%;
         position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: row;
-        flex-wrap: wrap;
         padding: 20px;
-        top: 170px;
 
-        &.right-to-left {
-            flex-direction: row-reverse;
+
+        .description-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: row;
+            flex-wrap: wrap;
+
+            &.right-to-left {
+                flex-direction: row-reverse;
+            }
         }
 
         .description {
@@ -71,17 +78,6 @@
 
         }
 
-        .background-2 {
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #ffd384;
-            z-index: -1;
-            transform: skewY(13deg);
-            top: 40%;
-        }
-
         .gif {
             display: flex;
             max-width: 500px;
@@ -90,6 +86,7 @@
             img {
                 border-radius: 100%;
                 width: 100%;
+                box-shadow: 3px 3px 75px -36px #000;
             }
         }
     }
