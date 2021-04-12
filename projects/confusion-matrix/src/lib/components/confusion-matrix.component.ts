@@ -201,9 +201,11 @@ export class ConfusionMatrixComponent implements AfterViewInit {
                 break;
             case ConfigurationsOption.View:
                 this.editionMode = false;
+                this.updateZoomValue(this._zoom);
                 break;
             case ConfigurationsOption.Edit:
                 this.editionMode = true;
+                this.updateZoomValue(this._zoom);
                 break;
             case ConfigurationsOption.Save:
                 this.save();
@@ -273,6 +275,9 @@ export class ConfusionMatrixComponent implements AfterViewInit {
     removeLabel(name: string) {
         this._confusionMatrix.removeLabel(name);
         this.confusionMatrixChange.emit(this._confusionMatrix);
+        this.originalWidth -= 40;
+        this.originalHeight -= 40;
+        this.updateZoomValue(this._zoom);
     }
 
     add(index: number) {
@@ -285,6 +290,9 @@ export class ConfusionMatrixComponent implements AfterViewInit {
         this._confusionMatrix.addLabel(name, emptyArray, emptyArray, index);
         ++this.numberOfItemsAdded;
         this.confusionMatrixChange.emit(this._confusionMatrix);
+        this.originalWidth += 40;
+        this.originalHeight += 40;
+        this.updateZoomValue(this._zoom);
 
     }
 
@@ -339,8 +347,10 @@ export class ConfusionMatrixComponent implements AfterViewInit {
         }
         this._zoom = zoom;
         if (this.fullyInitialized) {
-            this.host.nativeElement.style.width = `${this.originalWidth * this._zoom}px`;
-            this.host.nativeElement.style.height = `${this.originalHeight * this._zoom}px`;
+            const width = this.originalWidth + (this.editionMode ? 45 : 0);
+            const height = this.originalHeight + (this.editionMode ? 45 : 0)
+            this.host.nativeElement.style.width = `${width * this._zoom}px`;
+            this.host.nativeElement.style.height = `${height * this._zoom}px`;
         }
     }
 
