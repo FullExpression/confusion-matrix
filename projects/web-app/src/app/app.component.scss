@@ -12,6 +12,20 @@
         display: flex;
     }
 
+
+
+    .content {
+        width: 100%;
+        height: calc(100% - 55px);
+    }
+
+    &.home {
+        .content {
+            width: auto;
+            height: auto;
+        }
+    }
+
     .app-version {
         position: fixed;
         bottom: 0;

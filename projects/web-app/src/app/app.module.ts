@@ -17,6 +17,7 @@ import { EditorComponent } from './components/editor/editor.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ButtonComponent } from './components/html-basics/buttons/button/button.component';
 import { HomePageLineComponent } from './components/home-page/line/line-home-page.component';
+import { DocumentationComponent } from './components/documentation/documentation.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -25,7 +26,8 @@ import { HomePageLineComponent } from './components/home-page/line/line-home-pag
         EditorComponent,
         HomePageComponent,
         ButtonComponent,
-        HomePageLineComponent
+        HomePageLineComponent,
+        DocumentationComponent
     ],
     imports: [
         BrowserModule,

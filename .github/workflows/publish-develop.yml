@@ -44,3 +44,5 @@ jobs:
           git add package.json
           git commit -m "Update version"
           git push
+      - name: Publish website
+          run: npm run dev-deploy
