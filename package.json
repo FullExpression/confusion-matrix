@@ -1,10 +1,10 @@
 {
     "name": "confusion-matrix",
-    "version": "2.2.0-alpha.0",
+    "version": "3.0.0",
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
-        "build": "ng build confusion-matrix --prod && ng build web-app",
+        "build": "ng build confusion-matrix --prod && ng build web-app && gulp",
         "test": "ng test",
         "cm-build-test": "ng test --no-watch --project=confusion-matrix --browsers=ChromeHeadlessCI",
         "cm-code-coverage": "ng test --no-watch --project=confusion-matrix --code-coverage",
@@ -29,6 +29,7 @@
         "@angular/router": "~11.0.1",
         "@fullexpression/confusion-matrix-stats": "^1.5.2",
         "angular2-draggable": "^2.3.2",
+        "gulp": "^4.0.2",
         "html2canvas": "^1.0.0-rc.7",
         "ngx-color-picker": "^11.0.0",
         "rxjs": "~6.6.0",

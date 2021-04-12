@@ -1,6 +1,6 @@
 {
     "name": "@fullexpression/confusion-matrix",
-    "version": "3.0.0-alpha.17",
+    "version": "3.0.0",
     "repository": {
         "url": "https://github.com/FullExpression/confusion-matrix.git"
     },
