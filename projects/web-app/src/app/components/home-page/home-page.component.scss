@@ -14,9 +14,8 @@
         align-items: center;
         flex-direction: column;
         width: calc(100% - 40px);
-        height: 510px;
+        height: calc(100% - 40px);
         position: relative;
-        height: 100%;
         justify-content: center;
         text-align: center;
         padding: 20px;
@@ -71,9 +70,12 @@
     }
 
     .edit-message {
+        height: 100%;
+    }
+
+    .metrics-message {
         color: white;
         height: 100%;
-        width: 100%;
         position: relative;
         display: flex;
         align-items: center;
@@ -81,31 +83,17 @@
         flex-direction: row;
         flex-wrap: wrap;
         padding: 20px;
-        padding-left: 20px;
         top: 170px;
-
-        .description {
-            h1 {
-                margin: 0;
-                font-size: 28px;
-
-            }
-
-            .first-line,
-            .third-line {
-                font-size: 20px;
-            }
-        }
 
         .background {
             position: absolute;
-            top: -114px;
+            top: 0px;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #ffd384;
+            background-color: #af4f00;
             z-index: -1;
-            transform: skewY(-13deg);
+            transform: skewY(13deg);
 
         }
 
@@ -114,22 +102,27 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #ffd384;
+            background-color: #af4f00;
             z-index: -1;
-            transform: skewY(13deg);
+            transform: skewY(-13deg);
             top: 40%;
         }
 
-        .edit-gif {
-            display: flex;
-            display: flex;
-            max-width: 500px;
-            margin: 30px;
+    }
+}
 
-            img {
-                width: 100%;
-            }
-        }
+@keyframes edit-icon {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(180deg) scale(0.9);
+    }
+
+    100% {
+        transform: rotate(360deg) scale(1);
+
     }
 }
 

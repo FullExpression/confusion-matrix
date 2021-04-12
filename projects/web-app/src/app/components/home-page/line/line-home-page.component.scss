@@ -1,0 +1,96 @@
+:host {
+    width: 100%;
+    height: 100%;
+
+
+    .line-wrapper {
+        color: white;
+        height: 100%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 20px;
+        top: 170px;
+
+        &.right-to-left {
+            flex-direction: row-reverse;
+        }
+
+        .description {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            padding-left: 30px;
+            padding-right: 30px;
+            align-items: center;
+
+            justify-content: center;
+
+            .icon {
+                margin: 10px;
+                font-size: 50px;
+                margin: 10px;
+                font-size: 36px;
+                width: 50px;
+                height: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                animation: edit-icon 3s infinite;
+
+            }
+
+            h1 {
+                margin: 0;
+                font-size: 28px;
+
+            }
+
+            .first-line,
+            .third-line {
+                font-size: 20px;
+            }
+
+            .second-line {
+                font-weight: bolder;
+            }
+        }
+
+        .background {
+            position: absolute;
+            top: 0px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffd384;
+            z-index: -1;
+            transform: skewY(-13deg);
+
+        }
+
+        .background-2 {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffd384;
+            z-index: -1;
+            transform: skewY(13deg);
+            top: 40%;
+        }
+
+        .gif {
+            display: flex;
+            max-width: 500px;
+            margin: 30px;
+
+            img {
+                border-radius: 100%;
+                width: 100%;
+            }
+        }
+    }
+}

@@ -15,38 +15,31 @@
             </custom-button>
         </div>
     </div>
-    <div class='edit-message'>
-        <div class="background"></div>
-        <div class="background-2"></div>
-        <div class="description">
-            <h1 class="first-line">Don't liking what you are seeing?</h1>
-            <h1 class="second-line">Add, remove and edit the matrix as you want!</h1>
-            <h1 class="third-line">You can also move lines as well!</h1>
-        </div>
-
-        <div class='edit-gif'>
-            <img src='../../../assets/gifs/edit.gif'>
-        </div>
-    </div>
-    <!-- <div class='metrics-message'>
-        <h1>See different confusion matrix metrics!</h1>
-    </div> -->
-    <!-- <div class='mistakes-message'>
-        <h1>Mistakes happens! Undo and redo throw the edition history</h1>
-        <h1>//Add, delete, move columns</h1>
-    </div>
-    <div class='save-message'>
-        <h1>Save and import your confusion matrix</h1>
-        <h1>//Add, delete, move columns</h1>
-    </div>
-    <div class='zoom-message'>
-        <h1>Text to small or to large? Zoom in and zoom out as you want!</h1>
-        <h1></h1>
-    </div>
-    <div class='normalize-message'>
-        <h1>The interval numbers not fit your needs? Normalize it!</h1>
-        <h1></h1>
-    </div>
+    <home-page-line [icon]="'✏️'" [topDescription]="'Don\'t liking what you are seeing?'"
+        [title]="'Add, remove and edit the matrix as you want!'" [downDescription]="'You can also move lines as well!'"
+        [gifLocation]="'../../../assets/gifs/edit.gif'">
+    </home-page-line>
+    <home-page-line [icon]="'📊'" [title]="'See different confusion matrix metrics!'"
+        [downDescription]="'Obtain accuracy, precision, f1score and more!'"
+        [gifLocation]="'../../../assets/gifs/edit.gif'" [backgroundColor]="'#ff5722'" [rightToLeft]="true">
+    </home-page-line>
+    <home-page-line [icon]="'↩️↪️'" [topDescription]="'Ups! Made a mistake...'"
+        [title]="'Undo and redo through edition history!'" [gifLocation]="'../../../assets/gifs/edit.gif'"
+        [backgroundColor]="'#3f51b5'" [rightToLeft]="false">
+    </home-page-line>
+    <home-page-line [icon]="'💾'" [topDescription]="'I\'m in a hurry...'"
+        [title]="'Save and import different confusion matrix!'" [backgroundColor]="'#4caf50'"
+        [gifLocation]="'../../../assets/gifs/edit.gif'" [rightToLeft]="true">
+    </home-page-line>
+    <home-page-line [icon]="'🔍'" [topDescription]="'I can\'t read properly...'"
+        [title]="'Zoom in and out as you want!'" [gifLocation]="'../../../assets/gifs/edit.gif'"
+        [backgroundColor]="'#2196f3'" [rightToLeft]="false">
+    </home-page-line>
+    <home-page-line [icon]="'🔍'" [topDescription]="'This range of values should be different...'"
+        [title]="'Normalize the values of you matrix!'" [backgroundColor]="'#607d8b'"
+        [gifLocation]="'../../../assets/gifs/edit.gif'" [rightToLeft]="true">
+    </home-page-line>
+    <!--
     <div class='integrate-message'>
         <h1>Want to integrate in your website?</h1>
         <h1></h1>
