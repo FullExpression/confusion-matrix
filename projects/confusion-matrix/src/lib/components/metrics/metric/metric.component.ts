@@ -48,7 +48,7 @@ export class MetricComponent {
 
 
     get metricsTags(): Array<MetricTag> {
-        const labels = [this.metricLabel, this.averageLabel]
+        const labels = [this.metricLabel, this.averageLabel];
         if (this.label) {
             labels.push(new MetricTag({
                 backgroundColor: '#3f51b5',
@@ -59,17 +59,21 @@ export class MetricComponent {
         return labels;
     }
 
-    private metricLabel = new MetricTag({
-        backgroundColor: '#ff9800',
-        fontColor: 'white',
-        text: MetricsEnum[this.metric as keyof typeof MetricsEnum]
-    });
+    private get metricLabel(): MetricTag {
+        return new MetricTag({
+            backgroundColor: '#ff9800',
+            fontColor: 'white',
+            text: this.getMetricsText()
+        });
+    }
 
-    private averageLabel = new MetricTag({
-        backgroundColor: '#2196f3',
-        fontColor: 'white',
-        text: this.getAverageText(this.averageMethod)
-    });
+    private get averageLabel(): MetricTag {
+        return new MetricTag({
+            backgroundColor: '#2196f3',
+            fontColor: 'white',
+            text: this.getAverageText(this.averageMethod)
+        });
+    }
 
     constructor(private metricService: MetricService,
         private decimalPipe: DecimalPipe,
@@ -105,6 +109,10 @@ export class MetricComponent {
             case AverageMethod.Weighted:
                 return 'Weighted';
         }
+    }
+
+    getMetricsText(): string {
+        return MetricsEnum[this.metric as keyof typeof MetricsEnum];
     }
 
     getValue(): string {

@@ -1,5 +1,4 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { MatSelectChange } from '@angular/material/select';
 import { ConfusionMatrix } from '@fullexpression/confusion-matrix-stats';
 
 

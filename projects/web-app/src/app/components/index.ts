@@ -1,1 +1,1 @@
-export * from './matrix-configuration/matrix-configuration.component'
+export * from './editor/matrix-configuration/matrix-configuration.component'

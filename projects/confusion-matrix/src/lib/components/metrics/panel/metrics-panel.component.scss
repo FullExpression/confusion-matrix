@@ -6,16 +6,14 @@
     border: 1px solid #d2d2d2;
     border-radius: 11px;
     background-color: #f9f9f9;
-    margin-top: 20px;
     padding: 20px;
     cursor: move;
     user-select: none;
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    position: absolute;
     justify-content: center;
     box-shadow: rgb(0 0 0 / 56%) 0px 0px 10px -3px;
+    top: 0;
+    left: 0;
 
     metric {
         margin: 10px;

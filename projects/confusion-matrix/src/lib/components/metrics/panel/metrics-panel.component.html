@@ -1,6 +1,6 @@
-<div class="metrics-panel" *ngIf="visible" ngDraggable ngResizable>
+<div class="metrics-panel" *ngIf="visible" ngDraggable ngResizable #container>
     <panel-item [@inOutAnimation] *ngFor="let metric of metrics; let i = index" [confusionMatrix]="confusionMatrix"
-        (remove)="remove(i);">
+        [metric]="metric.metric" [averageMethod]="metric.averageMethod" [style]="metric.style" (remove)="remove(i);">
     </panel-item>
     <div class="add" (click)="add()">
         +

@@ -1,6 +1,8 @@
 import { animate, style, transition, trigger } from "@angular/animations";
-import { Component, ComponentFactoryResolver, EventEmitter, Input, Output, ViewChildren, ViewContainerRef } from "@angular/core";
-import { ConfusionMatrix } from "@fullexpression/confusion-matrix-stats";
+import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, EventEmitter, Input, Output, ViewChild, ViewContainerRef } from "@angular/core";
+import { AverageMethod, ConfusionMatrix } from "@fullexpression/confusion-matrix-stats";
+import { MetricStyleConfiguration } from "../metric/metric.models";
+import { MetricsEnum } from "../metrics.configurations.model";
 
 @Component({
     selector: 'metrics-panel',
@@ -30,7 +32,7 @@ import { ConfusionMatrix } from "@fullexpression/confusion-matrix-stats";
         )
     ]
 })
-export class MetricsPanelComponent {
+export class MetricsPanelComponent implements AfterViewInit {
 
     @Input()
     visible = true;
@@ -41,15 +43,32 @@ export class MetricsPanelComponent {
     @Input()
     confusionMatrix = new ConfusionMatrix();
 
-    @ViewChildren('dynamic', { read: ViewContainerRef })
-    container: ViewContainerRef | undefined;
+    @ViewChild('container')
+    container: ElementRef | undefined;
 
-    metrics = new Array<number>();
-
+    metrics: Array<{
+        metric: MetricsEnum,
+        averageMethod: AverageMethod,
+        style?: MetricStyleConfiguration
+    }> = [{ metric: MetricsEnum.Accuracy, averageMethod: AverageMethod.Weighted },
+    { metric: MetricsEnum.Precision, averageMethod: AverageMethod.Weighted },
+    { metric: MetricsEnum.Recall, averageMethod: AverageMethod.Weighted },
+    { metric: MetricsEnum.F1Score, averageMethod: AverageMethod.Weighted, style: { backgroundColor: '#ffe8a8', border: 'Round' } }];
+    //  { metric: MetricsEnum.Precision, averageMethod: AverageMethod.Weighted },
     constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
 
+    ngAfterViewInit(): void {
+        // if (this.container) {
+        //     this.container.nativeElement.style.transform = 'translate(-50%, -50%)';
+        // }
+
+    }
+
     add() {
-        this.metrics.push(this.metrics.length);
+        this.metrics.push({
+            metric: MetricsEnum.Accuracy,
+            averageMethod: AverageMethod.Macro
+        });
     }
 
     close() {

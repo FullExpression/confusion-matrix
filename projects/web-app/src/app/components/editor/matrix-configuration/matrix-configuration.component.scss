@@ -9,7 +9,8 @@
         justify-content: center;
         grid-template-columns: 1fr;
         max-width: 1000px;
-
+        box-shadow: 3px 3px 75px -36px #44000052;
+        border-radius: 16px;
 
         .matrix {
             display: flex;

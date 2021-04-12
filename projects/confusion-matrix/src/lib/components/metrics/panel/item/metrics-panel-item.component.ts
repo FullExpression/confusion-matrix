@@ -26,7 +26,7 @@ export class MetricsPanelItem implements AfterViewInit {
     @Input() round?: number;
 
     @Input()
-    style = new MetricStyleConfiguration();
+    style?= new MetricStyleConfiguration();
 
     @Output()
     remove = new EventEmitter<void>();
@@ -46,12 +46,14 @@ export class MetricsPanelItem implements AfterViewInit {
 
             instance.confusionMatrix = this.confusionMatrix;
             instance.metric = this.metric;
+
             instance.averageMethod = this.averageMethod;
             instance.label = this.label;
             instance.round = this.round;
-            instance.style = this.style;
+            instance.style = this.style || new MetricStyleConfiguration();
             instance.remove.subscribe(() => this.remove.emit());
             componentRef?.changeDetectorRef.detectChanges();
+
         }
     }
 }
