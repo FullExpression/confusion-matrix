@@ -8,10 +8,13 @@
         <h1>Confusion Matrix</h1>
         <h3>An awesome multi-class confusion matrix library and online editor</h3>
         <div class='buttons'>
-            <custom-button [text]="'Github'" [backgroundColor]="'white'" [fontColor]="'black'"></custom-button>
-            <custom-button [text]="'Documentation'" [backgroundColor]="'white'" [fontColor]="'black'">
+            <custom-button [text]="'Github'" [backgroundColor]="'white'" [fontColor]="'black'"
+                (click)="redirectToGitHub()">
             </custom-button>
-            <custom-button [text]="'Try it out!'" [backgroundColor]="'white'" [fontColor]="'black'">
+            <custom-button [text]="'Documentation'" [backgroundColor]="'white'" [fontColor]="'black'"
+                routerLink="documentation">
+            </custom-button>
+            <custom-button [text]="'Try it out!'" [backgroundColor]="'white'" [fontColor]="'black'" routerLink="editor">
             </custom-button>
         </div>
     </div>

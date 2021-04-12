@@ -7,4 +7,8 @@ import { version } from '../../../../../confusion-matrix/package.json';
 })
 export class HomePageComponent {
     appVersion = version;
+
+    redirectToGitHub() {
+        window.location.href = 'https://github.com/FullExpression/confusion-matrix/tree/master/projects/confusion-matrix';
+    }
 }
