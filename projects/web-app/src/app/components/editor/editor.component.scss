@@ -1,1 +1,35 @@
-.wrapper {}
+.wrapper {
+    width: 100%;
+    height: 92%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex-direction: column;
+    .background {
+        background-image: url("../../../assets/icon.png");
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        filter: blur(30px);
+        z-index: -1;
+        opacity: 0.2;
+        animation: background-animation 15s ease infinite;
+    }
+}
+
+@keyframes background-animation {
+    0% {
+        opacity: 0.2;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 0.2;
+    }
+}
