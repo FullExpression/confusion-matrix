@@ -35,13 +35,24 @@
         [title]="'Zoom in and out as you want!'" [gifLocation]="'../../../assets/gifs/edit.gif'"
         [backgroundColor]="'#2196f3'" [rightToLeft]="false">
     </home-page-line>
-    <home-page-line [icon]="'🔍'" [topDescription]="'This range of values should be different...'"
+    <home-page-line [icon]="'🧭'" [topDescription]="'This range of values should be different...'"
         [title]="'Normalize the values of you matrix!'" [backgroundColor]="'#607d8b'"
         [gifLocation]="'../../../assets/gifs/edit.gif'" [rightToLeft]="true">
     </home-page-line>
-    <!--
-    <div class='integrate-message'>
-        <h1>Want to integrate in your website?</h1>
-        <h1></h1>
-    </div> -->
+    <home-page-line [icon]="'📚'" [topDescription]="'It would be awesome use this features in my website...'"
+        [title]="'Integrate it in your website!'" [downDescription]="'You can use it as a library!'"
+        [backgroundColor]="'#795548'" [gifLocation]="'../../../assets/gifs/edit.gif'" [rightToLeft]="false">
+    </home-page-line>
+    <div class="credits">
+        <div class="background"></div>
+        <div class="icon">
+            <img src="../../../assets/icon.png" />
+        </div>
+        <div class="description">
+            <div class="author">Ricardo Rocha</div>
+            <div class="organization">FullExpression</div>
+            <div class="version">Version: {{appVersion}}</div>
+        </div>
+
+    </div>
 </div>

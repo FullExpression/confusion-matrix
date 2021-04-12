@@ -8,6 +8,7 @@
     width: 100%;
     height: 100%;
     overflow-y: auto;
+    background-color: #ff8f00;
 
     .main-message {
         display: flex;
@@ -21,7 +22,7 @@
         padding: 20px;
 
         .icon {
-            animation: icon 5s ease infinite;
+            animation: confusion-matrix-icon 5s ease infinite;
 
             img {
                 width: 80px;
@@ -51,7 +52,7 @@
             z-index: -1;
             background: linear-gradient(200deg, #ff8f00, #ffc157);
             background-size: 400% 400%;
-            animation: AnimationName 3s ease infinite;
+            animation: BackgroundAnimation 3s ease infinite;
         }
 
         .background-2 {
@@ -65,68 +66,67 @@
             transform: skewY(-13deg);
             background: linear-gradient(200deg, #ff8f00, #ffc157);
             background-size: 400% 400%;
-            animation: AnimationName 3s ease infinite;
+            animation: BackgroundAnimation 3s ease infinite;
         }
     }
 
-    .edit-message {
-        height: 100%;
-    }
-
-    .metrics-message {
+    .credits {
         color: white;
-        height: 100%;
-        position: relative;
+        height: 25vw;
+        width: 100%;
         display: flex;
-        align-items: center;
         justify-content: center;
-        flex-direction: row;
-        flex-wrap: wrap;
-        padding: 20px;
-        top: 170px;
+        align-items: center;
+        margin-top: -12%;
+        min-height: 160px;
+        position: relative;
 
         .background {
             position: absolute;
-            top: 0px;
-            left: 0;
             width: 100%;
             height: 100%;
-            background-color: #af4f00;
-            z-index: -1;
-            transform: skewY(13deg);
-
-        }
-
-        .background-2 {
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #af4f00;
-            z-index: -1;
             transform: skewY(-13deg);
-            top: 40%;
+            background-color: #ff8f00;
+            z-index: -1;
         }
 
+        .icon {
+            animation: credits-matrix-icon 5s ease infinite;
+            margin-top: calc(13% + 2px);
+
+            img {
+                width: 45px;
+                height: 45px;
+                filter: brightness(0) invert(1);
+            }
+        }
+
+        .description {
+            display: flex;
+            display: flex;
+            flex-direction: column;
+            margin-left: 20px;
+            font-size: 11px;
+            padding-top: 13%;
+
+            .version {
+                font-weight: bolder;
+                font-size: 14px;
+                height: 15px;
+                margin-top: 4px;
+            }
+
+            div {
+                height: 12px;
+
+            }
+        }
     }
 }
 
-@keyframes edit-icon {
-    0% {
-        transform: rotate(0deg) scale(1);
-    }
 
-    50% {
-        transform: rotate(180deg) scale(0.9);
-    }
 
-    100% {
-        transform: rotate(360deg) scale(1);
-
-    }
-}
-
-@keyframes icon {
+@keyframes confusion-matrix-icon {
     0% {
         opacity: 0.6;
         transform: rotate(0deg) scale(0.6);
@@ -149,22 +149,32 @@
     }
 }
 
-@-webkit-keyframes AnimationName {
+
+@keyframes credits-matrix-icon {
     0% {
-        background-position: 58% 0%
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(90deg);
     }
 
     50% {
-        background-position: 43% 100%
+        opacity: 1;
+        transform: rotate(180deg);
+    }
+
+    75% {
+        transform: rotate(270deg);
     }
 
     100% {
-        background-position: 58% 0%
+        transform: rotate(360deg);
+
     }
 }
 
-
-@keyframes AnimationName {
+@keyframes BackgroundAnimation {
     0% {
         background-position: 58% 0%
     }

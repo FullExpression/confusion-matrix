@@ -14,6 +14,7 @@
         padding: 20px;
 
 
+
         .description-wrapper {
             display: flex;
             align-items: center;
@@ -37,6 +38,7 @@
             justify-content: center;
 
             .icon {
+                animation: icon 3s ease infinite;
                 margin: 10px;
                 font-size: 50px;
                 margin: 10px;
@@ -46,7 +48,6 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                animation: edit-icon 3s infinite;
 
             }
 
@@ -89,5 +90,21 @@
                 box-shadow: 3px 3px 75px -36px #000;
             }
         }
+    }
+}
+
+
+@keyframes icon {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(180deg) scale(0.9);
+    }
+
+    100% {
+        transform: rotate(360deg) scale(1);
+
     }
 }
