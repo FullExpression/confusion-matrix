@@ -12,9 +12,10 @@ This library aims to help programers integrate confusion matrix tools in their w
 
 ## 👨‍🏫 Examples
 
-You can see visually how the library looks like as well different configurations [here](https://fe-confusion-matrix.web.app/).
+In the library [official website](https://fe-confusion-matrix.web.app/), there is a [confusion matrix editor](https://fe-confusion-matrix.web.app/editor) which uses this library there.
 
-In [here](https://github.com/FullExpression/confusion-matrix/tree/master/projects/web-app) you can find the source code of the example shown before.
+Also, [here](https://github.com/FullExpression/confusion-matrix/tree/master/projects/web-app) you can check the official website source code and you can find the editor component which implements the library [here](https://fe-confusion-matrix.web.app/#/editor).
+
 
 ## 🔨 How to install
 
@@ -22,8 +23,8 @@ In the command line, run the following command `npm install @fullexpression/conf
 
 *You can find all npm package versions [here](https://github.com/FullExpression/confusion-matrix/packages/630932/versions)*.
 
-**Important Note**: This library has dependency to [@fullexpression/confusion-matrix-stats](https://github.com/FullExpression/confusion-matrix-stats).
-Make sure this package is install as well (you can check on `node_modules/@fullexpression/confusion-matrix-stats`).
+**Important Note**: This library has dependencies to [@fullexpression/confusion-matrix-stats](https://github.com/FullExpression/confusion-matrix-stats), [html2canvas](https://github.com/niklasvh/html2canvas) and [angular2-draggable](https://github.com/xieziyu/angular2-draggable).
+Make sure these packages are install as well (you can check on `node_modules/@fullexpression/confusion-matrix-stats`, `node_modules/html2canvas` and `node_modules/@fullexpression/angular2-draggable`).
 
 
 ## 👩‍💻 How to use it
@@ -68,8 +69,8 @@ The documentation is generated automatically by [compodoc](https://compodoc.app/
 
 Nevertheless:
 
-1. For **basic confusion matrix manipulation and calculations**, check out the api [here](https://doc-confusion-matrix.web.app/classes/ConfusionMatrix.html).
-2. **To setup and show confusion matrix in your website**, check out the api [here](https://doc-confusion-matrix.web.app/classes/ConfusionMatrix.html).
+1. For **basic confusion matrix manipulation and calculations**, check out the api [here](https://fullexpression.github.io/confusion-matrix-stats/docs/index.html).
+2. **To setup and show confusion matrix in your website**, check out the api [here](https://doc-confusion-matrix.web.app/components/ConfusionMatrixComponent.html).
 
 
 

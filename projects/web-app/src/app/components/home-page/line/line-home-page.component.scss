@@ -90,6 +90,18 @@
                 box-shadow: 3px 3px 75px -36px #000;
             }
         }
+
+        .video {
+            display: flex;
+            max-width: 500px;
+            margin: 30px;
+
+            video {
+                border-radius: 100%;
+                width: 100%;
+                box-shadow: 3px 3px 75px -36px #000;
+            }
+        }
     }
 }
 

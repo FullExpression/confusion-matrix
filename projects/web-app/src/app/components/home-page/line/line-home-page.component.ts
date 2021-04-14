@@ -27,4 +27,7 @@ export class HomePageLineComponent {
     @Input()
     backgroundColor = '#ffd384';
 
+    @Input()
+    videoLocation: string | undefined;
+
 }

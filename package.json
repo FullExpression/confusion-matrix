@@ -4,18 +4,18 @@
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
-        "build": "ng build confusion-matrix --prod && ng build web-app && gulp",
+        "build": "npm run generate-documentation && ng build confusion-matrix --prod && ng build web-app && gulp",
         "test": "ng test",
         "cm-build-test": "ng test --no-watch --project=confusion-matrix --browsers=ChromeHeadlessCI",
         "cm-code-coverage": "ng test --no-watch --project=confusion-matrix --code-coverage",
         "prod-deploy": "firebase deploy --only hosting:prod-web-app && firebase deploy --only hosting:prod-doc",
         "rc-deploy": "firebase deploy --only hosting:rc-web-app && firebase deploy --only hosting:rc-doc",
         "dev-deploy": "firebase deploy --only hosting:dev-web-app",
+        "generate-documentation": "npm run generate-documentation --prefix projects/confusion-matrix",
         "lint": "ng lint",
         "publish": "npm run build && npm publish ./dist/confusion-matrix",
         "e2e": "ng e2e"
     },
-    "private": true,
     "dependencies": {
         "@angular/animations": "~11.0.1",
         "@angular/cdk": "^11.0.3",

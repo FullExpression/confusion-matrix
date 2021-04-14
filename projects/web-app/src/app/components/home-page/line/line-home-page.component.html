@@ -8,8 +8,11 @@
             <h1 class="third-line" *ngIf="downDescription">{{downDescription}}</h1>
         </div>
 
-        <div class='gif' *ngIf="gifLocation">
-            <img src='../../../assets/gifs/edit.gif' [src]="gifLocation">
+        <div class='gif' *ngIf="!videoLocation && gifLocation">
+            <img [src]="gifLocation">
+        </div>
+        <div class='video' *ngIf="videoLocation">
+            <video [src]="videoLocation" loop="true" autoplay muted></video>
         </div>
     </div>
 
